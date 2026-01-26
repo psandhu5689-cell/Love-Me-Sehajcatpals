@@ -31,7 +31,8 @@ const STICKER_GOLD = 'https://customer-assets.emergentagent.com/job_love-adventu
 
 export default function Celebration() {
   const { userName } = useUser();
-  const { playMagic } = useAudio();
+  const { playMagic, playPop } = useAudio();
+  const router = useRouter();
   const [showSecret, setShowSecret] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const titleAnim = useRef(new Animated.Value(0)).current;
