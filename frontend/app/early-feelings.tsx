@@ -18,7 +18,7 @@ const STICKER_BABY = 'https://customer-assets.emergentagent.com/job_love-adventu
 export default function EarlyFeelings() {
   const router = useRouter();
   const { userName } = useUser();
-  const { playPop } = useAudio();
+  const { playKiss, playClick } = useAudio();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const card1Anim = useRef(new Animated.Value(50)).current;
   const card2Anim = useRef(new Animated.Value(50)).current;
