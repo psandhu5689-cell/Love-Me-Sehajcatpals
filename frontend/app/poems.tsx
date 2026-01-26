@@ -213,6 +213,19 @@ export default function Poems() {
               </TouchableOpacity>
             </Animated.View>
           )}
+
+          {/* Skip Button */}
+          <TouchableOpacity
+            style={styles.skipButton}
+            onPress={() => {
+              playClick();
+              router.push('/confession');
+            }}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.skipButtonText}>Skip</Text>
+            <Ionicons name="chevron-forward" size={16} color="#9B7FA7" />
+          </TouchableOpacity>
         </Animated.View>
       </ScrollView>
     </SafeAreaView>
