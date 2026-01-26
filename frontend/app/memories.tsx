@@ -99,6 +99,14 @@ export default function Memories() {
         <Text style={styles.pageLabel}>Our Memories</Text>
         <Text style={styles.instruction}>Tap each card to explore</Text>
 
+        {/* Batman Sticker */}
+        <View style={styles.stickerContainer}>
+          <Image
+            source={{ uri: STICKER_BATMAN }}
+            style={styles.sticker}
+          />
+        </View>
+
         <View style={styles.cardsContainer}>
           {MEMORIES.map((memory, index) => {
             const isViewed = viewedMemories.has(memory.id);
