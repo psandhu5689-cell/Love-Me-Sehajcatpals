@@ -51,12 +51,12 @@ export default function EarlyFeelings() {
       Animated.sequence([
         Animated.timing(floatAnim, {
           toValue: 1,
-          duration: 3000,
+          duration: 2500,
           useNativeDriver: true,
         }),
         Animated.timing(floatAnim, {
           toValue: 0,
-          duration: 3000,
+          duration: 2500,
           useNativeDriver: true,
         }),
       ])
@@ -65,25 +65,35 @@ export default function EarlyFeelings() {
 
   const floatTranslate = floatAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, -10],
+    outputRange: [0, -12],
   });
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Baby Photo Sticker - Heart Shaped */}
+      <Animated.View
+        style={[
+          styles.stickerContainer,
+          {
+            transform: [{ translateY: floatTranslate }, { rotate: '-15deg' }],
+          },
+        ]}
+      >
+        <View style={styles.heartStickerWrapper}>
+          <Ionicons name="heart" size={120} color="#FFB6C1" style={styles.heartBg} />
+          <Image
+            source={{ uri: STICKER_BABY }}
+            style={styles.stickerImage}
+          />
+        </View>
+      </Animated.View>
+
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
           <Text style={styles.pageLabel}>Early Feelings</Text>
-
-          {/* Baby Photo Sticker */}
-          <View style={styles.stickerContainer}>
-            <Image
-              source={{ uri: STICKER_BABY }}
-              style={styles.sticker}
-            />
-          </View>
 
           <Animated.View
             style={[
@@ -152,7 +162,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     padding: 24,
-    paddingTop: 16,
+    paddingTop: 80,
   },
   content: {
     alignItems: 'center',
@@ -226,16 +236,25 @@ const styles = StyleSheet.create({
   },
   stickerContainer: {
     position: 'absolute',
-    top: 5,
-    left: 10,
+    top: 50,
+    left: 5,
     zIndex: 10,
-    transform: [{ rotate: '-10deg' }],
   },
-  sticker: {
-    width: 65,
-    height: 65,
-    borderRadius: 32,
+  heartStickerWrapper: {
+    width: 120,
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  heartBg: {
+    position: 'absolute',
+  },
+  stickerImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    marginTop: 12,
     borderWidth: 3,
-    borderColor: '#FFB6C1',
+    borderColor: '#FFFFFF',
   },
 });
