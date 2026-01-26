@@ -1,0 +1,18 @@
+diff --git a/frontend/app/memories.tsx b/frontend/app/memories.tsx
+index 51ca983..e6cac96 100644
+--- a/frontend/app/memories.tsx
++++ b/frontend/app/memories.tsx
+@@ -306,6 +306,13 @@ const styles = StyleSheet.create({
+     flex: 1,
+     backgroundColor: '#FFF5F7',
+   },
++  backButton: {
++    position: 'absolute',
++    top: 50,
++    left: 16,
++    zIndex: 10,
++    padding: 8,
++  },
+   content: {
+     flex: 1,
+     padding: 24,
