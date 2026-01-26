@@ -6,11 +6,14 @@ import {
   TouchableOpacity,
   Animated,
   ScrollView,
+  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useUser } from './_layout';
+
+const STICKER_BABY = 'https://customer-assets.emergentagent.com/job_love-adventure-49/artifacts/dhaq8syh_IMG_5559.png';
 
 export default function EarlyFeelings() {
   const router = useRouter();
