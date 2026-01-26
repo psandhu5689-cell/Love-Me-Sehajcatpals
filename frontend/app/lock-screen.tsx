@@ -91,27 +91,50 @@ export default function LockScreen() {
   };
 
   const renderKeypad = () => {
-    const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'del'];
     return (
       <View style={styles.keypad}>
-        {numbers.map((num, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[styles.key, num === '' && styles.keyEmpty]}
-            onPress={() => {
-              if (num === 'del') handleDelete();
-              else if (num !== '') handleNumberPress(num);
-            }}
-            activeOpacity={0.7}
-            disabled={num === '' || isUnlocked}
-          >
-            {num === 'del' ? (
-              <Ionicons name="backspace-outline" size={28} color="#4A1942" />
-            ) : (
-              <Text style={styles.keyText}>{num}</Text>
-            )}
+        <View style={styles.keypadRow}>
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('1')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>1</Text>
           </TouchableOpacity>
-        ))}
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('2')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>2</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('3')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>3</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.keypadRow}>
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('4')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>4</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('5')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>5</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('6')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>6</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.keypadRow}>
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('7')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>7</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('8')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>8</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('9')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>9</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.keypadRow}>
+          <View style={styles.keyEmpty} />
+          <TouchableOpacity style={styles.key} onPress={() => handleNumberPress('0')} activeOpacity={0.7} disabled={isUnlocked}>
+            <Text style={styles.keyText}>0</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.key} onPress={handleDelete} activeOpacity={0.7} disabled={isUnlocked}>
+            <Ionicons name="backspace-outline" size={28} color="#4A1942" />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
