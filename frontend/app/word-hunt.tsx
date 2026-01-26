@@ -16,7 +16,7 @@ import { useAudio } from './_layout';
 
 const { width } = Dimensions.get('window');
 const GRID_SIZE = 15;
-const CELL_SIZE = Math.floor((width - 32) / GRID_SIZE);
+const CELL_SIZE = Math.floor((width - 40) / GRID_SIZE); // Smaller cells to fit all 15
 
 // Words to find
 const WORDS_TO_FIND = [
