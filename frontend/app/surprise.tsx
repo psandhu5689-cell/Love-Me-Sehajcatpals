@@ -260,7 +260,7 @@ export default function Surprise() {
                 onPress={() => { playClick(); router.push('/quiet-stars'); }}
                 activeOpacity={0.8}
               >
-                <Text style={styles.continueButtonText}>One more thing...</Text>
+                <Text style={styles.continueButtonText}>one lassssst thing I promise</Text>
                 <Ionicons name="chevron-forward" size={20} color="#FFFFFF" />
               </TouchableOpacity>
             </Animated.View>
