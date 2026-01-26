@@ -6,11 +6,14 @@ import {
   TouchableOpacity,
   Animated,
   ScrollView,
+  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useUser } from './_layout';
+
+const STICKER_CITY = 'https://customer-assets.emergentagent.com/job_love-adventure-49/artifacts/7apudxnx_IMG_5617.jpeg';
 
 export default function OriginStory() {
   const router = useRouter();
