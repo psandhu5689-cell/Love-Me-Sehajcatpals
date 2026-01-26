@@ -70,6 +70,19 @@ export default function OriginStory() {
         >
           <Text style={styles.pageLabel}>Our Beginning</Text>
 
+          {/* Photo Sticker */}
+          <Animated.View
+            style={[
+              styles.stickerContainer,
+              { transform: [{ scale: heartPulse }] },
+            ]}
+          >
+            <Image
+              source={{ uri: STICKER_CITY }}
+              style={styles.sticker}
+            />
+          </Animated.View>
+
           <Animated.View
             style={[
               styles.heartIcon,
