@@ -123,6 +123,30 @@ export default function Celebration() {
         colors={['#FF6B9D', '#FFB347', '#9B59B6', '#FF4B7F', '#FFD6E6']}
       />
 
+      {/* Photo Stickers - Heart Shaped */}
+      <Animated.View
+        style={[
+          styles.stickerLeft,
+          { transform: [{ translateY: floatTranslateY }, { rotate: '-15deg' }] },
+        ]}
+      >
+        <View style={styles.heartStickerWrapper}>
+          <Ionicons name="heart" size={120} color="#9B59B6" style={styles.heartBg} />
+          <Image source={{ uri: STICKER_OCTOPUS }} style={styles.stickerImage} />
+        </View>
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.stickerRight,
+          { transform: [{ translateY: floatTranslateY }, { rotate: '15deg' }] },
+        ]}
+      >
+        <View style={styles.heartStickerWrapper}>
+          <Ionicons name="heart" size={120} color="#FF6B9D" style={styles.heartBg} />
+          <Image source={{ uri: STICKER_GOLD }} style={styles.stickerImage} />
+        </View>
+      </Animated.View>
+
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -172,24 +196,6 @@ export default function Celebration() {
             <Text style={styles.celebrationTitle}>
               You said YES!
             </Text>
-          </Animated.View>
-
-          {/* Photo Stickers */}
-          <Animated.View
-            style={[
-              styles.stickerLeft,
-              { transform: [{ translateY: floatTranslateY }, { rotate: '-12deg' }] },
-            ]}
-          >
-            <Image source={{ uri: STICKER_OCTOPUS }} style={styles.sticker} />
-          </Animated.View>
-          <Animated.View
-            style={[
-              styles.stickerRight,
-              { transform: [{ translateY: floatTranslateY }, { rotate: '10deg' }] },
-            ]}
-          >
-            <Image source={{ uri: STICKER_GOLD }} style={styles.sticker} />
           </Animated.View>
 
           {/* Floating Memories */}
@@ -254,8 +260,8 @@ export default function Celebration() {
           >
             <Ionicons
               name="heart"
-              size={16}
-              color={showSecret ? '#4A90D9' : '#D6E6FF'}
+              size={24}
+              color={showSecret ? '#4A90D9' : '#4A90D9'}
             />
           </TouchableOpacity>
 
@@ -289,7 +295,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     padding: 24,
-    paddingTop: 16,
+    paddingTop: 100,
   },
   content: {
     alignItems: 'center',
@@ -367,10 +373,10 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   secretHeart: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    padding: 10,
+    marginTop: 30,
+    padding: 15,
+    backgroundColor: '#E6F0FF',
+    borderRadius: 30,
   },
   secretContainer: {
     marginTop: 24,
@@ -386,20 +392,30 @@ const styles = StyleSheet.create({
   },
   stickerLeft: {
     position: 'absolute',
-    top: 120,
-    left: 10,
+    top: 50,
+    left: 5,
     zIndex: 10,
   },
   stickerRight: {
     position: 'absolute',
-    top: 120,
-    right: 10,
+    top: 50,
+    right: 5,
     zIndex: 10,
   },
-  sticker: {
+  heartStickerWrapper: {
+    width: 120,
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  heartBg: {
+    position: 'absolute',
+  },
+  stickerImage: {
     width: 70,
     height: 70,
     borderRadius: 35,
+    marginTop: 12,
     borderWidth: 3,
     borderColor: '#FFFFFF',
   },
