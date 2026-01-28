@@ -165,12 +165,8 @@ export default function FirstIntro() {
     // Mark intro as seen (for first-time users)
     await AsyncStorage.setItem('first_intro_seen', 'true');
     
-    // Check if user is Sehaj - if so, mark that she's seen the intro this session
-    const currentUser = await AsyncStorage.getItem('currentUser');
-    if (currentUser === 'sehaj') {
-      // Set a session flag so we don't loop back
-      await AsyncStorage.setItem('sehaj_intro_shown_session', 'true');
-    }
+    // Always mark that intro was shown this session for Sehaj
+    await AsyncStorage.setItem('sehaj_intro_shown_session', 'true');
     
     // Fade out and navigate
     Animated.parallel([
@@ -185,7 +181,7 @@ export default function FirstIntro() {
         useNativeDriver: true,
       }),
     ]).start(() => {
-      router.replace('/hub');
+      router.replace('/');
     });
   };
 
