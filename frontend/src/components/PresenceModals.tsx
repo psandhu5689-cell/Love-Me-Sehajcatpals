@@ -74,10 +74,6 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = ({ visible, onCompl
             Who is using this phone?
           </Text>
 
-          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-            This helps us personalize your experience 💕
-          </Text>
-
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               onPress={() => handleSelect('prabh')}
