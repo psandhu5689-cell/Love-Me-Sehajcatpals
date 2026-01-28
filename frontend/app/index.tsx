@@ -451,4 +451,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 215, 0, 0.15)',
     borderRadius: 20,
   },
+  galleryButton: {
+    position: 'absolute',
+    top: 60,
+    left: 70,
+    zIndex: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    backgroundColor: 'rgba(147, 112, 219, 0.15)',
+    borderRadius: 20,
+    gap: 6,
+  },
+  galleryButtonText: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
 });
