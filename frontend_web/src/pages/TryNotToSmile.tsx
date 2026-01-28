@@ -164,8 +164,9 @@ export default function TryNotToSmile() {
               onMouseLeave={() => setHoveredGame(null)}
               onClick={() => handleGameSelect(game.route)}
               style={{
-                background: colors.card,
-                border: `2px solid ${hoveredGame === game.id ? game.gradient[0] : colors.border}`,
+                background: 'rgba(255,255,255,0.05)',
+                backdropFilter: 'blur(15px)',
+                border: `2px solid ${hoveredGame === game.id ? game.gradient[0] : 'rgba(255,255,255,0.1)'}`,
                 borderRadius: 20,
                 padding: 20,
                 cursor: 'pointer',
@@ -174,7 +175,9 @@ export default function TryNotToSmile() {
                 gap: 16,
                 textAlign: 'left',
                 transition: 'border-color 0.2s',
-                boxShadow: hoveredGame === game.id ? `0 0 20px ${game.gradient[0]}30` : 'none',
+                boxShadow: hoveredGame === game.id 
+                  ? `0 0 30px ${game.gradient[0]}40, inset 0 0 20px rgba(255,255,255,0.05)` 
+                  : '0 8px 32px rgba(0,0,0,0.2), inset 0 0 20px rgba(255,255,255,0.03)',
               }}
             >
               {/* Game Icon */}
