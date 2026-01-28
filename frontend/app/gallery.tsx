@@ -269,28 +269,24 @@ export default function Gallery() {
 
     return (
       <View style={[styles.tile, { backgroundColor: colors.card, borderColor: colors.border }]}>
-        {/* Media (Photo/Video as album art) */}
+        {/* Video tile - always looping */}
         <View style={styles.mediaContainer}>
-          {item.type === 'video' ? (
-            <Video
-              source={{ uri: item.media }}
-              style={styles.media}
-              resizeMode={ResizeMode.COVER}
-              shouldPlay={isPlaying}
-              isLooping={false}
-              isMuted={true}
-            />
-          ) : (
-            <Image source={{ uri: item.media }} style={styles.media} />
-          )}
+          <Video
+            source={{ uri: item.media }}
+            style={styles.media}
+            resizeMode={ResizeMode.COVER}
+            shouldPlay={true}
+            isLooping={true}
+            isMuted={true}
+          />
           
-          {/* Play overlay on image */}
+          {/* Play overlay for music */}
           <TouchableOpacity 
             style={styles.playOverlay}
             onPress={() => handlePlayPause(item)}
             activeOpacity={0.8}
           >
-            <View style={[styles.playCircle, { backgroundColor: colors.primary }]}>
+            <View style={[styles.playCircle, { backgroundColor: isPlaying ? colors.secondary : colors.primary }]}>
               <Ionicons 
                 name={isPlaying ? "pause" : "play"} 
                 size={24} 
