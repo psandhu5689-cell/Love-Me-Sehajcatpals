@@ -449,19 +449,21 @@ const styles = StyleSheet.create({
   songTitle: {
     fontSize: 13,
     fontWeight: '600',
-    marginBottom: 4,
+    marginBottom: 6,
   },
-  sliderContainer: {
-    marginHorizontal: -6,
+  progressBarContainer: {
+    height: 4,
+    borderRadius: 2,
+    overflow: 'hidden',
   },
-  slider: {
-    width: '100%',
-    height: 20,
+  progressBarFill: {
+    height: '100%',
+    borderRadius: 2,
   },
   timeRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: -4,
+    marginTop: 4,
   },
   timeText: {
     fontSize: 10,
