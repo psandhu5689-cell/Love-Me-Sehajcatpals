@@ -140,16 +140,22 @@ export default function Gallery() {
       useNativeDriver: true,
     }).start();
 
-    // Load and play the song
+    // Load and play the song from PLAYLIST
     try {
       if (sound) {
         await sound.stopAsync();
         await sound.unloadAsync();
       }
 
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        staysActiveInBackground: false,
+        shouldDuckAndroid: true,
+      });
+
       const { sound: newSound } = await Audio.Sound.createAsync(
-        { uri: item.song.uri },
-        { shouldPlay: true }
+        { uri: item.song.url },
+        { shouldPlay: true, volume: 1.0 }
       );
 
       newSound.setOnPlaybackStatusUpdate((status: any) => {
