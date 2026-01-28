@@ -292,6 +292,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 3,
   },
+  crybabybuttonWrapper: {
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  crybabyButtonText: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    textAlign: 'center',
+  },
   stickerContainer: {
     position: 'absolute',
     top: 60,
