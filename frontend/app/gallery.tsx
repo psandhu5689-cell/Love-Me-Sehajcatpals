@@ -21,12 +21,22 @@ import * as Haptics from 'expo-haptics';
 const { width } = Dimensions.get('window');
 const TILE_WIDTH = (width - 48) / 2;
 
-// Memory entries with photos/videos and songs
+// Video URLs from HeartVideo component
+const VIDEOS = [
+  'https://customer-assets.emergentagent.com/job_romance-theme/artifacts/04jb8vk3_5744FE7D-DE20-40FB-94A9-C39CB3EDC595.MOV',
+  'https://customer-assets.emergentagent.com/job_romance-theme/artifacts/5qfbtsdz_4AC0D8EE-3674-4B81-B9A7-B6D93624CD39.MOV',
+  'https://customer-assets.emergentagent.com/job_romance-theme/artifacts/ep4xd9gw_7AE7E78A-C9AA-4437-B148-3644D4D18B0D.MOV',
+  'https://customer-assets.emergentagent.com/job_romance-theme/artifacts/iyxch1nu_ACAF7C77-F271-4132-9484-CA469D89580D.MOV',
+  'https://customer-assets.emergentagent.com/job_romance-theme/artifacts/cfyjmwjq_F42C870F-FAA3-401C-8272-6260F51FBD2A.MOV',
+  'https://customer-assets.emergentagent.com/job_add-this-1/artifacts/zr6k5md8_6ED17C90-F068-4114-862A-9C69C98D65D1.MOV',
+];
+
+// Memory entries with videos and songs
 const GALLERY_ITEMS = [
   {
     id: '1',
-    type: 'image',
-    media: 'https://customer-assets.emergentagent.com/job_love-adventure-49/artifacts/grh04hmp_IMG_5616.jpeg',
+    type: 'video',
+    media: VIDEOS[0],
     title: 'Golden Memories',
     song: {
       title: 'Our Song',
@@ -35,8 +45,8 @@ const GALLERY_ITEMS = [
   },
   {
     id: '2',
-    type: 'image',
-    media: 'https://customer-assets.emergentagent.com/job_love-adventure-49/artifacts/grh04hmp_IMG_5616.jpeg',
+    type: 'video',
+    media: VIDEOS[1],
     title: 'Sweet Moments',
     song: {
       title: 'Forever Yours',
@@ -45,8 +55,8 @@ const GALLERY_ITEMS = [
   },
   {
     id: '3',
-    type: 'image',
-    media: 'https://customer-assets.emergentagent.com/job_love-adventure-49/artifacts/grh04hmp_IMG_5616.jpeg',
+    type: 'video',
+    media: VIDEOS[2],
     title: 'Together Always',
     song: {
       title: 'Love Story',
@@ -55,11 +65,31 @@ const GALLERY_ITEMS = [
   },
   {
     id: '4',
-    type: 'image',
-    media: 'https://customer-assets.emergentagent.com/job_love-adventure-49/artifacts/grh04hmp_IMG_5616.jpeg',
+    type: 'video',
+    media: VIDEOS[3],
     title: 'Beautiful Days',
     song: {
       title: 'Dreaming',
+      uri: 'https://customer-assets.emergentagent.com/job_sehaj-love/artifacts/yavk7xux_efeed8b5.mp3',
+    },
+  },
+  {
+    id: '5',
+    type: 'video',
+    media: VIDEOS[4],
+    title: 'Our Love',
+    song: {
+      title: 'Heartbeat',
+      uri: 'https://customer-assets.emergentagent.com/job_sehaj-love/artifacts/yavk7xux_efeed8b5.mp3',
+    },
+  },
+  {
+    id: '6',
+    type: 'video',
+    media: VIDEOS[5],
+    title: 'Forever Us',
+    song: {
+      title: 'Endless',
       uri: 'https://customer-assets.emergentagent.com/job_sehaj-love/artifacts/yavk7xux_efeed8b5.mp3',
     },
   },
