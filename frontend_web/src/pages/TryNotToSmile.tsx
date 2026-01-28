@@ -58,20 +58,25 @@ export default function TryNotToSmile() {
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Animated background particles */}
+      {/* Animated background particles - simplified to avoid keyframe errors */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-        {[...Array(20)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
+            initial={{ 
+              y: '100vh', 
+              opacity: 0,
+              x: `${(i * 7) % 100}%`
+            }}
             animate={{
-              y: ['100vh', '-100px'],
-              x: [Math.random() * 100 + '%', Math.random() * 100 + '%'],
+              y: '-100px',
               opacity: [0, 0.3, 0],
             }}
             transition={{
-              duration: Math.random() * 10 + 10,
+              duration: 15 + (i % 5) * 2,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: i * 0.8,
+              ease: 'linear',
             }}
             style={{
               position: 'absolute',
