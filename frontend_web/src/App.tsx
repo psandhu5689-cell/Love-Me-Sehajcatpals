@@ -19,10 +19,14 @@ import RelationshipEmergency from './pages/RelationshipEmergency'
 import TortureChamber from './pages/TortureChamber'
 import TryNotToSmile from './pages/TryNotToSmile'
 import { UserSetupModal, PresenceCheckModal } from './components/PresenceModals'
+import StarryBackground from './components/StarryBackground'
 
 export default function App() {
   return (
     <>
+      {/* Global Starry Background */}
+      <StarryBackground starCount={150} shootingStarCount={6} />
+      
       {/* Global Presence Modals */}
       <UserSetupModal />
       <PresenceCheckModal />
