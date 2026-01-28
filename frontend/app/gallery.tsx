@@ -540,6 +540,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
+  musicArtist: {
+    fontSize: 14,
+    marginTop: 2,
+  },
   fullProgressBar: {
     width: '100%',
     height: 6,
