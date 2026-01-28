@@ -307,7 +307,7 @@ export default function Index() {
 
         {/* START Button */}
         <motion.button
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05, boxShadow: `0 12px 40px ${colors.primaryGlow}` }}
           whileTap={{ scale: 0.95 }}
           onClick={handleBegin}
           style={{
@@ -324,28 +324,49 @@ export default function Index() {
             alignItems: 'center',
             gap: 10,
             boxShadow: `0 8px 24px ${colors.primaryGlow}`,
+            backdropFilter: 'blur(10px)',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
+          {/* Shimmer effect */}
+          <motion.div
+            animate={{ x: ['-100%', '200%'] }}
+            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+              pointerEvents: 'none',
+            }}
+          />
           START
-          <IoHeart size={18} />
+          <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1, repeat: Infinity }}>
+            <IoHeart size={18} />
+          </motion.div>
         </motion.button>
 
         <p style={{ color: colors.textMuted, margin: '12px 0', fontStyle: 'italic' }}>or</p>
 
         {/* Silly Crybaby Button */}
         <motion.button
-          whileHover={{ scale: 1.02 }}
+          whileHover={{ scale: 1.02, boxShadow: `0 0 30px ${colors.secondary}30` }}
           whileTap={{ scale: 0.98 }}
           onClick={handleSillyCrybaby}
           style={{
-            background: colors.glass,
-            border: `1.5px solid ${colors.secondary}`,
+            background: 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(10px)',
+            border: `1.5px solid ${colors.secondary}50`,
             borderRadius: 25,
             padding: '14px 20px',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             gap: 8,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
           }}
         >
           <IoHeart size={18} color={colors.secondary} />
