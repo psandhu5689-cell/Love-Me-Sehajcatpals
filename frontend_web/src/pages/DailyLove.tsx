@@ -397,6 +397,11 @@ export default function DailyLove() {
 
   // ============ HEART TO HEART ============
   if (showHeartToHeart) {
+    const handleSavePrompt = () => {
+      addHeartToHeart(HEART_TO_HEART[hthIndex])
+      playMagic()
+    }
+
     return (
       <div style={{
         minHeight: '100vh',
@@ -408,6 +413,7 @@ export default function DailyLove() {
         padding: 24,
         position: 'relative',
       }}>
+        {/* Close Button */}
         <motion.button
           whileHover={{ scale: 1.1 }}
           onClick={() => setShowHeartToHeart(false)}
@@ -423,6 +429,24 @@ export default function DailyLove() {
           }}
         >
           <IoClose size={28} color={colors.primary} />
+        </motion.button>
+
+        {/* History Button */}
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          onClick={() => setShowHTHHistory(true)}
+          style={{
+            position: 'absolute',
+            top: 50,
+            left: 20,
+            background: colors.card,
+            border: 'none',
+            borderRadius: 20,
+            padding: 8,
+            cursor: 'pointer',
+          }}
+        >
+          <IoTime size={28} color={colors.primary} />
         </motion.button>
 
         <IoHeart size={60} color={colors.primary} />
@@ -457,28 +481,143 @@ export default function DailyLove() {
           </p>
         </motion.div>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleNextHTH}
-          style={{
-            marginTop: 30,
-            background: colors.primary,
-            border: 'none',
-            color: 'white',
-            padding: '12px 24px',
-            borderRadius: 25,
-            fontSize: 16,
-            fontWeight: 600,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-          }}
-        >
-          Next Prompt
-          <IoRefresh size={18} />
-        </motion.button>
+        {/* Action Buttons */}
+        <div style={{ display: 'flex', gap: 12, marginTop: 30 }}>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleSavePrompt}
+            style={{
+              background: colors.card,
+              border: `2px solid ${colors.secondary}`,
+              color: colors.secondary,
+              padding: '12px 20px',
+              borderRadius: 25,
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
+            <IoCheckmark size={18} />
+            We Talked About This
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleNextHTH}
+            style={{
+              background: colors.primary,
+              border: 'none',
+              color: 'white',
+              padding: '12px 24px',
+              borderRadius: 25,
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
+            Next
+            <IoRefresh size={18} />
+          </motion.button>
+        </div>
+
+        {/* History Modal */}
+        <AnimatePresence>
+          {showHTHHistory && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'rgba(0,0,0,0.8)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 100,
+                padding: 20,
+              }}
+              onClick={() => setShowHTHHistory(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.9 }}
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  background: colors.card,
+                  borderRadius: 20,
+                  padding: 24,
+                  maxWidth: 380,
+                  width: '100%',
+                  maxHeight: '70vh',
+                  overflow: 'auto',
+                }}
+              >
+                <h3 style={{ color: colors.textPrimary, fontSize: 18, fontWeight: 600, marginBottom: 16 }}>
+                  💬 Conversation History
+                </h3>
+
+                {heartToHeartHistory.length === 0 ? (
+                  <p style={{ color: colors.textMuted, textAlign: 'center', padding: 20 }}>
+                    No conversations saved yet.<br />Mark prompts as discussed to save them here.
+                  </p>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    {heartToHeartHistory.map((entry, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          background: colors.glass,
+                          borderRadius: 12,
+                          padding: 12,
+                          borderLeft: `3px solid ${entry.user === 'sehaj' ? colors.primary : '#6B5B95'}`,
+                        }}
+                      >
+                        <p style={{ color: colors.textPrimary, fontSize: 14, marginBottom: 6 }}>
+                          "{entry.prompt}"
+                        </p>
+                        <p style={{ color: colors.textMuted, fontSize: 11 }}>
+                          {entry.user === 'sehaj' ? '❄️ Sehaj' : '👨‍💻 Prabh'} • {getTimeAgo(entry.timestamp)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowHTHHistory(false)}
+                  style={{
+                    marginTop: 16,
+                    width: '100%',
+                    background: colors.primary,
+                    border: 'none',
+                    color: 'white',
+                    padding: '12px',
+                    borderRadius: 12,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Close
+                </motion.button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     )
   }
