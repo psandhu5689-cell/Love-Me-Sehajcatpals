@@ -341,9 +341,14 @@ export default function Gallery() {
               <View style={[styles.musicPlayer, { backgroundColor: colors.card, borderColor: colors.border }]}>
                 <View style={styles.musicInfo}>
                   <Ionicons name="musical-notes" size={24} color={colors.primary} />
-                  <Text style={[styles.musicTitle, { color: colors.textPrimary }]}>
-                    {selectedItem?.song.title}
-                  </Text>
+                  <View>
+                    <Text style={[styles.musicTitle, { color: colors.textPrimary }]}>
+                      {selectedItem?.song.title}
+                    </Text>
+                    <Text style={[styles.musicArtist, { color: colors.textMuted }]}>
+                      {selectedItem?.song.artist}
+                    </Text>
+                  </View>
                 </View>
 
                 {/* Progress Bar */}
