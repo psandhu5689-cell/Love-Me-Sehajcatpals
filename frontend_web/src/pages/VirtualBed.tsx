@@ -1171,7 +1171,7 @@ export default function VirtualBed() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               style={{
                 position: 'absolute',
-                left: '25%',
+                left: '20%', // MOBILE: Pushed more left for spacing
                 bottom: 110, // Moved lower to touch floor on mobile
                 zIndex: 3,
                 // SAFETY: Never allow invisible cats
