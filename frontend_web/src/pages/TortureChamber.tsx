@@ -41,29 +41,37 @@ export default function TortureChamber() {
   const navigate = useNavigate()
   const { colors } = useTheme()
   const { playClick, playPop } = useAudio()
-  const [hp, setHp] = useState(1500)
-  const [maxHp] = useState(1500)
+  
+  // Load initial stats from storage
+  const [stats, setStats] = useState(tortureStorage.getStats())
+  const [hp, setHp] = useState(stats.currentHp)
+  const [maxHp] = useState(3000)
   const [currentMessage, setCurrentMessage] = useState('')
   const [floatingDamage, setFloatingDamage] = useState<{ value: number; isHeal: boolean } | null>(null)
   const [isShaking, setIsShaking] = useState(false)
   const [isDead, setIsDead] = useState(false)
   const [showJustKidding, setShowJustKidding] = useState(false)
   const [wasJustDamaged, setWasJustDamaged] = useState(false)
+  
+  // Save HP to storage whenever it changes
+  useEffect(() => {
+    tortureStorage.updateStats({ currentHp: hp })
+  }, [hp])
 
   // Get status based on HP
   const getStatus = () => {
-    if (hp > 1500) return "tooooo much love...."
-    if (hp > 1050) return "Vibing."  // 70%
-    if (hp > 600) return "Concerned."  // 40%
-    if (hp > 225) return "Regretting life choices."  // 15%
+    if (hp > 3000) return "tooooo much love...."
+    if (hp > 2100) return "Vibing."  // 70%
+    if (hp > 1200) return "Concerned."  // 40%
+    if (hp > 450) return "Regretting life choices."  // 15%
     return "On life support."
   }
 
   // Get HP bar color
   const getHpColor = () => {
-    if (hp > 1500) return '#ff69b4' // Pink for overheal
-    if (hp > 900) return '#4ade80' // Green (60%)
-    if (hp > 450) return '#fbbf24' // Yellow (30%)
+    if (hp > 3000) return '#ff69b4' // Pink for overheal
+    if (hp > 1800) return '#4ade80' // Green (60%)
+    if (hp > 900) return '#fbbf24' // Yellow (30%)
     return '#ef4444' // Red
   }
 
