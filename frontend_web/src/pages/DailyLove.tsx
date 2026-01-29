@@ -195,7 +195,7 @@ const HEART_TO_HEART = [
 export default function DailyLove() {
   const navigate = useNavigate()
   const { colors, isDark } = useTheme()
-  const { playClick, playMagic } = useAudio()
+  const { playClick, playMagic, playPop } = useAudio()
   const { currentTrack, isPlaying, isMuted, togglePlayPause, toggleMute, nextTrack, previousTrack } = useMusic()
   const { addHeartToHeart, heartToHeartHistory, getTimeAgo, currentUser } = usePresence()
   const [selectedCategory, setSelectedCategory] = useState<typeof CATEGORIES[0] | null>(null)
@@ -214,6 +214,14 @@ export default function DailyLove() {
   const [coinResult, setCoinResult] = useState<string | null>(null)
   const [isFlipping, setIsFlipping] = useState(false)
   const [showTimeTogether, setShowTimeTogether] = useState(false)
+  
+  // Sad mode states - MUST be at top level (Rules of Hooks)
+  const [kissDelivered, setKissDelivered] = useState(false)
+  const [hugProgress, setHugProgress] = useState(0)
+  const [isHugging, setIsHugging] = useState(false)
+  const [hugComplete, setHugComplete] = useState(false)
+  const [floatingHearts, setFloatingHearts] = useState<Array<{id: number, x: number, y: number}>>([])
+  const hugIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   
   // Calculate time together (from a start date)
   const startDate = new Date('2023-07-01') // Adjust this date!
