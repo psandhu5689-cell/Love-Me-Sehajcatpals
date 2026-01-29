@@ -290,7 +290,7 @@ export default function TortureChamber() {
                 initial={{ opacity: 1, y: 0, scale: 1 }}
                 animate={{ opacity: 0, y: -60 - idx * 15, scale: 1.5 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 1.8 }}
+                transition={{ duration: 1 }} // FIXED: 1 second animation
                 style={{
                   position: 'absolute',
                   top: -20 - idx * 20,
