@@ -44,6 +44,8 @@ export default function LieDetector() {
   const [isCustomResult, setIsCustomResult] = useState(false)
   const [showTruthJoke, setShowTruthJoke] = useState(false)
   const [glitchEffect, setGlitchEffect] = useState(false)
+  const [showHistory, setShowHistory] = useState(false)
+  const [history, setHistory] = useState(lieDetectorStorage.getHistory())
 
   const runTest = (statement: string, isCustom: boolean = false) => {
     playClick()
@@ -74,11 +76,15 @@ export default function LieDetector() {
           setShowTruthJoke(true)
           setResultText('LIE DETECTED.')
           setSubText('Just kidding. Lie.')
+          lieDetectorStorage.addEntry(statement, 'LIE')
+          setHistory(lieDetectorStorage.getHistory())
         }, 1500)
       } else {
         setResultText('LIE DETECTED.')
         setSubText(isCustom ? 'LIE DETECTED (especially this one)' : LIE_SUBTEXTS[Math.floor(Math.random() * LIE_SUBTEXTS.length)])
         setShowResult(true)
+        lieDetectorStorage.addEntry(statement, 'LIE')
+        setHistory(lieDetectorStorage.getHistory())
       }
     }, 2500)
   }
