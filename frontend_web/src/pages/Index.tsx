@@ -177,7 +177,7 @@ export default function Index() {
       {/* Theme Toggle - bottom left, stacked above music widget on mobile */}
       <div style={{
         position: 'fixed',
-        bottom: 90, // Stacked above music widget
+        bottom: 100, // Higher above music widget for better visibility
         left: 20,
         zIndex: 100,
       }}>
