@@ -719,9 +719,6 @@ export default function VirtualBed() {
   const [pettingMeter, setPettingMeter] = useState(0)
   const [isPetting, setIsPetting] = useState(false)
   
-  // Cuddle mode
-  const [cuddleMode, setCuddleMode] = useState(false)
-  
   // Toy spawn
   const [spawnedToy, setSpawnedToy] = useState<string | null>(null)
   const TOYS = ['🧶', '🧸', '👑', '🎮', '🎾', '🐟']
