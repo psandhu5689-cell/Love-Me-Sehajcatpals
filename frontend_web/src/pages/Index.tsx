@@ -174,6 +174,16 @@ export default function Index() {
         <MusicJukebox compact style={{ minWidth: 180 }} />
       </div>
 
+      {/* Theme Toggle - bottom left, stacked above music widget on mobile */}
+      <div style={{
+        position: 'fixed',
+        bottom: 90, // Stacked above music widget
+        left: 20,
+        zIndex: 100,
+      }}>
+        <ThemeToggle />
+      </div>
+
       {/* REMOVED: Music Prompt overlay - music is controlled via widget only */}
 
       {/* Yellow Heart */}
