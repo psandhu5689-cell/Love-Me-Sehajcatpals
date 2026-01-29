@@ -19,13 +19,17 @@ import RelationshipEmergency from './pages/RelationshipEmergency'
 import TortureChamber from './pages/TortureChamber'
 import TryNotToSmile from './pages/TryNotToSmile'
 import { UserSetupModal, PresenceCheckModal } from './components/PresenceModals'
-import StarryBackground from './components/StarryBackground'
+import AnimatedBackground from './components/AnimatedBackground'
+import ThemeToggle from './components/ThemeToggle'
 
 export default function App() {
   return (
     <>
-      {/* Global Starry Background */}
-      <StarryBackground starCount={150} shootingStarCount={6} />
+      {/* Global Animated Background (Stars/Hearts based on theme) */}
+      <AnimatedBackground particleCount={80} shootingCount={4} />
+      
+      {/* Theme Toggle - Fixed position */}
+      <ThemeToggle style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999 }} />
       
       {/* Global Presence Modals */}
       <UserSetupModal />
