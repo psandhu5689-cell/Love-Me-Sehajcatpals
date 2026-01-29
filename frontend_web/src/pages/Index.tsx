@@ -77,6 +77,11 @@ export default function Index() {
     navigate('/try-not-to-smile')
   }
 
+  const handleVirtualBed = () => {
+    playClick()
+    navigate('/virtual-bed')
+  }
+
   if (checkingIntro) {
     return <div style={{ flex: 1, background: colors.background }} />
   }
