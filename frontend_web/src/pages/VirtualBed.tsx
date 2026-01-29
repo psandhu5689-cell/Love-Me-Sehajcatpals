@@ -189,33 +189,35 @@ function Sprite({ sheet, animations, currentAnimation, onAnimationEnd, scale = 1
     }
   }, [currentAnimation, anim.fps, anim.frameCount, anim.loop, onAnimationEnd])
   
-  const col = frame % SHEET_COLS
+  // Calculate which frame column we're at (0-based)
+  const frameCol = frame % anim.frameCount
   const row = anim.startRow
-  const size = FRAME_SIZE * scale
+  const displaySize = FRAME_SIZE * scale
+  
+  // The sprite sheet is 896px wide (14 cols * 64px) and 4608px tall (72 rows * 64px)
+  // We need to position the background to show the correct frame
+  const bgX = -frameCol * FRAME_SIZE * scale
+  const bgY = -row * FRAME_SIZE * scale
   
   return (
-    <motion.div 
-      initial={{ opacity: 0.8 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
-      style={{
-        width: size,
-        height: size,
-        overflow: 'hidden',
-        transform: flip ? 'scaleX(-1)' : 'none',
-        imageRendering: 'pixelated',
-      }}
-    >
+    <div style={{
+      width: displaySize,
+      height: displaySize,
+      overflow: 'hidden',
+      transform: flip ? 'scaleX(-1)' : 'none',
+      imageRendering: 'pixelated',
+      borderRadius: 8,
+    }}>
       <div style={{
-        width: SHEET_COLS * size,
-        height: 72 * size,
+        width: displaySize,
+        height: displaySize,
         backgroundImage: `url(${sheet})`,
-        backgroundSize: `${SHEET_COLS * size}px auto`,
-        transform: `translate(-${col * size}px, -${row * size}px)`,
+        backgroundSize: `${SHEET_COLS * FRAME_SIZE * scale}px ${72 * FRAME_SIZE * scale}px`,
+        backgroundPosition: `${bgX}px ${bgY}px`,
+        backgroundRepeat: 'no-repeat',
         imageRendering: 'pixelated',
-        transition: 'transform 0.08s ease-out',
       }} />
-    </motion.div>
+    </div>
   )
 }
 
