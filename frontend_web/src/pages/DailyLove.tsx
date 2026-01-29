@@ -1020,10 +1020,7 @@ export default function DailyLove() {
   // ============ SAD MODE ============
   if (showSadMode) {
     const handleQuickKiss = () => {
-      // Vibrate phone - graceful degradation if not supported
-      if (navigator.vibrate) {
-        navigator.vibrate([50, 30, 50])
-      }
+      // Removed vibration as per user request
       haptics.medium()
       playPop()
       setKissDelivered(true)
