@@ -174,10 +174,10 @@ export default function Index() {
         <MusicJukebox compact style={{ minWidth: 180 }} />
       </div>
 
-      {/* Theme Toggle - bottom left, stacked above music widget on mobile */}
+      {/* Theme Toggle - bottom left, stacked above music widget on mobile - SINGLE INSTANCE */}
       <div style={{
         position: 'fixed',
-        bottom: 100, // Higher above music widget for better visibility
+        bottom: 100,
         left: 20,
         zIndex: 100,
       }}>
