@@ -2061,8 +2061,8 @@ export default function VirtualBed() {
             {/* Prabh Cat (Right - Grey) - ROAMING with smooth transitions - TAP TO PET */}
             <motion.div
               animate={{
-                left: cuddleMode ? '55%' : `${prabhRoam.xPercent}%`,
-                bottom: cuddleMode ? 110 : `${100 - prabhRoam.yPercent}%`,
+                left: cuddleMode ? '52%' : `${prabhRoam.xPercent}%`,
+                bottom: cuddleMode ? '30%' : `${100 - prabhRoam.yPercent}%`,
                 y: prabh.action === 'nudge' || prabh.action === 'kick' ? [0, -5, 0] : 0,
               }}
               transition={{ 
