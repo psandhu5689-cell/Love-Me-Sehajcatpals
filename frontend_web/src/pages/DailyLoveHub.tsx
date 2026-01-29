@@ -11,6 +11,30 @@ export default function DailyLoveHub() {
 
   const activities = [
     {
+      id: 'timer',
+      title: 'How Long Together',
+      subtitle: 'Every second with you',
+      icon: IoTime,
+      gradient: ['#667eea', '#764ba2'],
+      route: '/how-long-together',
+    },
+    {
+      id: 'would-you-rather',
+      title: 'Would You Rather',
+      subtitle: 'Fun questions for us',
+      icon: IoSwapHorizontal,
+      gradient: ['#f093fb', '#f5576c'],
+      route: '/would-you-rather',
+    },
+    {
+      id: 'gallery',
+      title: 'Memories',
+      subtitle: 'Our moments together',
+      icon: IoImages,
+      gradient: ['#4facfe', '#00f2fe'],
+      route: '/gallery',
+    },
+    {
       id: 'compliments',
       title: 'Daily Compliments',
       subtitle: 'Words from my heart',
