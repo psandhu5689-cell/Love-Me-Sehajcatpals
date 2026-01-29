@@ -145,7 +145,7 @@ export default function LieDetector() {
         onClick={() => navigate(-1)}
         style={{
           position: 'absolute',
-          top: 20,
+          top: 55,
           left: 16,
           width: 44,
           height: 44,
@@ -171,7 +171,7 @@ export default function LieDetector() {
         }}
         style={{
           position: 'absolute',
-          top: 20,
+          top: 55,
           right: 16,
           width: 44,
           height: 44,

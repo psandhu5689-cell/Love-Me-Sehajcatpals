@@ -127,7 +127,7 @@ export default function RelationshipEmergency() {
             transition={{ duration: 0.5, repeat: Infinity }}
             style={{
               position: 'absolute',
-              top: 20,
+              top: 55,
               left: 20,
               width: 30,
               height: 30,
@@ -141,7 +141,7 @@ export default function RelationshipEmergency() {
             transition={{ duration: 0.5, repeat: Infinity }}
             style={{
               position: 'absolute',
-              top: 20,
+              top: 55,
               right: 20,
               width: 30,
               height: 30,

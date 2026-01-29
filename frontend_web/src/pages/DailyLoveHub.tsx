@@ -78,7 +78,7 @@ export default function DailyLoveHub() {
         }}
         style={{
           position: 'absolute',
-          top: 20,
+          top: 55,
           left: 20,
           width: 44,
           height: 44,

@@ -848,7 +848,7 @@ export default function VirtualBed() {
         }}
         style={{
           position: 'fixed',
-          top: 20,
+          top: 55,
           left: 20,
           width: 40,
           height: 40,
@@ -875,7 +875,7 @@ export default function VirtualBed() {
         }}
         style={{
           position: 'fixed',
-          top: 20,
+          top: 55,
           right: 20,
           width: 40,
           height: 40,

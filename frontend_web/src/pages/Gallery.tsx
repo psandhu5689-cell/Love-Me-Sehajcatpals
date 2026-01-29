@@ -268,7 +268,7 @@ export default function Gallery() {
               onClick={closeFullscreen}
               style={{
                 position: 'absolute',
-                top: 20,
+                top: 55,
                 right: 20,
                 width: 44,
                 height: 44,

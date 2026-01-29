@@ -1468,7 +1468,7 @@ export default function DailyLove() {
           onClick={goBackToMenu}
           style={{
             position: 'absolute',
-            top: 20,
+            top: 55,
             left: 16,
             width: 44,
             height: 44,

@@ -80,7 +80,7 @@ export default function FutureGoals() {
         }}
         style={{
           position: 'fixed',
-          top: 20,
+          top: 55,
           left: 16,
           width: 44,
           height: 44,

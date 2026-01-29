@@ -415,7 +415,7 @@ export default function Crossword() {
         }}
         style={{
           position: 'fixed',
-          top: 20,
+          top: 55,
           left: 20,
           width: 40,
           height: 40,
