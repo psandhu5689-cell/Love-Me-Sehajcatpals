@@ -1269,6 +1269,9 @@ export default function DailyLove() {
           { title: 'Would You Rather 🎲', subtitle: 'Fun couples game', icon: IoHelpCircle, color: colors.secondary, onClick: handleOpenWYR },
           { title: "Who's Right? 🪙", subtitle: 'Flip a coin to decide', icon: null, emoji: '🪙', color: '#FFD700', onClick: handleCoinFlip },
           { title: 'Together For 🕯', subtitle: 'Our time together', icon: null, emoji: '🕯', color: colors.primary, onClick: handleOpenTimeTogether },
+          { title: 'Virtual Bed 🛏️', subtitle: 'Cozy time with our cats', icon: null, emoji: '🛏️', color: colors.secondary, onClick: () => { playClick(); navigate('/virtual-bed'); } },
+          { title: 'Future Goals 🎯', subtitle: 'Dreams we\'re building', icon: null, emoji: '🎯', color: colors.primary, onClick: () => { playClick(); navigate('/future-goals'); } },
+          { title: 'Word Puzzles 🧩', subtitle: 'Daily crosswords & word search', icon: null, emoji: '🧩', color: colors.secondary, onClick: () => { playClick(); navigate('/word-puzzles'); } },
         ].map((item, index) => (
           <motion.div
             key={index}
