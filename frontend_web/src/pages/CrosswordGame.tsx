@@ -13,6 +13,47 @@ const createEmptyGrid = (): (string | null)[][] => {
   return Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null))
 }
 
+// Pre-fill 5-10% of correct letters as hints
+const preFillLetters = (puzzle: CrosswordPuzzle): (string | null)[][] => {
+  const grid = createEmptyGrid()
+  const allCells: { row: number; col: number; letter: string }[] = []
+  
+  // Collect all letter positions
+  puzzle.clues.forEach(clue => {
+    for (let i = 0; i < clue.answer.length; i++) {
+      const row = clue.direction === 'across' ? clue.row : clue.row + i
+      const col = clue.direction === 'across' ? clue.col + i : clue.col
+      allCells.push({ row, col, letter: clue.answer[i] })
+    }
+  })
+  
+  // Randomly select 7% of cells to pre-fill
+  const fillCount = Math.floor(allCells.length * 0.07)
+  const shuffled = [...allCells].sort(() => Math.random() - 0.5)
+  
+  for (let i = 0; i < fillCount; i++) {
+    const cell = shuffled[i]
+    grid[cell.row][cell.col] = cell.letter
+  }
+  
+  return grid
+}
+
+// Track which cells are locked (pre-filled)
+const getLockedCells = (puzzle: CrosswordPuzzle, preFilledGrid: (string | null)[][]): boolean[][] => {
+  const locked = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(false))
+  
+  for (let row = 0; row < GRID_SIZE; row++) {
+    for (let col = 0; col < GRID_SIZE; col++) {
+      if (preFilledGrid[row][col] !== null) {
+        locked[row][col] = true
+      }
+    }
+  }
+  
+  return locked
+}
+
 export default function CrosswordGame() {
   const navigate = useNavigate()
   const { colors } = useTheme()
