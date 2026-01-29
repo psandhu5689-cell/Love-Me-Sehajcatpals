@@ -655,7 +655,7 @@ export default function VirtualBed() {
             <video
               autoPlay
               loop
-              muted
+              muted={isMuted}
               playsInline
               style={{
                 position: 'absolute',
@@ -666,9 +666,8 @@ export default function VirtualBed() {
                 objectFit: 'cover',
                 zIndex: 0,
               }}
-            >
-              <source src="/window-rain.mov" type="video/mp4" />
-            </video>
+              src="/window-rain.mov"
+            />
             
             {/* Window frame */}
             <div style={{
