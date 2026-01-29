@@ -585,9 +585,14 @@ export default function VirtualBed() {
     // Clear any unloved messages since both cats are getting attention
     setShowUnlovedMessage(null)
     
-    // Play tussle sounds
+    // NEW: Play cat SCREAM sound for special button
+    if (!isMuted && catScreamRef.current) {
+      catScreamRef.current.play()
+    }
+    
+    // Also play tussle sounds
     if (!isMuted && tussleRef.current) {
-      tussleRef.current.play()
+      setTimeout(() => tussleRef.current?.play(), 500)
     }
     
     // Cycle through messages
