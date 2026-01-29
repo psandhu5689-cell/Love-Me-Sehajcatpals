@@ -69,31 +69,32 @@ interface AnimationDef {
 /**
  * ANIMATION MAP FOR PRABH (Grey/Black Cat)
  * Based on sprite sheet analysis - cat1_sheet.png
- * Rows are 0-indexed
+ * Rows are 0-indexed, 14 cols, 72 rows total
+ * Using conservative row numbers for reliable animation
  */
 const PRABH_ANIMATIONS: Record<string, AnimationDef> = {
-  // Default calm sitting idle - VERY slow for gentle feel
-  sitIdle: { startRow: 16, frameCount: 8, fps: 2, loop: true },
-  tailWag: { startRow: 18, frameCount: 8, fps: 3, loop: true },
-  // Sleep states
-  sleep: { startRow: 41, frameCount: 2, fps: 1.5, loop: true },
-  sleepCurled: { startRow: 49, frameCount: 2, fps: 1.5, loop: true },
+  // Default calm sitting - use row 0 (first row, always safe)
+  sitIdle: { startRow: 0, frameCount: 8, fps: 2, loop: true },
+  tailWag: { startRow: 1, frameCount: 8, fps: 3, loop: true },
+  // Sleep states - typically in lower rows
+  sleep: { startRow: 5, frameCount: 4, fps: 1.5, loop: true },
+  sleepCurled: { startRow: 6, frameCount: 4, fps: 1.5, loop: true },
   // Grooming
-  lickPaw: { startRow: 9, frameCount: 8, fps: 4, loop: true },
+  lickPaw: { startRow: 2, frameCount: 8, fps: 4, loop: true },
   // Vocalizations
-  meow: { startRow: 11, frameCount: 4, fps: 4, loop: false },
-  yawn: { startRow: 40, frameCount: 6, fps: 3, loop: false },
+  meow: { startRow: 3, frameCount: 4, fps: 4, loop: false },
+  yawn: { startRow: 4, frameCount: 6, fps: 3, loop: false },
   // Actions
-  nudge: { startRow: 33, frameCount: 8, fps: 5, loop: false },
-  kick: { startRow: 36, frameCount: 8, fps: 6, loop: false },
+  nudge: { startRow: 7, frameCount: 8, fps: 5, loop: false },
+  kick: { startRow: 8, frameCount: 8, fps: 6, loop: false },
   // Reactions
-  hiss: { startRow: 57, frameCount: 2, fps: 3, loop: false },
+  hiss: { startRow: 9, frameCount: 4, fps: 3, loop: false },
   // Eating
-  eat: { startRow: 53, frameCount: 8, fps: 4, loop: false },
-  // Cuddle state (use lying tail wag)
-  cuddle: { startRow: 24, frameCount: 4, fps: 2, loop: true },
-  // Gaming (sitting tail wag)
-  gaming: { startRow: 16, frameCount: 8, fps: 3, loop: true },
+  eat: { startRow: 10, frameCount: 8, fps: 4, loop: false },
+  // Cuddle state
+  cuddle: { startRow: 5, frameCount: 4, fps: 2, loop: true },
+  // Gaming
+  gaming: { startRow: 1, frameCount: 8, fps: 3, loop: true },
 }
 
 /**
@@ -101,28 +102,28 @@ const PRABH_ANIMATIONS: Record<string, AnimationDef> = {
  * Based on sprite sheet analysis - cat2_sheet.png
  */
 const SEHAJ_ANIMATIONS: Record<string, AnimationDef> = {
-  // Default calm sitting idle
-  sitIdle: { startRow: 16, frameCount: 8, fps: 2, loop: true },
-  tailWag: { startRow: 19, frameCount: 8, fps: 3, loop: true },
+  // Default calm sitting
+  sitIdle: { startRow: 0, frameCount: 8, fps: 2, loop: true },
+  tailWag: { startRow: 1, frameCount: 8, fps: 3, loop: true },
   // Sleep states
-  sleep: { startRow: 45, frameCount: 2, fps: 1.5, loop: true },
-  sleepCurled: { startRow: 51, frameCount: 2, fps: 1.5, loop: true },
+  sleep: { startRow: 5, frameCount: 4, fps: 1.5, loop: true },
+  sleepCurled: { startRow: 6, frameCount: 4, fps: 1.5, loop: true },
   // Grooming
-  lickPaw: { startRow: 10, frameCount: 8, fps: 4, loop: true },
+  lickPaw: { startRow: 2, frameCount: 8, fps: 4, loop: true },
   // Vocalizations  
-  meow: { startRow: 12, frameCount: 4, fps: 4, loop: false },
-  yawn: { startRow: 40, frameCount: 6, fps: 3, loop: false },
+  meow: { startRow: 3, frameCount: 4, fps: 4, loop: false },
+  yawn: { startRow: 4, frameCount: 6, fps: 3, loop: false },
   // Actions
-  nudge: { startRow: 34, frameCount: 8, fps: 5, loop: false },
-  kick: { startRow: 38, frameCount: 8, fps: 6, loop: false },
+  nudge: { startRow: 7, frameCount: 8, fps: 5, loop: false },
+  kick: { startRow: 8, frameCount: 8, fps: 6, loop: false },
   // Reactions
-  hiss: { startRow: 58, frameCount: 2, fps: 3, loop: false },
+  hiss: { startRow: 9, frameCount: 4, fps: 3, loop: false },
   // Eating
-  eat: { startRow: 55, frameCount: 8, fps: 4, loop: false },
+  eat: { startRow: 10, frameCount: 8, fps: 4, loop: false },
   // Cuddle state
-  cuddle: { startRow: 25, frameCount: 4, fps: 2, loop: true },
+  cuddle: { startRow: 5, frameCount: 4, fps: 2, loop: true },
   // Gaming
-  gaming: { startRow: 17, frameCount: 8, fps: 3, loop: true },
+  gaming: { startRow: 1, frameCount: 8, fps: 3, loop: true },
 }
 
 type AnimationState = keyof typeof PRABH_ANIMATIONS
