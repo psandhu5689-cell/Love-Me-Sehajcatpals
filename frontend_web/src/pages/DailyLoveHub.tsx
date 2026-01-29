@@ -105,33 +105,9 @@ export default function DailyLoveHub() {
         paddingRight: 16,
         marginTop: 50,
       }}>
-        {/* Title Section - HIGHLY VISIBLE */}
-        <div
-          style={{
-            textAlign: 'center',
-            marginBottom: 16,
-            padding: '14px 12px',
-            background: 'linear-gradient(135deg, rgba(232, 99, 143, 0.3), rgba(167, 139, 250, 0.3))',
-            borderRadius: 16,
-            border: '1px solid rgba(232, 99, 143, 0.4)',
-          }}
-        >
-          <div style={{
-            color: '#FFFFFF',
-            fontSize: 22,
-            fontWeight: 700,
-            letterSpacing: '0.5px',
-          }}>
-            ✨ Personal Library ✨
-          </div>
-          <div style={{
-            color: 'rgba(255,255,255,0.7)',
-            fontSize: 12,
-            marginTop: 4,
-          }}>
-            Everything for my girl
-          </div>
-        </div>
+        {/* Simple Title */}
+        <p style={{ color: 'white', textAlign: 'center', fontSize: 20, fontWeight: 'bold', marginBottom: 12 }}>✨ Personal Library ✨</p>
+        <p style={{ color: '#9B9BAE', textAlign: 'center', fontSize: 12, marginBottom: 16, marginTop: -8 }}>Everything for my girl</p>
 
         {/* BIG "When You're Sad" Widget at TOP */}
         <motion.div
