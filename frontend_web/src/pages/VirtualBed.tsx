@@ -859,7 +859,7 @@ export default function VirtualBed() {
               }} />
             </div>
             
-            {/* Sehaj Cat (Left - Ginger) */}
+            {/* LAYER 5: Sehaj Cat (Left - Ginger) */}
             <motion.div
               animate={{
                 y: sehaj.action === 'nudge' || sehaj.action === 'kick' ? [0, -3, 0] : 0,
@@ -867,9 +867,9 @@ export default function VirtualBed() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               style={{
                 position: 'absolute',
-                left: '18%',
-                bottom: 55,
-                zIndex: 2,
+                left: '25%',
+                bottom: 180,
+                zIndex: 3,
               }}
             >
               <Sprite
