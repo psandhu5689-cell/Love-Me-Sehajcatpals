@@ -87,10 +87,25 @@ export default function TortureChamber() {
     return '#ef4444' // Red
   }
 
-  // Add floating message with auto-removal after 1 second
-  const addFloatingMessage = (value: number, isHeal: boolean) => {
+  // Add floating message with auto-removal after 1 second - POSITIONED ABOVE BUTTON
+  const addFloatingMessage = (value: number, isHeal: boolean, buttonIndex: number) => {
     const id = `${Date.now()}-${Math.random()}`
-    const newMessage = { id, value, isHeal, timestamp: Date.now() }
+    
+    // Get button position to place message above it
+    const buttonRef = isHeal ? healButtonRefs.current[buttonIndex] : damageButtonRefs.current[buttonIndex]
+    let x = 50 // Default center
+    let y = 50 // Default center
+    
+    if (buttonRef) {
+      const rect = buttonRef.getBoundingClientRect()
+      const containerRect = document.getElementById('torture-container')?.getBoundingClientRect()
+      if (containerRect) {
+        x = ((rect.left + rect.width / 2) - containerRect.left) / containerRect.width * 100
+        y = ((rect.top) - containerRect.top) / containerRect.height * 100
+      }
+    }
+    
+    const newMessage = { id, value, isHeal, timestamp: Date.now(), x, y }
     
     setFloatingMessages(prev => {
       // Just add the new message - no cap needed since they disappear fast
