@@ -486,6 +486,20 @@ export default function VirtualBed() {
         // Pick new spot
         const newSpotId = pickRandomSpot(sehajRoam.currentSpotId, true)
         const newSpot = ANCHOR_SPOTS[newSpotId]
+        const currentSpot = ANCHOR_SPOTS[sehajRoam.currentSpotId]
+        
+        // Determine walk direction based on movement
+        const deltaX = newSpot.xPercent - currentSpot.xPercent
+        const deltaY = newSpot.yPercent - currentSpot.yPercent
+        let walkAnimation: AnimationState = 'walkRight'
+        
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          // Horizontal movement is dominant
+          walkAnimation = deltaX > 0 ? 'walkRight' : 'walkLeft'
+        } else {
+          // Vertical movement is dominant
+          walkAnimation = deltaY > 0 ? 'walkDown' : 'walkUp'
+        }
         
         // Start walking to new spot
         setSehajRoam(prev => ({
@@ -493,6 +507,12 @@ export default function VirtualBed() {
           state: 'walkToSpot',
           targetSpotId: newSpotId,
           isMoving: true,
+        }))
+        
+        // Set walking animation
+        setSehaj(prev => ({
+          ...prev,
+          action: walkAnimation,
         }))
         
         // After movement duration, arrive at spot
