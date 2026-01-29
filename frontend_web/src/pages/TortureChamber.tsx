@@ -99,10 +99,14 @@ export default function TortureChamber() {
     // Check for death
     if (newHp <= 0) {
       setIsDead(true)
+      const newStats = tortureStorage.incrementDeaths()
+      setStats(newStats)
       setTimeout(() => {
         setShowJustKidding(true)
         setTimeout(() => {
-          setHp(450)  // Revive to 30% of 1500
+          setHp(900)  // Revive to 30% of 3000
+          const revivedStats = tortureStorage.incrementRevivals()
+          setStats(revivedStats)
           setIsDead(false)
           setShowJustKidding(false)
           setCurrentMessage("im immortal unfortunately.")
