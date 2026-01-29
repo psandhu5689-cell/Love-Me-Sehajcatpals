@@ -588,52 +588,53 @@ export default function VirtualBed() {
           return
         }
         
-        // Pick new spot
+        // Pick new spot - FLOOR ONLY
         const newSpotId = pickRandomSpot(prabhRoam.currentSpotId, false)
         const newSpot = ANCHOR_SPOTS[newSpotId]
-        const currentSpot = ANCHOR_SPOTS[prabhRoam.currentSpotId]
         
-        // Determine walk direction based on movement
-        const deltaX = newSpot.xPercent - currentSpot.xPercent
-        const deltaY = newSpot.yPercent - currentSpot.yPercent
-        let walkAnimation: AnimationState = 'walkRight'
+        // Calculate walk direction based on movement vector
+        const walkDir = calculateWalkDirection(
+          prabhRoam.xPercent, 
+          prabhRoam.yPercent, 
+          newSpot.xPercent, 
+          newSpot.yPercent
+        )
         
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-          // Horizontal movement is dominant
-          walkAnimation = deltaX > 0 ? 'walkRight' : 'walkLeft'
-        } else {
-          // Vertical movement is dominant
-          walkAnimation = deltaY > 0 ? 'walkDown' : 'walkUp'
-        }
-        
-        // Start walking to new spot
+        // Start walking to new spot - play walk animation
         setPrabhRoam(prev => ({
           ...prev,
           state: 'walkToSpot',
           targetSpotId: newSpotId,
           isMoving: true,
+          walkDirection: walkDir,
         }))
         
-        // Set walking animation
+        // Set walking animation for direction
         setPrabh(prev => ({
           ...prev,
-          action: walkAnimation,
+          action: walkDir,
         }))
         
         // After movement duration, arrive at spot
         setTimeout(() => {
           const newPose = Math.random() > 0.5 ? 'sit' : 'lay'
+          
+          // Clamp final position within floor bounds
+          const clampedX = Math.max(FLOOR_BOUNDS.minX, Math.min(FLOOR_BOUNDS.maxX, newSpot.xPercent))
+          const clampedY = Math.max(FLOOR_BOUNDS.minY, Math.min(FLOOR_BOUNDS.maxY, newSpot.yPercent))
+          
           setPrabhRoam({
             state: newPose === 'sit' ? 'idleSit' : 'idleLay',
             currentSpotId: newSpotId,
             targetSpotId: newSpotId,
-            xPercent: newSpot.xPercent,
-            yPercent: newSpot.yPercent,
+            xPercent: clampedX,
+            yPercent: clampedY,
             pose: newPose,
             isMoving: false,
+            walkDirection: walkDir,
           })
           
-          // Update cat animation to match pose
+          // STOP walk animation - return to idle/sleep
           setPrabh(prev => ({
             ...prev,
             action: newPose === 'lay' ? 'sleep' : 'sitIdle',
@@ -641,7 +642,7 @@ export default function VirtualBed() {
           
           // Schedule next roam
           startRoaming()
-        }, 2000) // 2 seconds to walk
+        }, 2500) // 2.5 seconds to walk (slow and gentle)
         
       }, getRandomRoamInterval())
     }
