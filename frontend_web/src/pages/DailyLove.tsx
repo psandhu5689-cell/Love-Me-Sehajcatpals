@@ -815,6 +815,10 @@ export default function DailyLove() {
   // ============ SAD MODE ============
   if (showSadMode) {
     const handleQuickKiss = () => {
+      // Vibrate phone - graceful degradation if not supported
+      if (navigator.vibrate) {
+        navigator.vibrate([50, 30, 50])
+      }
       haptics.medium()
       playPop()
       setKissDelivered(true)
@@ -839,6 +843,10 @@ export default function DailyLove() {
     const handleHoldToHug = (e: React.MouseEvent | React.TouchEvent) => {
       e.preventDefault()
       setIsHugging(true)
+      // Vibrate to indicate start
+      if (navigator.vibrate) {
+        navigator.vibrate(30)
+      }
       haptics.light()
       
       // Clear any existing interval
@@ -851,12 +859,20 @@ export default function DailyLove() {
           if (prev >= 100) {
             if (hugIntervalRef.current) clearInterval(hugIntervalRef.current)
             setHugComplete(true)
+            // Strong vibration on complete
+            if (navigator.vibrate) {
+              navigator.vibrate([100, 50, 100, 50, 100])
+            }
             haptics.success()
             setTimeout(() => {
               setHugComplete(false)
               setHugProgress(0)
             }, 3000)
             return 100
+          }
+          // Light pulse vibration while holding
+          if (prev % 25 === 0 && navigator.vibrate) {
+            navigator.vibrate(15)
           }
           return prev + 5
         })
@@ -871,6 +887,12 @@ export default function DailyLove() {
       if (hugProgress < 100) {
         setHugProgress(0)
       }
+    }
+    
+    const handleNextSadMessageNav = () => {
+      haptics.light()
+      setSadMessageIndex((prev) => (prev + 1) % SAD_MODE_MESSAGES.length)
+      setSadMessage(SAD_MODE_MESSAGES[(sadMessageIndex + 1) % SAD_MODE_MESSAGES.length])
     }
 
     return (
@@ -955,28 +977,6 @@ export default function DailyLove() {
             zIndex: 2,
           }}
         >
-          {/* Pulsing Heart Outline */}
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.5, 0.8, 0.5],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-            }}
-            style={{
-              position: 'absolute',
-              top: -40,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              fontSize: 80,
-              zIndex: -1,
-            }}
-          >
-            💗
-          </motion.div>
-
           {/* Shimmer Highlight */}
           <motion.div
             animate={{
@@ -998,36 +998,61 @@ export default function DailyLove() {
             }}
           />
 
+          {/* Static Heart Icon - NOT spinning */}
           <IoHeart size={50} color={colors.primary} style={{ display: 'block', margin: '0 auto 16px' }} />
           <h1 style={{ color: colors.textPrimary, fontSize: 28, fontWeight: 700, marginBottom: 24, textAlign: 'center' }}>
             I'm here for you 💗
           </h1>
 
-          {/* Rotating Supportive Lines */}
-          <motion.div
-            key={sadMessage}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{
-              background: colors.card,
-              border: `1px solid ${colors.border}`,
-              borderRadius: 20,
-              padding: 24,
-              marginBottom: 24,
-              cursor: 'pointer',
-            }}
-            onClick={handleNextSadMessage}
-          >
-            <p style={{
-              color: colors.textPrimary,
-              fontSize: 19,
-              textAlign: 'center',
-              lineHeight: 1.7,
-              fontStyle: 'italic',
-            }}>
-              {sadMessage}
-            </p>
-          </motion.div>
+          {/* Message with Navigation */}
+          <div style={{ position: 'relative', marginBottom: 24 }}>
+            <motion.div
+              key={sadMessage}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{
+                background: colors.card,
+                border: `1px solid ${colors.border}`,
+                borderRadius: 20,
+                padding: 24,
+                paddingRight: 50,
+              }}
+            >
+              <p style={{
+                color: colors.textPrimary,
+                fontSize: 19,
+                textAlign: 'center',
+                lineHeight: 1.7,
+                fontStyle: 'italic',
+              }}>
+                {sadMessage}
+              </p>
+            </motion.div>
+            
+            {/* Next Message Button */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handleNextSadMessageNav}
+              style={{
+                position: 'absolute',
+                right: 10,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: colors.glass,
+                border: `1px solid ${colors.border}`,
+                borderRadius: '50%',
+                width: 36,
+                height: 36,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+              }}
+            >
+              <IoChevronForward size={20} color={colors.primary} />
+            </motion.button>
+          </div>
 
           {/* Quick Kiss Button */}
           <div style={{ position: 'relative', marginBottom: 16 }}>
