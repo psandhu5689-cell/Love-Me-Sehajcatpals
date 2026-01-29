@@ -1063,23 +1063,136 @@ export default function VirtualBed() {
               zIndex: 10, // ABOVE dim overlay (z-index 5) so it stays bright
               boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 0 20px rgba(0,0,0,0.3)',
             }}>
-              {/* Looping rain video inside window - ALWAYS MUTED */}
-              <video
-                autoPlay
-                loop
-                muted={true}
-                playsInline
-                style={{
+              {/* Weather Videos/Backgrounds */}
+              {weatherMode === 'rain' && (
+                <video
+                  autoPlay
+                  loop
+                  muted={true}
+                  playsInline
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    zIndex: 0,
+                  }}
+                  src="/window-rain.mov"
+                />
+              )}
+              {weatherMode === 'snow' && (
+                <div style={{
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   width: '100%',
                   height: '100%',
-                  objectFit: 'cover',
+                  background: 'linear-gradient(180deg, #1a2a4e 0%, #0d1a30 100%)',
                   zIndex: 0,
-                }}
-                src="/window-rain.mov"
-              />
+                }}>
+                  {/* Snowflakes */}
+                  {[...Array(20)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{
+                        y: [0, 120],
+                        x: [0, Math.sin(i) * 10],
+                        opacity: [0.8, 0.3],
+                      }}
+                      transition={{
+                        duration: 2 + Math.random() * 2,
+                        repeat: Infinity,
+                        delay: Math.random() * 2,
+                      }}
+                      style={{
+                        position: 'absolute',
+                        left: `${Math.random() * 100}%`,
+                        top: -10,
+                        width: 4,
+                        height: 4,
+                        borderRadius: '50%',
+                        background: 'white',
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+              {weatherMode === 'city' && (
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'linear-gradient(180deg, #0f0f23 0%, #1a1a2e 100%)',
+                  zIndex: 0,
+                }}>
+                  {/* City lights */}
+                  {[...Array(15)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ duration: 1 + Math.random(), repeat: Infinity }}
+                      style={{
+                        position: 'absolute',
+                        left: `${5 + Math.random() * 90}%`,
+                        top: `${40 + Math.random() * 50}%`,
+                        width: 2 + Math.random() * 3,
+                        height: 2 + Math.random() * 3,
+                        borderRadius: 1,
+                        background: ['#FFD700', '#FF6B6B', '#4ECDC4', '#FFA500'][Math.floor(Math.random() * 4)],
+                      }}
+                    />
+                  ))}
+                  {/* Stars */}
+                  {[...Array(8)].map((_, i) => (
+                    <motion.div
+                      key={`star-${i}`}
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                      style={{
+                        position: 'absolute',
+                        left: `${10 + Math.random() * 80}%`,
+                        top: `${5 + Math.random() * 30}%`,
+                        width: 2,
+                        height: 2,
+                        borderRadius: '50%',
+                        background: 'white',
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+              {weatherMode === 'sunrise' && (
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'linear-gradient(180deg, #FF9A8B 0%, #FF6B8A 30%, #FF8E53 70%, #FFA726 100%)',
+                  zIndex: 0,
+                }}>
+                  {/* Sun */}
+                  <motion.div
+                    animate={{ y: [20, 10, 20] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                    style={{
+                      position: 'absolute',
+                      bottom: '30%',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      width: 30,
+                      height: 30,
+                      borderRadius: '50%',
+                      background: '#FFF176',
+                      boxShadow: '0 0 20px #FFF176, 0 0 40px rgba(255,241,118,0.5)',
+                    }}
+                  />
+                </div>
+              )}
               
               {/* Window frame overlays - WHITE */}
               <div style={{
@@ -1102,6 +1215,94 @@ export default function VirtualBed() {
                 transform: 'translateY(-50%)',
                 zIndex: 1,
               }} />
+              
+              {/* Curtains */}
+              <motion.div
+                animate={{
+                  x: curtainState === 'closed' ? 0 : curtainState === 'peek' ? -30 : -80,
+                }}
+                transition={{ duration: 0.5 }}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '55%',
+                  height: '100%',
+                  background: 'linear-gradient(90deg, #8B4513 0%, #A0522D 100%)',
+                  zIndex: 2,
+                  borderRight: '2px solid #5D3A1A',
+                }}
+              />
+              <motion.div
+                animate={{
+                  x: curtainState === 'closed' ? 0 : curtainState === 'peek' ? 30 : 80,
+                }}
+                transition={{ duration: 0.5 }}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  width: '55%',
+                  height: '100%',
+                  background: 'linear-gradient(270deg, #8B4513 0%, #A0522D 100%)',
+                  zIndex: 2,
+                  borderLeft: '2px solid #5D3A1A',
+                }}
+              />
+              
+              {/* Weather toggle arrows */}
+              <div style={{
+                position: 'absolute',
+                bottom: 5,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                gap: 8,
+                zIndex: 3,
+              }}>
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => {
+                    const modes: ('rain' | 'snow' | 'city' | 'sunrise')[] = ['rain', 'snow', 'city', 'sunrise']
+                    const idx = modes.indexOf(weatherMode)
+                    setWeatherMode(modes[(idx - 1 + modes.length) % modes.length])
+                    addXP(2)
+                  }}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: '50%',
+                    background: 'rgba(255,255,255,0.8)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: 10,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >◀</motion.button>
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => {
+                    const modes: ('rain' | 'snow' | 'city' | 'sunrise')[] = ['rain', 'snow', 'city', 'sunrise']
+                    const idx = modes.indexOf(weatherMode)
+                    setWeatherMode(modes[(idx + 1) % modes.length])
+                    addXP(2)
+                  }}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: '50%',
+                    background: 'rgba(255,255,255,0.8)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: 10,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >▶</motion.button>
+              </div>
             </div>
 
             {/* LAYER 2: Floor/Base Surface */}
