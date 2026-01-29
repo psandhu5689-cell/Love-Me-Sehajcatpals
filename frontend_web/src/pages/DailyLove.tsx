@@ -1224,7 +1224,7 @@ export default function DailyLove() {
                 pointerEvents: 'none',
               }} />
               
-              {/* Wheel items */}
+              {/* Wheel items - SHOW ONLY ONE MESSAGE AT A TIME */}
               <motion.div
                 animate={{ y: -wheelIndex * 60 + 60 }}
                 transition={{ type: 'spring', damping: 20, stiffness: 300 }}
@@ -1238,18 +1238,20 @@ export default function DailyLove() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      opacity: i === wheelIndex ? 1 : 0.3,
-                      transform: i === wheelIndex ? 'scale(1.05)' : 'scale(0.9)',
+                      // FIXED: Only show the selected message, hide all others
+                      opacity: i === wheelIndex ? 1 : 0,
+                      visibility: i === wheelIndex ? 'visible' : 'hidden',
+                      transform: i === wheelIndex ? 'scale(1)' : 'scale(0.8)',
                       transition: 'all 0.3s ease',
                     }}
                   >
                     <p style={{
                       color: colors.textPrimary,
-                      fontSize: i === wheelIndex ? 17 : 14,
+                      fontSize: 17,
                       textAlign: 'center',
                       lineHeight: 1.5,
                       fontStyle: 'italic',
-                      fontWeight: i === wheelIndex ? 600 : 400,
+                      fontWeight: 600,
                       padding: '0 16px',
                     }}>
                       {msg}
