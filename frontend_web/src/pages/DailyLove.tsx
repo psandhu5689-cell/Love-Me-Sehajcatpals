@@ -223,11 +223,17 @@ export default function DailyLove() {
   const [floatingHearts, setFloatingHearts] = useState<Array<{id: number, x: number, y: number}>>([])
   const hugIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   
-  // Calculate time together (from a start date)
-  const startDate = new Date('2023-07-01') // Adjust this date!
+  // Calculate time together 
+  // UPDATED DATES: Talking since Feb 26 2025, Dating since July 11 2025
+  const talkingStartDate = new Date('2025-02-26')
+  const datingStartDate = new Date('2025-07-11')
   const now = new Date()
-  const timeDiff = now.getTime() - startDate.getTime()
-  const daysTogether = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
+  const talkingDiff = now.getTime() - talkingStartDate.getTime()
+  const datingDiff = now.getTime() - datingStartDate.getTime()
+  const daysTalking = Math.floor(talkingDiff / (1000 * 60 * 60 * 24))
+  const daysDating = Math.max(0, Math.floor(datingDiff / (1000 * 60 * 60 * 24)))
+  // Use daysDating if after July 11, otherwise show talking days
+  const daysTogether = daysDating > 0 ? daysDating : daysTalking
 
   useEffect(() => {
     // Load streak from localStorage
