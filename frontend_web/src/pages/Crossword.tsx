@@ -69,6 +69,9 @@ export default function Crossword() {
   const [selectedDirection, setSelectedDirection] = useState<'across' | 'down'>('across')
   const [revealCount, setRevealCount] = useState(3)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragStartCell, setDragStartCell] = useState<{row: number, col: number} | null>(null)
+  const [draggedCells, setDraggedCells] = useState<{row: number, col: number}[]>([])
 
   // Save progress
   useEffect(() => {
