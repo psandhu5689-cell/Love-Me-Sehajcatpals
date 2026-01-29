@@ -665,13 +665,13 @@ export default function Crossword() {
             </div>
           </div>
           
-          {/* Skip Button */}
+          {/* Skip Puzzle Button - navigates to next pathway page */}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => {
               haptics.light()
-              navigate(-1)
+              navigate('/card-match')
             }}
             style={{
               width: '100%',
