@@ -305,6 +305,10 @@ export default function DailyLove() {
   const [sadMessageIndex, setSadMessageIndex] = useState(0)
   const hugIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   
+  // FIXED: Wheel picker state - MUST be at top level (Rules of Hooks)
+  const wheelRef = useRef<HTMLDivElement>(null)
+  const [wheelIndex, setWheelIndex] = useState(0)
+  
   // Calculate time together 
   // UPDATED DATES: Talking since Feb 26 2025, Dating since July 11 2025
   const talkingStartDate = new Date('2025-02-26')
