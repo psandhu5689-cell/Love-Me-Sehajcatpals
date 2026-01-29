@@ -237,6 +237,31 @@ export default function Index() {
         <span style={{ color: '#a855f7', fontSize: 13, fontWeight: 600 }}>Games</span>
       </motion.button>
 
+      {/* Virtual Bed Button - Top Right */}
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={handleVirtualBed}
+        style={{
+          position: 'absolute',
+          top: 60,
+          right: 16,
+          padding: '10px 14px',
+          background: 'rgba(244, 165, 189, 0.2)',
+          backdropFilter: 'blur(10px)',
+          borderRadius: 20,
+          border: '1px solid rgba(244, 165, 189, 0.4)',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 6,
+          boxShadow: '0 4px 20px rgba(244, 165, 189, 0.3)',
+        }}
+      >
+        <span style={{ fontSize: 16 }}>🛏️</span>
+        <span style={{ color: '#E8638F', fontSize: 13, fontWeight: 600 }}>Bed</span>
+      </motion.button>
+
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
