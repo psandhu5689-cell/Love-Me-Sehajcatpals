@@ -1925,19 +1925,22 @@ export default function DailyLove() {
             background: colors.secondary,
             border: 'none',
             color: 'white',
-            padding: '14px 24px',
-            borderRadius: 30,
-            fontSize: 16,
-            fontWeight: 600,
+            padding: '20px 36px',
+            borderRadius: 40,
+            fontSize: 20,
+            fontWeight: 700,
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            gap: 10,
+            gap: 12,
             margin: '0 auto',
-            boxShadow: `0 4px 15px ${colors.secondaryGlow}`,
+            boxShadow: `0 6px 20px ${colors.secondaryGlow}`,
+            minHeight: 70,
+            minWidth: 260,
+            justifyContent: 'center',
           }}
         >
-          <IoHeartHalf size={24} />
+          <IoHeartHalf size={32} />
           Need a bigger hug?
         </motion.button>
         <p style={{ color: colors.textMuted, fontSize: 12, marginTop: 8, fontStyle: 'italic' }}>
