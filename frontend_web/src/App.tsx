@@ -73,6 +73,8 @@ export default function App() {
           <Route path="/daily-questions" element={<DailyQuestions />} />
           <Route path="/daily-challenges" element={<DailyChallenges />} />
           <Route path="/special-moments" element={<SpecialMoments />} />
+          <Route path="/how-long-together" element={<HowLongTogether />} />
+          <Route path="/would-you-rather" element={<WouldYouRather />} />
           
           <Route path="/quiet-stars" element={<QuietStars />} />
           <Route path="/question" element={<Question />} />
