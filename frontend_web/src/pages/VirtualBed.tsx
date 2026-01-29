@@ -571,10 +571,8 @@ export default function VirtualBed() {
         break
         
       case 'nudge':
-        // Play cute chirp for nudge
-        if (userInteracted && catMeowSoftRef.current && !isMuted) {
-          catMeowSoftRef.current.play()
-        }
+        // Play cute chirp for nudge with cooldown
+        playCatSound(catMeowSoftRef)
         setCat(prev => ({ ...prev, action: 'nudge', mood: Math.min(100, prev.mood + 15) }))
         // Increase freakiness meter (Prabh increases faster)
         if (cat === 'prabh') {
