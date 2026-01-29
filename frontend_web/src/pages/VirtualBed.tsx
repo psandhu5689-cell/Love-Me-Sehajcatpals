@@ -1530,6 +1530,7 @@ export default function VirtualBed() {
             <motion.div
               animate={{
                 y: sehaj.action === 'nudge' || sehaj.action === 'kick' ? [0, -3, 0] : 0,
+                x: cuddleMode ? 30 : 0,
               }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
               style={{
@@ -1545,6 +1546,31 @@ export default function VirtualBed() {
                 minHeight: 64,
               }}
             >
+              {/* Mood Bubble for Sehaj */}
+              <AnimatePresence>
+                {sehajMoodBubble && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.8 }}
+                    style={{
+                      position: 'absolute',
+                      top: -40,
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      background: 'rgba(255,255,255,0.95)',
+                      borderRadius: 12,
+                      padding: '6px 10px',
+                      fontSize: 14,
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                      whiteSpace: 'nowrap',
+                      zIndex: 10,
+                    }}
+                  >
+                    {sehajMoodBubble}
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <Sprite
                 sheet={cat2Sheet}
                 animations={SEHAJ_ANIMATIONS}
