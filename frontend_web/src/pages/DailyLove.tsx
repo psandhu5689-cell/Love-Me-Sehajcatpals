@@ -1094,10 +1094,7 @@ export default function DailyLove() {
       }
     }
     
-    // FIXED: Wheel picker for scrollable messages
-    const wheelRef = useRef<HTMLDivElement>(null)
-    const [wheelIndex, setWheelIndex] = useState(0)
-    
+    // FIXED: Wheel picker handlers - state is defined at component top level
     const handleWheelSpin = () => {
       haptics.light()
       // Vibrate briefly on scroll
