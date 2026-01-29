@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { IoHeart, IoSparkles, IoImages, IoSkull } from 'react-icons/io5'
+import { IoHeart, IoSparkles, IoImages, IoSkull, IoBed } from 'react-icons/io5'
 import { useTheme } from '../context/ThemeContext'
 import { useAudio } from '../context/AudioContext'
 import { PresenceDisplay } from '../components/PresenceModals'
