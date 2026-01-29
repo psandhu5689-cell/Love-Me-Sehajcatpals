@@ -976,34 +976,54 @@ export default function VirtualBed() {
               zIndex: 2,
             }} />
 
-            {/* NEW: LAYER 3.5: Blanket (moves left/center/right based on hog blanket action) */}
+            {/* NEW: LAYER 7: Blanket (moves left/center/right based on hog blanket action) - FOREGROUND */}
             <motion.div
               animate={{
-                left: blanketPosition === 'left' ? '20%' : blanketPosition === 'right' ? '65%' : '42.5%',
+                left: blanketPosition === 'left' ? '15%' : blanketPosition === 'right' ? '60%' : '37.5%',
               }}
               transition={{ type: 'spring', stiffness: 120, damping: 15 }}
               style={{
                 position: 'absolute',
-                bottom: 80,
-                width: 180,
-                height: 120,
+                bottom: 40,
+                width: 220,
+                height: 80,
                 background: 'linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFD1DC 100%)',
-                borderRadius: '60% 60% 30% 30%',
-                border: '3px solid #FF69B4',
-                zIndex: 6,
-                boxShadow: '0 4px 12px rgba(255,105,180,0.3), inset 0 2px 8px rgba(255,255,255,0.3)',
-                opacity: 0.9,
+                borderRadius: '50% 50% 20% 20%',
+                border: '2px solid #FF69B4',
+                zIndex: 7,
+                boxShadow: '0 2px 8px rgba(255,105,180,0.2), inset 0 1px 4px rgba(255,255,255,0.4)',
+                opacity: 0.85,
+                transform: 'perspective(100px) rotateX(15deg)',
               }}
             >
-              {/* Blanket texture/pattern */}
+              {/* Blanket texture/pattern - flatter appearance */}
               <div style={{
                 position: 'absolute',
-                top: 10,
-                left: 10,
-                right: 10,
-                bottom: 10,
-                background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)',
-                borderRadius: '50% 50% 25% 25%',
+                top: 5,
+                left: 5,
+                right: 5,
+                bottom: 5,
+                background: 'repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,0.15) 8px, rgba(255,255,255,0.15) 16px)',
+                borderRadius: '45% 45% 15% 15%',
+              }} />
+              {/* Blanket folds for realistic flat appearance */}
+              <div style={{
+                position: 'absolute',
+                top: '30%',
+                left: '20%',
+                right: '20%',
+                height: 2,
+                background: 'rgba(255,105,180,0.3)',
+                borderRadius: 1,
+              }} />
+              <div style={{
+                position: 'absolute',
+                top: '60%',
+                left: '15%',
+                right: '25%',
+                height: 1,
+                background: 'rgba(255,105,180,0.2)',
+                borderRadius: 1,
               }} />
             </motion.div>
 
