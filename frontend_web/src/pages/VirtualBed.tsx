@@ -859,7 +859,8 @@ export default function VirtualBed() {
               }} />
             </div>
             
-            {/* LAYER 5: Sehaj Cat (Left - Ginger) */}
+            {/* LAYER 5: Cat Sprites */}
+            {/* Sehaj Cat (Left - Ginger) */}
             <motion.div
               animate={{
                 y: sehaj.action === 'nudge' || sehaj.action === 'kick' ? [0, -3, 0] : 0,
@@ -867,7 +868,7 @@ export default function VirtualBed() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               style={{
                 position: 'absolute',
-                left: '25%',
+                left: '28%',
                 bottom: 180,
                 zIndex: 3,
               }}
@@ -909,7 +910,7 @@ export default function VirtualBed() {
               )}
             </motion.div>
             
-            {/* LAYER 6: Prabh Cat (Right - Grey) */}
+            {/* Prabh Cat (Right - Grey) */}
             <motion.div
               animate={{
                 y: prabh.action === 'nudge' || prabh.action === 'kick' ? [0, -3, 0] : 0,
@@ -917,7 +918,7 @@ export default function VirtualBed() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               style={{
                 position: 'absolute',
-                right: '25%',
+                right: '28%',
                 bottom: 180,
                 zIndex: 3,
               }}
@@ -958,8 +959,36 @@ export default function VirtualBed() {
                 </motion.div>
               )}
             </motion.div>
-            
-            {/* LAYER 7: Blanket Overlay */}
+
+            {/* LAYER 6: Foreground Props */}
+            {/* Pillow on floor - left */}
+            <div style={{
+              position: 'absolute',
+              bottom: 120,
+              left: 70,
+              width: 50,
+              height: 35,
+              background: 'linear-gradient(135deg, #FF6B9D 0%, #E91E63 100%)',
+              borderRadius: '45%',
+              border: '2px solid #C2185B',
+              zIndex: 4,
+              boxShadow: '0 3px 6px rgba(0,0,0,0.2)',
+              transform: 'rotate(-15deg)',
+            }} />
+
+            {/* Toy on floor - right */}
+            <div style={{
+              position: 'absolute',
+              bottom: 130,
+              right: 80,
+              fontSize: 28,
+              zIndex: 4,
+              transform: 'rotate(20deg)',
+            }}>
+              🎾
+            </div>
+
+            {/* Blanket Overlay (between cats) */}
             <motion.div
               animate={{ x: `${blanketOffset - 50}%` }}
               transition={{ type: 'spring', damping: 20, stiffness: 100 }}
@@ -968,8 +997,8 @@ export default function VirtualBed() {
                 bottom: 160,
                 left: '50%',
                 transform: 'translateX(-50%)',
-                width: '60%',
-                height: 40,
+                width: '50%',
+                height: 60,
                 background: 'linear-gradient(180deg, #E8A5C0 0%, #D88BA5 50%, #C87090 100%)',
                 borderRadius: '18px 18px 8px 8px',
                 border: '3px solid #B86080',
