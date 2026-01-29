@@ -1,56 +1,156 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { IoChevronBackOutline, IoMoon, IoSunny } from 'react-icons/io5'
+import { IoChevronBackOutline, IoSunny, IoMoon } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import haptics from '../utils/haptics'
+
+// Reference images from user
+const BED_IMAGE = 'https://customer-assets.emergentagent.com/job_ea00522a-d50f-4f38-a93e-0ece2d9e5cd8/artifacts/mr5zc8fj_Image%2010.jpeg'
+const CAT_IMAGE = 'https://customer-assets.emergentagent.com/job_ea00522a-d50f-4f38-a93e-0ece2d9e5cd8/artifacts/a6djxcrh_Image%209.jpeg'
+const BLANKET_IMAGE = 'https://customer-assets.emergentagent.com/job_ea00522a-d50f-4f38-a93e-0ece2d9e5cd8/artifacts/0yx76l6q_Image%2011.jpeg'
+
+type CatMood = 'cozy' | 'happy' | 'mischievous' | 'sleepy' | 'annoyed'
+type CatAction = 'idle' | 'waking' | 'sleeping' | 'nudging' | 'kicking' | 'eating' | 'gaming'
+
+interface CatState {
+  mood: number // 0-100
+  action: CatAction
+  isAwake: boolean
+}
+
+const FOOD_ITEMS = ['🐟', '🦴', '🍖']
 
 export default function VirtualBed() {
   const navigate = useNavigate()
   const { colors } = useTheme()
   const [isNight, setIsNight] = useState(false)
-  const [cat1Mood, setCat1Mood] = useState<'happy' | 'sleepy' | 'playing'>('happy')
-  const [cat2Mood, setCat2Mood] = useState<'happy' | 'sleepy' | 'playing'>('happy')
-  const [showBlanket, setShowBlanket] = useState(false)
+  const [blanketOffset, setBlanketOffset] = useState(50) // 0-100, where 50 is centered
+  
+  const [brownCat, setBrownCat] = useState<CatState>({
+    mood: 75,
+    action: 'idle',
+    isAwake: true,
+  })
+  
+  const [blackCat, setBlackCat] = useState<CatState>({
+    mood: 75,
+    action: 'idle',
+    isAwake: true,
+  })
 
-  // Auto-cycle time of day every 10 seconds
+  const [showEffect, setShowEffect] = useState<{
+    type: 'heart' | 'z' | 'puff' | 'sparkle' | 'food'
+    x: number
+    y: number
+    value?: string
+  } | null>(null)
+
+  const [currentFood, setCurrentFood] = useState(0)
+
+  // Auto toggle day/night every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setIsNight(prev => !prev)
-    }, 10000)
+    }, 30000)
     return () => clearInterval(interval)
   }, [])
 
-  const handleCat1Click = () => {
-    haptics.light()
-    const moods: Array<'happy' | 'sleepy' | 'playing'> = ['happy', 'sleepy', 'playing']
-    const currentIndex = moods.indexOf(cat1Mood)
-    setCat1Mood(moods[(currentIndex + 1) % moods.length])
+  // Reset actions to idle after animation
+  useEffect(() => {
+    if (brownCat.action !== 'idle' && brownCat.action !== 'sleeping') {
+      const timeout = setTimeout(() => {
+        setBrownCat(prev => ({ ...prev, action: prev.isAwake ? 'idle' : 'sleeping' }))
+      }, 2000)
+      return () => clearTimeout(timeout)
+    }
+  }, [brownCat.action, brownCat.isAwake])
+
+  useEffect(() => {
+    if (blackCat.action !== 'idle' && blackCat.action !== 'sleeping') {
+      const timeout = setTimeout(() => {
+        setBlackCat(prev => ({ ...prev, action: prev.isAwake ? 'idle' : 'sleeping' }))
+      }, 2000)
+      return () => clearTimeout(timeout)
+    }
+  }, [blackCat.action, blackCat.isAwake])
+
+  // Clear effects after animation
+  useEffect(() => {
+    if (showEffect) {
+      const timeout = setTimeout(() => setShowEffect(null), 1500)
+      return () => clearTimeout(timeout)
+    }
+  }, [showEffect])
+
+  const getMoodLabel = (mood: number): string => {
+    if (mood > 80) return 'Happy'
+    if (mood > 60) return 'Cozy'
+    if (mood > 40) return 'Okay'
+    if (mood > 20) return 'Annoyed'
+    return 'Mischievous'
   }
 
-  const handleCat2Click = () => {
+  const handleCatAction = (
+    cat: 'brown' | 'black',
+    action: 'wake' | 'sleep' | 'nudge' | 'kick' | 'hog' | 'feed' | 'game'
+  ) => {
     haptics.light()
-    const moods: Array<'happy' | 'sleepy' | 'playing'> = ['happy', 'sleepy', 'playing']
-    const currentIndex = moods.indexOf(cat2Mood)
-    setCat2Mood(moods[(currentIndex + 1) % moods.length])
-  }
+    const isLeft = cat === 'brown'
+    const setCat = cat === 'brown' ? setBrownCat : setBlackCat
+    const otherCat = cat === 'brown' ? blackCat : brownCat
+    const setOtherCat = cat === 'brown' ? setBlackCat : setBrownCat
 
-  const toggleBlanket = () => {
-    haptics.medium()
-    setShowBlanket(prev => !prev)
+    switch (action) {
+      case 'wake':
+        setCat(prev => ({ ...prev, isAwake: true, action: 'waking', mood: Math.min(100, prev.mood + 10) }))
+        break
+      
+      case 'sleep':
+        setCat(prev => ({ ...prev, isAwake: false, action: 'sleeping', mood: Math.min(100, prev.mood + 5) }))
+        setShowEffect({ type: 'z', x: isLeft ? 35 : 65, y: 35 })
+        break
+      
+      case 'nudge':
+        setCat(prev => ({ ...prev, action: 'nudging', mood: Math.min(100, prev.mood + 15) }))
+        setOtherCat(prev => ({ ...prev, mood: Math.min(100, prev.mood + 15) }))
+        setShowEffect({ type: 'heart', x: 50, y: 35 })
+        break
+      
+      case 'kick':
+        setCat(prev => ({ ...prev, action: 'kicking', mood: Math.max(0, prev.mood - 5) }))
+        setOtherCat(prev => ({ ...prev, mood: Math.max(0, prev.mood - 10) }))
+        setShowEffect({ type: 'puff', x: isLeft ? 60 : 40, y: 45 })
+        break
+      
+      case 'hog':
+        setBlanketOffset(isLeft ? 30 : 70)
+        setCat(prev => ({ ...prev, mood: Math.min(100, prev.mood + 10) }))
+        setOtherCat(prev => ({ ...prev, mood: Math.max(0, prev.mood - 15) }))
+        setTimeout(() => setBlanketOffset(50), 3000)
+        break
+      
+      case 'feed':
+        setCat(prev => ({ ...prev, action: 'eating', mood: Math.min(100, prev.mood + 20) }))
+        setShowEffect({ type: 'food', x: isLeft ? 35 : 65, y: 40, value: FOOD_ITEMS[currentFood] })
+        setCurrentFood((currentFood + 1) % FOOD_ITEMS.length)
+        break
+      
+      case 'game':
+        setCat(prev => ({ ...prev, action: 'gaming', mood: Math.min(100, prev.mood + 15) }))
+        setShowEffect({ type: 'sparkle', x: isLeft ? 35 : 65, y: 45 })
+        break
+    }
   }
 
   return (
     <div style={{
       minHeight: '100vh',
       width: '100%',
-      background: isNight 
-        ? 'linear-gradient(180deg, #1a1a2e 0%, #2d2d44 100%)'
-        : 'linear-gradient(180deg, #87CEEB 0%, #FFA07A 100%)',
-      transition: 'background 1s ease',
+      background: 'transparent',
       padding: 24,
       position: 'relative',
-      overflow: 'hidden',
+      overflow: 'auto',
     }}>
       {/* Header */}
       <motion.button
@@ -79,26 +179,32 @@ export default function VirtualBed() {
         <IoChevronBackOutline size={24} color={colors.textPrimary} />
       </motion.button>
 
-      {/* Time Indicator */}
-      <div style={{
-        position: 'absolute',
-        top: 20,
-        right: 80,
-        background: colors.glass,
-        backdropFilter: 'blur(10px)',
-        border: `1px solid ${colors.border}`,
-        borderRadius: 20,
-        padding: '8px 16px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-        zIndex: 100,
-      }}>
+      {/* Day/Night Toggle */}
+      <motion.button
+        whileTap={{ scale: 0.9 }}
+        onClick={() => {
+          haptics.medium()
+          setIsNight(prev => !prev)
+        }}
+        style={{
+          position: 'fixed',
+          top: 20,
+          right: 20,
+          width: 40,
+          height: 40,
+          borderRadius: 12,
+          background: colors.glass,
+          backdropFilter: 'blur(10px)',
+          border: `1px solid ${colors.border}`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          zIndex: 100,
+        }}
+      >
         {isNight ? <IoMoon size={20} color="#FFD700" /> : <IoSunny size={20} color="#FFA500" />}
-        <span style={{ color: colors.textPrimary, fontSize: 14, fontWeight: 600 }}>
-          {isNight ? 'Night' : 'Day'}
-        </span>
-      </div>
+      </motion.button>
 
       {/* Main Content */}
       <div style={{
@@ -106,7 +212,6 @@ export default function VirtualBed() {
         margin: '80px auto 0',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
         gap: 24,
       }}>
         <h1 style={{
@@ -116,40 +221,40 @@ export default function VirtualBed() {
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           textAlign: 'center',
-          marginBottom: 8,
         }}>
           Virtual Bed 🛏️
         </h1>
 
-        {/* Room Container */}
-        <div style={{
-          width: '100%',
-          background: colors.glass,
-          backdropFilter: 'blur(20px)',
-          border: `1px solid ${colors.border}`,
-          borderRadius: 24,
-          padding: 24,
-          position: 'relative',
-          boxShadow: `0 8px 32px ${colors.primaryGlow}`,
-        }}>
+        {/* Room Scene */}
+        <motion.div
+          style={{
+            background: colors.glass,
+            backdropFilter: 'blur(20px)',
+            border: `1px solid ${colors.border}`,
+            borderRadius: 24,
+            padding: 24,
+            position: 'relative',
+            boxShadow: `0 8px 32px ${colors.primaryGlow}`,
+          }}
+        >
           {/* Window */}
           <div style={{
-            width: 120,
-            height: 100,
+            width: 140,
+            height: 110,
             background: isNight 
               ? 'linear-gradient(180deg, #0f0f1e 0%, #1a1a2e 100%)'
               : 'linear-gradient(180deg, #87CEEB 0%, #B0E0E6 100%)',
             border: `4px solid ${isNight ? '#4a4a5e' : '#8B4513'}`,
-            borderRadius: 8,
-            margin: '0 auto 16px',
+            borderRadius: 12,
+            margin: '0 auto 20px',
             position: 'relative',
             overflow: 'hidden',
             transition: 'all 1s ease',
             boxShadow: isNight 
-              ? 'inset 0 0 20px rgba(255,255,255,0.1)'
-              : 'inset 0 0 20px rgba(255,255,255,0.3)',
+              ? 'inset 0 0 30px rgba(255,255,255,0.1)'
+              : 'inset 0 0 30px rgba(255,255,255,0.4)',
           }}>
-            {/* Window divider */}
+            {/* Window Frame Dividers */}
             <div style={{
               position: 'absolute',
               top: 0,
@@ -157,6 +262,7 @@ export default function VirtualBed() {
               width: 4,
               height: '100%',
               background: isNight ? '#4a4a5e' : '#8B4513',
+              transform: 'translateX(-50%)',
             }} />
             <div style={{
               position: 'absolute',
@@ -165,24 +271,40 @@ export default function VirtualBed() {
               width: '100%',
               height: 4,
               background: isNight ? '#4a4a5e' : '#8B4513',
+              transform: 'translateY(-50%)',
             }} />
             
-            {/* Stars at night or sun during day */}
+            {/* Stars or Sun */}
             {isNight ? (
               <>
-                {[...Array(8)].map((_, i) => (
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  style={{
+                    position: 'absolute',
+                    width: 30,
+                    height: 30,
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, #FFF8DC 0%, #FFD700 100%)',
+                    boxShadow: '0 0 20px #FFD700',
+                    top: '25%',
+                    right: '20%',
+                  }}
+                />
+                {[...Array(12)].map((_, i) => (
                   <motion.div
                     key={i}
                     animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 2, delay: i * 0.3, repeat: Infinity }}
+                    transition={{ duration: 2 + i * 0.3, delay: i * 0.2, repeat: Infinity }}
                     style={{
                       position: 'absolute',
                       width: 3,
                       height: 3,
                       background: 'white',
                       borderRadius: '50%',
-                      left: `${20 + (i % 4) * 25}%`,
-                      top: `${20 + Math.floor(i / 4) * 40}%`,
+                      left: `${15 + (i % 4) * 22}%`,
+                      top: `${20 + Math.floor(i / 4) * 25}%`,
+                      boxShadow: '0 0 2px white',
                     }}
                   />
                 ))}
@@ -190,228 +312,342 @@ export default function VirtualBed() {
             ) : (
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
                 style={{
                   position: 'absolute',
-                  width: 40,
-                  height: 40,
+                  width: 50,
+                  height: 50,
                   borderRadius: '50%',
                   background: 'radial-gradient(circle, #FFD700 0%, #FFA500 100%)',
-                  boxShadow: '0 0 20px #FFA500',
+                  boxShadow: '0 0 30px #FFA500',
                   top: '20%',
                   right: '15%',
                 }}
-              />
+              >
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      position: 'absolute',
+                      width: 6,
+                      height: 20,
+                      background: '#FFD700',
+                      top: '50%',
+                      left: '50%',
+                      transformOrigin: '3px -15px',
+                      transform: `rotate(${i * 45}deg)`,
+                      borderRadius: 3,
+                    }}
+                  />
+                ))}
+              </motion.div>
             )}
           </div>
 
-          {/* Bed */}
+          {/* Bed and Cats Container */}
           <div style={{
-            width: '100%',
-            height: 250,
-            background: 'linear-gradient(135deg, #D2691E 0%, #8B4513 100%)',
-            borderRadius: 16,
             position: 'relative',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
-            border: '3px solid #A0522D',
+            width: '100%',
+            height: 350,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}>
-            {/* Mattress */}
-            <div style={{
-              width: '90%',
-              height: 180,
-              background: 'linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%)',
-              borderRadius: '12px 12px 8px 8px',
-              position: 'absolute',
-              top: 10,
-              left: '5%',
-              border: '2px solid #80DEEA',
-              boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.1)',
-            }}>
-              {/* Pillows */}
+            {/* Bed Image */}
+            <img
+              src={BED_IMAGE}
+              alt="Bed"
+              style={{
+                position: 'absolute',
+                width: '90%',
+                height: 'auto',
+                bottom: 0,
+                left: '5%',
+                objectFit: 'contain',
+                zIndex: 1,
+              }}
+            />
+
+            {/* Brown Cat (Left) */}
+            <motion.div
+              animate={{
+                scale: brownCat.action === 'nudging' ? [1, 1.1, 1] : brownCat.action === 'kicking' ? [1, 0.95, 1] : 1,
+                y: brownCat.action === 'waking' ? [-5, 0] : 0,
+              }}
+              transition={{ duration: 0.5 }}
+              style={{
+                position: 'absolute',
+                left: '20%',
+                bottom: '35%',
+                zIndex: 2,
+              }}
+            >
+              <motion.img
+                animate={{
+                  scale: [1, 1.02, 1],
+                  opacity: brownCat.isAwake ? 1 : 0.8,
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+                src={CAT_IMAGE}
+                alt="Brown Cat"
+                style={{
+                  width: 80,
+                  height: 80,
+                  objectFit: 'contain',
+                  filter: `brightness(${brownCat.isAwake ? 1 : 0.7}) hue-rotate(20deg)`,
+                }}
+              />
+              {brownCat.action === 'gaming' && (
+                <div style={{
+                  position: 'absolute',
+                  bottom: -5,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  fontSize: 24,
+                }}>
+                  🎮
+                </div>
+              )}
+            </motion.div>
+
+            {/* Black Cat (Right) */}
+            <motion.div
+              animate={{
+                scale: blackCat.action === 'nudging' ? [1, 1.1, 1] : blackCat.action === 'kicking' ? [1, 0.95, 1] : 1,
+                y: blackCat.action === 'waking' ? [-5, 0] : 0,
+              }}
+              transition={{ duration: 0.5 }}
+              style={{
+                position: 'absolute',
+                right: '20%',
+                bottom: '35%',
+                zIndex: 2,
+              }}
+            >
+              <motion.img
+                animate={{
+                  scale: [1, 1.02, 1],
+                  opacity: blackCat.isAwake ? 1 : 0.8,
+                }}
+                transition={{ duration: 2.2, repeat: Infinity }}
+                src={CAT_IMAGE}
+                alt="Black Cat"
+                style={{
+                  width: 80,
+                  height: 80,
+                  objectFit: 'contain',
+                  filter: `brightness(${blackCat.isAwake ? 1 : 0.7}) hue-rotate(-180deg) saturate(0)`,
+                  transform: 'scaleX(-1)',
+                }}
+              />
+              {blackCat.action === 'gaming' && (
+                <div style={{
+                  position: 'absolute',
+                  bottom: -5,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  fontSize: 24,
+                }}>
+                  🎮
+                </div>
+              )}
+            </motion.div>
+
+            {/* Blanket Overlay */}
+            <motion.img
+              animate={{
+                x: `${blanketOffset - 50}%`,
+              }}
+              transition={{ type: 'spring', damping: 20 }}
+              src={BLANKET_IMAGE}
+              alt="Blanket"
+              style={{
+                position: 'absolute',
+                width: '70%',
+                height: 'auto',
+                bottom: '25%',
+                left: '15%',
+                objectFit: 'contain',
+                zIndex: 3,
+                opacity: 0.95,
+              }}
+            />
+
+            {/* Visual Effects */}
+            <AnimatePresence>
+              {showEffect && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 0 }}
+                  animate={{ opacity: 1, scale: 1.2, y: -30 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1 }}
+                  style={{
+                    position: 'absolute',
+                    left: `${showEffect.x}%`,
+                    top: `${showEffect.y}%`,
+                    fontSize: 32,
+                    zIndex: 10,
+                    pointerEvents: 'none',
+                  }}
+                >
+                  {showEffect.type === 'heart' && '💕'}
+                  {showEffect.type === 'z' && '💤'}
+                  {showEffect.type === 'puff' && '💥'}
+                  {showEffect.type === 'sparkle' && '✨'}
+                  {showEffect.type === 'food' && showEffect.value}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Cat Status Bars */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: 20,
+            marginBottom: 20,
+            gap: 16,
+          }}>
+            {/* Brown Cat Status */}
+            <div style={{ flex: 1 }}>
+              <p style={{ color: colors.textPrimary, fontSize: 14, fontWeight: 600, marginBottom: 6 }}>
+                🐱 Brown Cat
+              </p>
               <div style={{
-                display: 'flex',
-                gap: 12,
-                justifyContent: 'center',
-                marginTop: 12,
+                width: '100%',
+                height: 8,
+                background: colors.card,
+                borderRadius: 4,
+                overflow: 'hidden',
+                border: `1px solid ${colors.border}`,
               }}>
-                <div style={{
-                  width: 80,
-                  height: 50,
-                  background: 'linear-gradient(135deg, #FFFACD 0%, #FFF8DC 100%)',
-                  borderRadius: '50%',
-                  border: '2px solid #FFE4B5',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                }} />
-                <div style={{
-                  width: 80,
-                  height: 50,
-                  background: 'linear-gradient(135deg, #FFFACD 0%, #FFF8DC 100%)',
-                  borderRadius: '50%',
-                  border: '2px solid #FFE4B5',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                }} />
+                <motion.div
+                  animate={{ width: `${brownCat.mood}%` }}
+                  style={{
+                    height: '100%',
+                    background: `linear-gradient(90deg, ${colors.primary}, ${colors.secondary})`,
+                  }}
+                />
               </div>
+              <p style={{ color: colors.textSecondary, fontSize: 12, marginTop: 4 }}>
+                {getMoodLabel(brownCat.mood)} • {brownCat.mood}/100
+              </p>
+            </div>
 
-              {/* Cat 1 - Left side */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleCat1Click}
-                animate={cat1Mood === 'playing' ? { y: [0, -10, 0] } : {}}
-                transition={{ duration: 0.5, repeat: cat1Mood === 'playing' ? Infinity : 0 }}
-                style={{
-                  position: 'absolute',
-                  left: '15%',
-                  bottom: '25%',
-                  cursor: 'pointer',
-                }}
-              >
-                <img 
-                  src="https://customer-assets.emergentagent.com/job_ea00522a-d50f-4f38-a93e-0ece2d9e5cd8/artifacts/a6djxcrh_Image%209.jpeg"
-                  alt="Cat 1"
+            {/* Black Cat Status */}
+            <div style={{ flex: 1 }}>
+              <p style={{ color: colors.textPrimary, fontSize: 14, fontWeight: 600, marginBottom: 6 }}>
+                🐱 Black Cat
+              </p>
+              <div style={{
+                width: '100%',
+                height: 8,
+                background: colors.card,
+                borderRadius: 4,
+                overflow: 'hidden',
+                border: `1px solid ${colors.border}`,
+              }}>
+                <motion.div
+                  animate={{ width: `${blackCat.mood}%` }}
                   style={{
-                    width: 70,
-                    height: 70,
-                    objectFit: 'contain',
-                    filter: cat1Mood === 'sleepy' ? 'brightness(0.8)' : 'brightness(1)',
-                    transition: 'filter 0.3s',
+                    height: '100%',
+                    background: `linear-gradient(90deg, ${colors.secondary}, ${colors.primary})`,
                   }}
                 />
-                <div style={{
-                  fontSize: 20,
-                  textAlign: 'center',
-                  marginTop: 4,
-                }}>
-                  {cat1Mood === 'happy' && '😸'}
-                  {cat1Mood === 'sleepy' && '😴'}
-                  {cat1Mood === 'playing' && '🎮'}
-                </div>
-              </motion.div>
-
-              {/* Cat 2 - Right side */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleCat2Click}
-                animate={cat2Mood === 'playing' ? { y: [0, -10, 0] } : {}}
-                transition={{ duration: 0.5, repeat: cat2Mood === 'playing' ? Infinity : 0 }}
-                style={{
-                  position: 'absolute',
-                  right: '15%',
-                  bottom: '25%',
-                  cursor: 'pointer',
-                }}
-              >
-                <img 
-                  src="https://customer-assets.emergentagent.com/job_ea00522a-d50f-4f38-a93e-0ece2d9e5cd8/artifacts/a6djxcrh_Image%209.jpeg"
-                  alt="Cat 2"
-                  style={{
-                    width: 70,
-                    height: 70,
-                    objectFit: 'contain',
-                    filter: cat2Mood === 'sleepy' ? 'brightness(0.8)' : 'brightness(1)',
-                    transform: 'scaleX(-1)',
-                    transition: 'filter 0.3s',
-                  }}
-                />
-                <div style={{
-                  fontSize: 20,
-                  textAlign: 'center',
-                  marginTop: 4,
-                }}>
-                  {cat2Mood === 'happy' && '😸'}
-                  {cat2Mood === 'sleepy' && '😴'}
-                  {cat2Mood === 'playing' && '🎮'}
-                </div>
-              </motion.div>
-
-              {/* Blanket */}
-              <AnimatePresence>
-                {showBlanket && (
-                  <motion.div
-                    initial={{ y: -100, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -100, opacity: 0 }}
-                    transition={{ type: 'spring', damping: 15 }}
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      height: '60%',
-                      background: 'linear-gradient(135deg, #87CEEB 10%, transparent 10%, transparent 50%, #87CEEB 50%, #87CEEB 60%, transparent 60%, transparent 100%)',
-                      backgroundSize: '20px 20px',
-                      border: '2px solid #5F9EA0',
-                      borderRadius: '0 0 8px 8px',
-                      opacity: 0.9,
-                      boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.1)',
-                    }}
-                  />
-                )}
-              </AnimatePresence>
+              </div>
+              <p style={{ color: colors.textSecondary, fontSize: 12, marginTop: 4 }}>
+                {getMoodLabel(blackCat.mood)} • {blackCat.mood}/100
+              </p>
             </div>
           </div>
 
-          {/* Controls */}
+          {/* Control Buttons */}
           <div style={{
-            marginTop: 24,
-            display: 'flex',
-            gap: 12,
-            justifyContent: 'center',
-            flexWrap: 'wrap',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 16,
           }}>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={toggleBlanket}
-              style={{
-                padding: '12px 24px',
-                borderRadius: 12,
-                background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
-                border: 'none',
-                color: 'white',
-                fontSize: 16,
-                fontWeight: 600,
-                cursor: 'pointer',
-                boxShadow: `0 4px 12px ${colors.primaryGlow}`,
-              }}
-            >
-              {showBlanket ? '🛏️ Remove Blanket' : '🛏️ Add Blanket'}
-            </motion.button>
+            {/* Brown Cat Controls */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 8,
+            }}>
+              <p style={{ color: colors.textPrimary, fontSize: 12, fontWeight: 600, marginBottom: 4 }}>
+                Brown Cat Actions:
+              </p>
+              {[
+                { label: '👁️ Wake', action: 'wake' as const },
+                { label: '😴 Sleep', action: 'sleep' as const },
+                { label: '💕 Nudge', action: 'nudge' as const },
+                { label: '🦵 Kick', action: 'kick' as const },
+                { label: '🧣 Hog', action: 'hog' as const },
+                { label: '🍖 Feed', action: 'feed' as const },
+                { label: '🎮 Game', action: 'game' as const },
+              ].map((btn) => (
+                <motion.button
+                  key={btn.action}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleCatAction('brown', btn.action)}
+                  style={{
+                    padding: '10px 12px',
+                    borderRadius: 20,
+                    background: colors.card,
+                    border: `1px solid ${colors.border}`,
+                    color: colors.textPrimary,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                  }}
+                >
+                  {btn.label}
+                </motion.button>
+              ))}
+            </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                haptics.medium()
-                setIsNight(prev => !prev)
-              }}
-              style={{
-                padding: '12px 24px',
-                borderRadius: 12,
-                background: colors.glass,
-                backdropFilter: 'blur(10px)',
-                border: `1px solid ${colors.border}`,
-                color: colors.textPrimary,
-                fontSize: 16,
-                fontWeight: 600,
-                cursor: 'pointer',
-                boxShadow: `0 4px 12px ${colors.primaryGlow}`,
-              }}
-            >
-              {isNight ? '☀️ Make Day' : '🌙 Make Night'}
-            </motion.button>
+            {/* Black Cat Controls */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 8,
+            }}>
+              <p style={{ color: colors.textPrimary, fontSize: 12, fontWeight: 600, marginBottom: 4 }}>
+                Black Cat Actions:
+              </p>
+              {[
+                { label: '👁️ Wake', action: 'wake' as const },
+                { label: '😴 Sleep', action: 'sleep' as const },
+                { label: '💕 Nudge', action: 'nudge' as const },
+                { label: '🦵 Kick', action: 'kick' as const },
+                { label: '🧣 Hog', action: 'hog' as const },
+                { label: '🍖 Feed', action: 'feed' as const },
+                { label: '🎮 Game', action: 'game' as const },
+              ].map((btn) => (
+                <motion.button
+                  key={btn.action}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleCatAction('black', btn.action)}
+                  style={{
+                    padding: '10px 12px',
+                    borderRadius: 20,
+                    background: colors.card,
+                    border: `1px solid ${colors.border}`,
+                    color: colors.textPrimary,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                  }}
+                >
+                  {btn.label}
+                </motion.button>
+              ))}
+            </div>
           </div>
-
-          <p style={{
-            marginTop: 16,
-            textAlign: 'center',
-            color: colors.textSecondary,
-            fontSize: 14,
-          }}>
-            Click on the cats to change their mood! 🐱
-          </p>
-        </div>
+        </motion.div>
       </div>
     </div>
   )
