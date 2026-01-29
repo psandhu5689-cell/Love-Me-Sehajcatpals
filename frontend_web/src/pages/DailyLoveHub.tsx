@@ -98,9 +98,11 @@ export default function DailyLoveHub() {
       {/* Content */}
       <div style={{
         maxWidth: 600,
-        margin: '60px auto 0',
+        margin: '0 auto',
         width: '100%',
-        paddingTop: 20,
+        paddingTop: 70,
+        paddingLeft: 16,
+        paddingRight: 16,
       }}>
         {/* Title */}
         <motion.div
@@ -108,20 +110,20 @@ export default function DailyLoveHub() {
           animate={{ opacity: 1, y: 0 }}
           style={{
             textAlign: 'center',
-            marginBottom: 32,
+            marginBottom: 24,
           }}
         >
           <h1 style={{
             color: colors.textPrimary,
-            fontSize: 32,
+            fontSize: 28,
             fontWeight: 600,
-            marginBottom: 8,
+            marginBottom: 6,
           }}>
             Personal Library
           </h1>
           <p style={{
             color: colors.textSecondary,
-            fontSize: 16,
+            fontSize: 14,
           }}>
             Everything for my girl
           </p>
