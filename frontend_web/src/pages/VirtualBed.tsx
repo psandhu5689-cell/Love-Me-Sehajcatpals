@@ -591,10 +591,8 @@ export default function VirtualBed() {
         break
         
       case 'kick':
-        // Play annoyed meow for kick
-        if (userInteracted && catMeowNightRef.current && !isMuted) {
-          catMeowNightRef.current.play()
-        }
+        // Play annoyed meow for kick with cooldown
+        playCatSound(catMeowNightRef)
         haptics.medium()
         setCat(prev => ({ ...prev, action: 'kick', mood: Math.max(0, prev.mood - 5) }))
         setTimeout(() => {
