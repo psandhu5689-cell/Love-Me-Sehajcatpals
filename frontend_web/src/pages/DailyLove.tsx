@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { IoChevronBack, IoSparkles, IoHeart, IoFlash, IoCamera, IoRefresh, IoClose, IoHeartHalf, IoChatbubbles, IoHelpCircle, IoChevronForward, IoFlame, IoSunny, IoGift, IoPlay, IoPause, IoPlaySkipForward, IoPlaySkipBack, IoVolumeHigh, IoVolumeMute, IoCheckmark, IoTime } from 'react-icons/io5'
