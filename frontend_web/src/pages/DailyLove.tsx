@@ -839,9 +839,38 @@ export default function DailyLove() {
           <IoClose size={28} color={colors.primary} />
         </motion.button>
 
-        <h1 style={{ color: colors.textPrimary, fontSize: 24, fontWeight: 600, marginBottom: 30 }}>
+        <h1 style={{ color: colors.textPrimary, fontSize: 24, fontWeight: 600, marginBottom: 16 }}>
           Who's Right? 🪙
         </h1>
+        
+        {/* Tally Display */}
+        <div style={{
+          display: 'flex',
+          gap: 24,
+          marginBottom: 30,
+          padding: '12px 24px',
+          background: colors.card,
+          borderRadius: 16,
+          border: `1px solid ${colors.border}`,
+        }}>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ color: colors.textMuted, fontSize: 12, marginBottom: 4 }}>Prabh</p>
+            <p style={{ color: colors.secondary, fontSize: 28, fontWeight: 700 }}>
+              {coinTally.prabh}
+            </p>
+          </div>
+          <div style={{
+            width: 1,
+            height: 50,
+            background: colors.border,
+          }} />
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ color: colors.textMuted, fontSize: 12, marginBottom: 4 }}>Sehaj</p>
+            <p style={{ color: colors.primary, fontSize: 28, fontWeight: 700 }}>
+              {coinTally.sehaj}
+            </p>
+          </div>
+        </div>
 
         <motion.div
           animate={isFlipping ? { rotateY: [0, 1800] } : {}}
