@@ -378,33 +378,36 @@ export default function Index() {
             <IoHeart size={18} />
           </motion.div>
         </motion.button>
+        </div>
 
-        <p style={{ color: colors.textMuted, margin: '12px 0', fontStyle: 'italic' }}>or</p>
+        <p style={{ color: colors.textMuted, margin: '12px 0', fontStyle: 'italic', textAlign: 'center' }}>or</p>
 
-        {/* Silly Crybaby Button */}
-        <motion.button
-          whileHover={{ scale: 1.02, boxShadow: `0 0 30px ${colors.secondary}30` }}
-          whileTap={{ scale: 0.98 }}
-          onClick={handleSillyCrybaby}
-          style={{
-            background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(10px)',
-            border: `1.5px solid ${colors.secondary}50`,
-            borderRadius: 25,
-            padding: '14px 20px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-          }}
-        >
-          <IoHeart size={18} color={colors.secondary} />
-          <span style={{ color: colors.secondary, fontSize: 14, fontWeight: 500 }}>
-            when you're being my silly crybaby
-          </span>
-          <span>💕</span>
-        </motion.button>
+        {/* Silly Crybaby Button - CENTERED */}
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <motion.button
+            whileHover={{ scale: 1.02, boxShadow: `0 0 30px ${colors.secondary}30` }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleSillyCrybaby}
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(10px)',
+              border: `1.5px solid ${colors.secondary}50`,
+              borderRadius: 25,
+              padding: '14px 20px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+            }}
+          >
+            <IoHeart size={18} color={colors.secondary} />
+            <span style={{ color: colors.secondary, fontSize: 14, fontWeight: 500 }}>
+              when you're being my silly crybaby
+            </span>
+            <span>💕</span>
+          </motion.button>
+        </div>
 
         {/* Presence Display */}
         <PresenceDisplay style={{ marginTop: 24 }} />
