@@ -1271,7 +1271,8 @@ export default function DailyLove() {
           { title: 'Together For 🕯', subtitle: 'Our time together', icon: null, emoji: '🕯', color: colors.primary, onClick: handleOpenTimeTogether },
           { title: 'Virtual Bed 🛏️', subtitle: 'Cozy time with our cats', icon: null, emoji: '🛏️', color: colors.secondary, onClick: () => { playClick(); navigate('/virtual-bed'); } },
           { title: 'Future Goals 🎯', subtitle: 'Dreams we\'re building', icon: null, emoji: '🎯', color: colors.primary, onClick: () => { playClick(); navigate('/future-goals'); } },
-          { title: 'Word Puzzles 🧩', subtitle: 'Daily crosswords & word search', icon: null, emoji: '🧩', color: colors.secondary, onClick: () => { playClick(); navigate('/word-puzzles'); } },
+          { title: 'Word Search 🔍', subtitle: 'Find hidden words - Easy', icon: null, emoji: '🔍', color: colors.secondary, onClick: () => { playClick(); navigate('/word-search'); } },
+          { title: 'Crossword ✏️', subtitle: 'Classic puzzle - Moderate', icon: null, emoji: '✏️', color: colors.primary, onClick: () => { playClick(); navigate('/crossword'); } },
         ].map((item, index) => (
           <motion.div
             key={index}
