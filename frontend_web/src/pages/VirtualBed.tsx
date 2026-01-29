@@ -976,6 +976,37 @@ export default function VirtualBed() {
               zIndex: 2,
             }} />
 
+            {/* NEW: LAYER 3.5: Blanket (moves left/center/right based on hog blanket action) */}
+            <motion.div
+              animate={{
+                left: blanketPosition === 'left' ? '20%' : blanketPosition === 'right' ? '65%' : '42.5%',
+              }}
+              transition={{ type: 'spring', stiffness: 120, damping: 15 }}
+              style={{
+                position: 'absolute',
+                bottom: 80,
+                width: 180,
+                height: 120,
+                background: 'linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFD1DC 100%)',
+                borderRadius: '60% 60% 30% 30%',
+                border: '3px solid #FF69B4',
+                zIndex: 6,
+                boxShadow: '0 4px 12px rgba(255,105,180,0.3), inset 0 2px 8px rgba(255,255,255,0.3)',
+                opacity: 0.9,
+              }}
+            >
+              {/* Blanket texture/pattern */}
+              <div style={{
+                position: 'absolute',
+                top: 10,
+                left: 10,
+                right: 10,
+                bottom: 10,
+                background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)',
+                borderRadius: '50% 50% 25% 25%',
+              }} />
+            </motion.div>
+
             {/* LAYER 4: Furniture Props */}
             {/* Small couch/bean bag - left side */}
             <div style={{
