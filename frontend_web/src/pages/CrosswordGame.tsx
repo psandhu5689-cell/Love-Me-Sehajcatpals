@@ -344,6 +344,12 @@ export default function CrosswordGame() {
                 const isBlack = currentPuzzle.blackSquares[row][col]
                 const isSelected = selectedCell?.row === row && selectedCell?.col === col
                 const cellValue = userGrid[row][col]
+                const isLocked = lockedCells[row][col]
+                
+                // Find if this cell starts a clue
+                const clueNumber = currentPuzzle.clues.find(
+                  c => c.row === row && c.col === col
+                )?.number
                 
                 return (
                   <div
@@ -351,18 +357,31 @@ export default function CrosswordGame() {
                     onClick={() => !isBlack && handleCellClick(row, col)}
                     style={{
                       aspectRatio: '1',
-                      background: isBlack ? '#000' : isSelected ? colors.primary : colors.background,
+                      background: isBlack ? '#000' : isSelected ? colors.primary : isLocked ? colors.card : colors.background,
                       border: `1px solid ${colors.border}`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      cursor: isBlack ? 'default' : 'pointer',
+                      cursor: isBlack ? 'default' : isLocked ? 'not-allowed' : 'pointer',
                       fontSize: 16,
                       fontWeight: 600,
-                      color: isSelected ? '#fff' : colors.textPrimary,
+                      color: isSelected ? '#fff' : isLocked ? colors.primary : colors.textPrimary,
                       position: 'relative',
                     }}
                   >
+                    {/* Clue number in top-left corner */}
+                    {clueNumber && (
+                      <span style={{
+                        position: 'absolute',
+                        top: 1,
+                        left: 2,
+                        fontSize: 8,
+                        fontWeight: 700,
+                        color: isSelected ? '#fff' : colors.textSecondary,
+                      }}>
+                        {clueNumber}
+                      </span>
+                    )}
                     {cellValue}
                   </div>
                 )
