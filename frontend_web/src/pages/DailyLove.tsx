@@ -807,12 +807,6 @@ export default function DailyLove() {
 
   // ============ SAD MODE ============
   if (showSadMode) {
-    const [kissDelivered, setKissDelivered] = useState(false)
-    const [hugProgress, setHugProgress] = useState(0)
-    const [isHugging, setIsHugging] = useState(false)
-    const [hugComplete, setHugComplete] = useState(false)
-    const [floatingHearts, setFloatingHearts] = useState<Array<{id: number, x: number, y: number}>>([])
-
     const handleQuickKiss = () => {
       haptics.medium()
       playPop()
@@ -840,10 +834,15 @@ export default function DailyLove() {
       setIsHugging(true)
       haptics.light()
       
-      const interval = setInterval(() => {
+      // Clear any existing interval
+      if (hugIntervalRef.current) {
+        clearInterval(hugIntervalRef.current)
+      }
+      
+      hugIntervalRef.current = setInterval(() => {
         setHugProgress(prev => {
           if (prev >= 100) {
-            clearInterval(interval)
+            if (hugIntervalRef.current) clearInterval(hugIntervalRef.current)
             setHugComplete(true)
             haptics.success()
             setTimeout(() => {
@@ -859,6 +858,9 @@ export default function DailyLove() {
 
     const handleReleaseHug = () => {
       setIsHugging(false)
+      if (hugIntervalRef.current) {
+        clearInterval(hugIntervalRef.current)
+      }
       if (hugProgress < 100) {
         setHugProgress(0)
       }
