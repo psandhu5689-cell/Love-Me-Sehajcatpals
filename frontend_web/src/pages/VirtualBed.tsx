@@ -424,6 +424,12 @@ export default function VirtualBed() {
       case 'feed':
         playSound(AUDIO.meow)
         setCat(prev => ({ ...prev, action: 'eat', mood: Math.min(100, prev.mood + 20) }))
+        // Increase meter slightly
+        if (cat === 'prabh') {
+          setPrabhMeter(prev => Math.min(100, prev + 10))
+        } else {
+          setSehajMeter(prev => Math.min(100, prev + 8))
+        }
         const food = FOOD_ITEMS[Math.floor(Math.random() * FOOD_ITEMS.length)]
         setShowEffect({ type: 'food', x: isLeft ? 35 : 65, y: 40, value: food })
         break
