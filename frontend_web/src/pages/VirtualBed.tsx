@@ -2955,19 +2955,20 @@ export default function VirtualBed() {
           
           {/* ============ NEW COMPACT BUTTON UI ============ */}
           
-          {/* Target Selector - Above action bar */}
+          {/* Target Selector - Above action bar - MOBILE OPTIMIZED */}
           <div style={{
             position: 'fixed',
-            bottom: 100,
+            bottom: window.innerWidth < 768 ? 90 : 100,
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',
-            gap: 8,
+            gap: window.innerWidth < 768 ? 6 : 8,
             background: 'rgba(255,255,255,0.15)',
             backdropFilter: 'blur(10px)',
-            padding: '6px 12px',
+            padding: window.innerWidth < 768 ? '4px 10px' : '6px 12px',
             borderRadius: 20,
             zIndex: 50,
+            WebkitTapHighlightColor: 'transparent',
           }}>
             {['prabh', 'sehaj', 'both'].map(mode => (
               <motion.button
@@ -2975,15 +2976,18 @@ export default function VirtualBed() {
                 onClick={() => { setTargetMode(mode as any); haptics.light(); }}
                 whileTap={{ scale: 0.95 }}
                 style={{
-                  padding: '6px 14px',
+                  padding: window.innerWidth < 768 ? '4px 12px' : '6px 14px',
                   background: targetMode === mode ? 'rgba(255,255,255,0.4)' : 'transparent',
                   border: 'none',
                   borderRadius: 14,
                   color: '#fff',
-                  fontSize: 11,
+                  fontSize: window.innerWidth < 768 ? 10 : 11,
                   fontWeight: 600,
                   cursor: 'pointer',
                   textTransform: 'capitalize',
+                  minWidth: window.innerWidth < 768 ? 50 : 60,
+                  touchAction: 'manipulation',
+                  WebkitTapHighlightColor: 'transparent',
                 }}
               >
                 {mode}
@@ -2991,24 +2995,26 @@ export default function VirtualBed() {
             ))}
           </div>
 
-          {/* Bottom Action Bar */}
+          {/* Bottom Action Bar - MOBILE OPTIMIZED */}
           <motion.div
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             transition={{ type: 'spring', damping: 20 }}
             style={{
               position: 'fixed',
-              bottom: 16,
+              bottom: window.innerWidth < 768 ? 12 : 16,
               left: '50%',
               transform: 'translateX(-50%)',
               display: 'flex',
-              gap: 10,
+              gap: window.innerWidth < 768 ? 8 : 10,
               background: 'rgba(255,255,255,0.2)',
               backdropFilter: 'blur(15px)',
-              padding: '10px 16px',
+              padding: window.innerWidth < 768 ? '8px 12px' : '10px 16px',
               borderRadius: 24,
               boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
               zIndex: 100,
+              maxWidth: '95vw',
+              WebkitTapHighlightColor: 'transparent',
             }}
           >
             <ActionIcon icon="👁️" label="Wake" onClick={() => handleCompactAction('wake')} />
