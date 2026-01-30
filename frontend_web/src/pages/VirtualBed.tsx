@@ -2275,7 +2275,129 @@ export default function VirtualBed() {
               zIndex: 1,
             }} />
 
-            {/* LAYER 3: Enlarged Rug (60-70% of floor, centered, below characters) */}
+            {/* LAYER 2.5: Couch (against back wall on floor) z60 */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              style={{
+                position: 'absolute',
+                bottom: '35%',
+                left: '60%',
+                transform: 'translateX(-50%)',
+                width: 140,
+                height: 80,
+                backgroundImage: 'url(/couch.png)',
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                zIndex: 60,
+                cursor: 'pointer',
+                filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))',
+              }}
+            />
+
+            {/* LAYER 2.6: Floor Lamp z60 */}
+            <motion.div
+              onClick={() => {
+                setFloorLampOn(!floorLampOn);
+                haptics.light();
+                addXP(1);
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                position: 'absolute',
+                bottom: '32%',
+                right: '15%',
+                width: 50,
+                height: 100,
+                backgroundImage: floorLampOn ? 'url(/lamp_on.png)' : 'url(/lamp_off.png)',
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                zIndex: 60,
+                cursor: 'pointer',
+                filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.15))',
+              }}
+            />
+            
+            {/* Lamp Glow Overlay z80 */}
+            {floorLampOn && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.4 }}
+                exit={{ opacity: 0 }}
+                style={{
+                  position: 'absolute',
+                  bottom: '48%',
+                  right: '12%',
+                  width: 120,
+                  height: 120,
+                  backgroundImage: 'url(/glowCircle.png)',
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                  zIndex: 80,
+                  mixBlendMode: 'screen',
+                  pointerEvents: 'none',
+                }}
+              />
+            )}
+
+            {/* String Lights z30 */}
+            <motion.div
+              onClick={() => {
+                const modes: ('off' | 'warm' | 'pink' | 'purple')[] = ['off', 'warm', 'pink', 'purple'];
+                const idx = modes.indexOf(stringLightsMode);
+                setStringLightsMode(modes[(idx + 1) % modes.length]);
+                haptics.light();
+                addXP(1);
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                position: 'absolute',
+                top: '5%',
+                left: '10%',
+                width: '80%',
+                height: 40,
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                zIndex: 30,
+                cursor: 'pointer',
+              }}
+            >
+              {stringLightsMode !== 'off' && Array.from({ length: 12 }).map((_, i) => (
+                <motion.div
+                  key={i}
+                  animate={{
+                    opacity: [0.6, 1, 0.6],
+                    scale: [0.9, 1.1, 0.9],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.15,
+                  }}
+                  style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    background: 
+                      stringLightsMode === 'warm' ? '#FFD700' :
+                      stringLightsMode === 'pink' ? '#FF69B4' :
+                      '#9B59B6',
+                    boxShadow: `0 0 12px ${
+                      stringLightsMode === 'warm' ? '#FFD700' :
+                      stringLightsMode === 'pink' ? '#FF69B4' :
+                      '#9B59B6'
+                    }`,
+                  }}
+                />
+              ))}
+            </motion.div>
+
+            {/* LAYER 3: Enlarged Rug (60-70% of floor, centered, below characters) z55 */}
             <div style={{
               position: 'absolute',
               bottom: 30,
