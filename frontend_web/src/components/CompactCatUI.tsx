@@ -102,15 +102,16 @@ export function CompactCatUI({ onAction, prabhState, sehajState, disabled }: Com
       gap: 12,
       paddingBottom: 20,
     }}>
-      {/* Target Selector - Now relative positioning */}
+      {/* Target Selector - Glassy look */}
       <div style={{
         display: 'flex',
         gap: 4,
-        background: 'rgba(26, 26, 36, 0.85)',
-        backdropFilter: 'blur(10px)',
+        background: 'rgba(255, 255, 255, 0.08)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         borderRadius: 20,
         padding: 4,
-        border: '1px solid rgba(255, 255, 255, 0.1)',
+        border: '1px solid rgba(255, 255, 255, 0.15)',
       }}>
         {(['prabh', 'sehaj', 'both'] as Target[]).map(t => (
           <motion.button
