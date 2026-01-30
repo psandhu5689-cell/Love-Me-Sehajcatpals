@@ -2966,6 +2966,107 @@ export default function VirtualBed() {
             </div>
           </div>
           
+          {/* ============ BOTTOM HUD STRIP ============ */}
+          <div style={{
+            position: 'fixed',
+            bottom: window.innerWidth < 768 ? 100 : 110,
+            left: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '8px 16px',
+            background: 'rgba(0,0,0,0.3)',
+            backdropFilter: 'blur(10px)',
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            zIndex: 45,
+          }}>
+            {/* Left: Mood Icons */}
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                <span style={{ fontSize: 12 }}>🐱</span>
+                <span style={{ fontSize: 10, color: '#E67E22', fontWeight: 600 }}>
+                  {prabh.mood > 80 ? '😊' : prabh.mood > 50 ? '😐' : '😢'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                <span style={{ fontSize: 12 }}>🐱</span>
+                <span style={{ fontSize: 10, color: '#D68910', fontWeight: 600 }}>
+                  {sehaj.mood > 80 ? '😊' : sehaj.mood > 50 ? '😐' : '😢'}
+                </span>
+              </div>
+            </div>
+
+            {/* Center: Freakiness Meter */}
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              gap: 4,
+              minWidth: 120,
+            }}>
+              <span style={{ fontSize: 9, color: '#fff', fontWeight: 600 }}>Freakiness</span>
+              <div style={{
+                width: 100,
+                height: 8,
+                background: 'rgba(255,255,255,0.2)',
+                borderRadius: 4,
+                overflow: 'hidden',
+              }}>
+                <motion.div
+                  animate={{ width: `${Math.max(prabhMeter, sehajMeter)}%` }}
+                  style={{
+                    height: '100%',
+                    background: 'linear-gradient(90deg, #FF69B4, #9B59B6)',
+                    borderRadius: 4,
+                  }}
+                />
+              </div>
+              <span style={{ fontSize: 8, color: '#FF69B4', fontWeight: 600 }}>
+                {Math.max(prabhMeter, sehajMeter)}%
+              </span>
+            </div>
+
+            {/* Right: Room Level Badge */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}>
+              <div style={{
+                background: 'rgba(255,255,255,0.2)',
+                padding: '4px 8px',
+                borderRadius: 8,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+              }}>
+                <span style={{ fontSize: 12 }}>🏠</span>
+                <span style={{ fontSize: 10, color: '#fff', fontWeight: 600 }}>
+                  Lv.{roomLevel}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* ============ QUICK ACTION BUTTONS (BOTTOM EMPTY SPACE) ============ */}
+          <div style={{
+            position: 'fixed',
+            bottom: window.innerWidth < 768 ? 144 : 154,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            gap: 8,
+            zIndex: 45,
+          }}>
+            <QuickButton icon="🎮" onClick={() => handleCompactAction('gaming')} />
+            <QuickButton icon="🐾" onClick={() => handleCompactAction('pet')} />
+            <QuickButton icon="🐟" onClick={() => handleCompactAction('feed')} />
+            <QuickButton icon="❤️" onClick={() => handleCompactAction('cuddle')} />
+            <QuickButton icon="🌙" onClick={() => handleCompactAction('lightsOut')} />
+            <QuickButton icon="🎭" onClick={() => handleCompactAction('drama')} />
+          </div>
+
           {/* ============ NEW COMPACT BUTTON UI ============ */}
           
           {/* Target Selector - Above action bar - MOBILE OPTIMIZED */}
