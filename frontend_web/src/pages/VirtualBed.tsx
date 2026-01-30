@@ -20,7 +20,7 @@ import { useToys, CatReaction } from '../hooks/useToys'
 
 type Effect = {
   id: string
-  type: 'heart' | 'angry' | 'sparkle' | 'z' | 'exclaim' | 'treat' | 'yarn' | 'confetti'
+  type: 'heart' | 'angry' | 'sparkle' | 'z' | 'exclaim' | 'treat' | 'yarn' | 'confetti' | 'water'
   x: number
   y: number
   timestamp: number
