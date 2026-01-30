@@ -1765,7 +1765,7 @@ export default function VirtualBed() {
               border: '5px solid #FFFFFF',
               borderRadius: 10,
               overflow: 'hidden',
-              zIndex: 10, // ABOVE dim overlay (z-index 5) so it stays bright
+              zIndex: 100, // Z-PLANE 100: Wall Decor (stays above dim overlay)
               boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 0 20px rgba(0,0,0,0.3)',
             }}>
               {/* Weather Videos/Backgrounds */}
