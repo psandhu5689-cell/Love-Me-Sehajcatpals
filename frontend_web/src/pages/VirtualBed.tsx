@@ -44,6 +44,12 @@ import haptics from '../utils/haptics'
 import { Howl } from 'howler'
 import { useCatAnimation } from '../hooks/useCatAnimation'
 
+// NEW: Game-grade animation system
+import { CatSprite, CatState } from '../components/CatSprite'
+import { CompactCatUI } from '../components/CompactCatUI'
+import { useCatMovement } from '../hooks/useCatMovement'
+import { useCatTouch, detectDragApartSadness } from '../hooks/useCatTouch'
+
 // Sprite sheets
 import cat1Sheet from '../assets/sprites/cat1_sheet.png'
 import cat2Sheet from '../assets/sprites/cat2_sheet.png'
