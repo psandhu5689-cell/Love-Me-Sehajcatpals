@@ -513,23 +513,24 @@ export default function VirtualBed() {
               padding: 0,
             }}
           />
-          
-          {/* Cat tree - Positioned in wall but extends down to floor */}
-          <img
-            src="/decor/cat_tree.png"
-            alt="cat tree"
-            style={{
-              position: 'absolute',
-              bottom: '-60px',
-              left: '5%',
-              width: 95,
-              height: 149,
-              objectFit: 'contain',
-              imageRendering: 'pixelated',
-              zIndex: 100,
-            }}
-          />
         </div>
+        
+        {/* Cat tree - Spans wall and floor, positioned in room-view */}
+        <img
+          src="/decor/cat_tree.png"
+          alt="cat tree"
+          style={{
+            position: 'absolute',
+            top: '35%',
+            left: '3%',
+            width: 110,
+            height: 170,
+            objectFit: 'contain',
+            imageRendering: 'pixelated',
+            zIndex: 100,
+            pointerEvents: 'none',
+          }}
+        />
 
         {/* FLOOR CONTAINER - STARTS EXACTLY AT WALL BOTTOM */}
         <div 
