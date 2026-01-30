@@ -2234,6 +2234,10 @@ export default function VirtualBed() {
             }} />
             
             {/* LAYER 5: Cat Sprites - AUTONOMOUS ROAMING */}
+            {/* ============================================ */}
+            {/* Z-PLANE 70: CATS LAYER */}
+            {/* ============================================ */}
+            
             {/* Sehaj Cat (Left - Ginger) - ROAMING with smooth transitions - TOUCH ZONES */}
             <motion.div
               animate={{
@@ -2248,7 +2252,7 @@ export default function VirtualBed() {
               }}
               style={{
                 position: 'absolute',
-                zIndex: 3,
+                zIndex: 70,
                 opacity: 1,
                 visibility: 'visible',
                 display: 'block',
