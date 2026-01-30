@@ -1719,7 +1719,23 @@ export default function VirtualBed() {
             overflow: 'hidden',
             borderRadius: 24,
           }}>
-            {/* NEW: Dim Lights Overlay - dims wall and floor when active */}
+            {/* ============================================ */}
+            {/* Z-PLANE 90: WALL LAYER */}
+            {/* ============================================ */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundImage: 'url(/wall-background.jpeg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              zIndex: 90,
+            }} />
+            
+            {/* Dim Lights Overlay - dims entire scene when active */}
             <div style={{
               position: 'absolute',
               top: 0,
@@ -1731,22 +1747,8 @@ export default function VirtualBed() {
               ...(lightsDimmed && {
                 background: 'rgba(0, 0, 0, 0.5)',
               }),
-              zIndex: 5,
+              zIndex: 110,
               pointerEvents: 'none',
-            }} />
-            
-            {/* LAYER 1: Wall Background (full width) */}
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundImage: 'url(/wall-background.jpeg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              zIndex: 0,
             }} />
 
             {/* Rainy Window on Wall - LARGER with WHITE OUTLINE - STAYS BRIGHT */}
