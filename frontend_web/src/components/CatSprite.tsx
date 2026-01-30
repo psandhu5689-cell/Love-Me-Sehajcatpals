@@ -155,6 +155,7 @@ export function CatSprite({ cat, state, onAnimationComplete, flip = false, scale
         width: displaySize,
         height: displaySize,
         position: 'relative',
+        overflow: 'hidden',  // CRITICAL: Clip to show only one frame
         transform: flip ? 'scaleX(-1)' : 'none',
       }}
     >
