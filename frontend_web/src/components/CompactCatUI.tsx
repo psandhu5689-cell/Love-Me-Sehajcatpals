@@ -124,6 +124,10 @@ export function CompactCatUI({
     return false
   }
 
+  // Check if cats are sleeping
+  const prabhSleeping = prabhState === 'sleep'
+  const sehajSleeping = sehajState === 'sleep'
+
   return (
     <div style={{
       width: '100%',
@@ -132,55 +136,192 @@ export function CompactCatUI({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      gap: 12,
+      gap: 10,
       paddingBottom: 20,
     }}>
-      {/* Target Selector - Glassy look */}
+      {/* 1) Target Selector - Glassy segmented control */}
       <div style={{
         display: 'flex',
         gap: 4,
-        background: 'rgba(255, 255, 255, 0.08)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
+        ...GLASSY_STYLE,
         borderRadius: 20,
         padding: 4,
-        border: '1px solid rgba(255, 255, 255, 0.15)',
       }}>
-        {(['prabh', 'sehaj', 'both'] as Target[]).map(t => (
+        {(['sehaj', 'prabh', 'both'] as Target[]).map(t => (
           <motion.button
             key={t}
             whileTap={{ scale: 0.95 }}
             onClick={() => setTarget(t)}
             style={{
-              padding: '6px 12px',
+              padding: '8px 16px',
               borderRadius: 16,
               border: 'none',
               background: target === t 
                 ? 'linear-gradient(135deg, #667eea, #764ba2)'
                 : 'transparent',
               color: 'white',
-              fontSize: 11,
+              fontSize: 12,
               fontWeight: 600,
               cursor: 'pointer',
               transition: 'all 0.2s',
             }}
           >
-            {t === 'prabh' ? '🖤 Prabh' : t === 'sehaj' ? '🧡 Sehaj' : '💕 Both'}
+            {t === 'sehaj' ? '🧡 Sehaj' : t === 'prabh' ? '🖤 Prabh' : '💕 Both'}
           </motion.button>
         ))}
       </div>
+
+      {/* 2) Freakiness Bar */}
+      <div style={{
+        ...GLASSY_STYLE,
+        borderRadius: 12,
+        padding: '8px 16px',
+        width: '100%',
+        maxWidth: 300,
+      }}>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          marginBottom: 6,
+        }}>
+          <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 11, fontWeight: 500 }}>
+            Freakiness
+          </span>
+          <span style={{ color: 'white', fontSize: 11, fontWeight: 600 }}>
+            {target === 'both' 
+              ? `${Math.round((sehajFreakiness + prabhFreakiness) / 2)}%`
+              : target === 'sehaj' ? `${sehajFreakiness}%` : `${prabhFreakiness}%`
+            }
+          </span>
+        </div>
+        {/* Bars */}
+        {target === 'both' ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', width: 40 }}>Sehaj</span>
+              <div style={{ flex: 1, height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 3 }}>
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${sehajFreakiness}%` }}
+                  style={{ height: '100%', background: 'linear-gradient(90deg, #f97316, #ea580c)', borderRadius: 3 }}
+                />
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', width: 40 }}>Prabh</span>
+              <div style={{ flex: 1, height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 3 }}>
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${prabhFreakiness}%` }}
+                  style={{ height: '100%', background: 'linear-gradient(90deg, #6366f1, #4f46e5)', borderRadius: 3 }}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ height: 8, background: 'rgba(255,255,255,0.1)', borderRadius: 4 }}>
+            <motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: `${target === 'sehaj' ? sehajFreakiness : prabhFreakiness}%` }}
+              style={{ 
+                height: '100%', 
+                background: target === 'sehaj' 
+                  ? 'linear-gradient(90deg, #f97316, #ea580c)' 
+                  : 'linear-gradient(90deg, #6366f1, #4f46e5)', 
+                borderRadius: 4 
+              }}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* 3) Mood Bar - Compact mood indicators */}
+      <div style={{ display: 'flex', gap: 8 }}>
+        {(target === 'both' || target === 'sehaj') && (
+          <div style={{
+            ...GLASSY_STYLE,
+            borderRadius: 12,
+            padding: '6px 12px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+          }}>
+            <span style={{ fontSize: 14 }}>{MOOD_ICONS[sehajMood]}</span>
+            <span style={{ color: 'white', fontSize: 11, fontWeight: 500 }}>
+              {sehajMood.charAt(0).toUpperCase() + sehajMood.slice(1)}
+            </span>
+            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 9 }}>Sehaj</span>
+          </div>
+        )}
+        {(target === 'both' || target === 'prabh') && (
+          <div style={{
+            ...GLASSY_STYLE,
+            borderRadius: 12,
+            padding: '6px 12px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+          }}>
+            <span style={{ fontSize: 14 }}>{MOOD_ICONS[prabhMood]}</span>
+            <span style={{ color: 'white', fontSize: 11, fontWeight: 500 }}>
+              {prabhMood.charAt(0).toUpperCase() + prabhMood.slice(1)}
+            </span>
+            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 9 }}>Prabh</span>
+          </div>
+        )}
+      </div>
+
+      {/* 4) Sleep Status Bar - Shows when cat is sleeping */}
+      <AnimatePresence>
+        {(sehajSleeping || prabhSleeping) && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            style={{
+              display: 'flex',
+              gap: 8,
+            }}
+          >
+            {sehajSleeping && (
+              <div style={{
+                ...GLASSY_STYLE,
+                borderRadius: 20,
+                padding: '6px 14px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+              }}>
+                <span style={{ color: 'white', fontSize: 11 }}>Sehaj sleeping</span>
+                <span style={{ fontSize: 14 }}>😴</span>
+              </div>
+            )}
+            {prabhSleeping && (
+              <div style={{
+                ...GLASSY_STYLE,
+                borderRadius: 20,
+                padding: '6px 14px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+              }}>
+                <span style={{ color: 'white', fontSize: 11 }}>Prabh sleeping</span>
+                <span style={{ fontSize: 14 }}>😴</span>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Action Bar - Glassy look */}
       <motion.div
         style={{
           display: 'flex',
           gap: 12,
-          background: 'rgba(255, 255, 255, 0.08)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
+          ...GLASSY_STYLE,
           borderRadius: 30,
           padding: '12px 20px',
-          border: '1px solid rgba(255, 255, 255, 0.15)',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
         }}
       >
