@@ -1,14 +1,17 @@
 /**
- * GAME-GRADE CAT SPRITE ANIMATOR - FIXED VITE PATHS
+ * GAME-GRADE CAT SPRITE ANIMATOR - CLEAN SPRITES (NO LABELS)
  * NO SLIDING - Movement only occurs during walk animations
  * Frame-based position updates
+ * 
+ * Using unlabeled sprite sheets: prabh_sprites.png (black) and sehaj_sprites.png (ginger)
+ * Sheet dimensions: 896x4608 (14 columns x 72 rows of 64px frames)
  */
 
 import React, { useState, useEffect, useRef } from 'react'
 
-// Use public folder paths for Vite
-const prabhSheet = '/black_cat_sheet.png'
-const sehajSheet = '/ginger_cat_labeled.png'
+// Use CLEAN sprite sheets (no text labels)
+const prabhSheet = '/prabh_sprites.png'  // Black cat
+const sehajSheet = '/sehaj_sprites.png'  // Ginger/tan cat
 
 // Core animation states
 export type CatState = 
@@ -38,32 +41,36 @@ interface AnimationDef {
   loop: boolean
 }
 
-// BLACK CAT (Prabh)
-const PRABH_ANIMATIONS: Record<CatState, AnimationDef> = {
-  sitIdle: { start: 144, end: 144, fps: 1, loop: true },
-  layIdle: { start: 145, end: 145, fps: 1, loop: true },
-  walkUp: { start: 18, end: 23, fps: 8, loop: true },
-  walkDown: { start: 0, end: 5, fps: 8, loop: true },
-  walkLeft: { start: 54, end: 59, fps: 8, loop: true },
-  walkRight: { start: 36, end: 41, fps: 8, loop: true },
-  sleep: { start: 666, end: 671, fps: 6, loop: true },
-  wake: { start: 671, end: 666, fps: 10, loop: false },
-  eat: { start: 864, end: 873, fps: 10, loop: false },
-  happy: { start: 504, end: 514, fps: 12, loop: false },
-  annoyed: { start: 936, end: 945, fps: 10, loop: false },
-  sad: { start: 936, end: 938, fps: 6, loop: true },
-  surprised: { start: 144, end: 145, fps: 12, loop: false },
-  purr: { start: 504, end: 506, fps: 8, loop: true },
-  tailFlick: { start: 936, end: 940, fps: 10, loop: false },
-  bounce: { start: 504, end: 510, fps: 12, loop: false },
-  pickUp: { start: 144, end: 146, fps: 6, loop: true },
-  chaos: { start: 936, end: 945, fps: 14, loop: false },
+// Animation frame mappings for clean sprite sheets (14 columns)
+// Row 0: Walk down (frames 0-5)
+// Row 1: Walk left (frames 14-19)
+// Row 2: Walk right (frames 28-33)
+// Row 3: Walk up (frames 42-47)
+// etc.
+const ANIMATIONS: Record<CatState, AnimationDef> = {
+  sitIdle: { start: 0, end: 0, fps: 1, loop: true },        // Standing idle
+  layIdle: { start: 56, end: 56, fps: 1, loop: true },      // Lying idle
+  walkDown: { start: 0, end: 5, fps: 8, loop: true },       // Row 0
+  walkLeft: { start: 14, end: 19, fps: 8, loop: true },     // Row 1
+  walkRight: { start: 28, end: 33, fps: 8, loop: true },    // Row 2
+  walkUp: { start: 42, end: 47, fps: 8, loop: true },       // Row 3
+  sleep: { start: 56, end: 59, fps: 4, loop: true },        // Lying/sleep frames
+  wake: { start: 59, end: 56, fps: 8, loop: false },        // Wake up (reverse sleep)
+  eat: { start: 70, end: 75, fps: 8, loop: false },         // Eating animation
+  happy: { start: 84, end: 89, fps: 10, loop: false },      // Happy/excited
+  annoyed: { start: 98, end: 103, fps: 8, loop: false },    // Annoyed
+  sad: { start: 98, end: 100, fps: 4, loop: true },         // Sad (short loop)
+  surprised: { start: 112, end: 114, fps: 10, loop: false },// Surprised
+  purr: { start: 84, end: 86, fps: 6, loop: true },         // Purring
+  tailFlick: { start: 126, end: 130, fps: 8, loop: false }, // Tail flick
+  bounce: { start: 84, end: 91, fps: 12, loop: false },     // Bouncy/playful
+  pickUp: { start: 140, end: 143, fps: 6, loop: true },     // Being picked up
+  chaos: { start: 98, end: 105, fps: 14, loop: false },     // Chaos mode (fast annoyed)
 }
 
-// GINGER CAT (Sehaj) - Same structure
-const SEHAJ_ANIMATIONS: Record<CatState, AnimationDef> = {
-  ...PRABH_ANIMATIONS
-}
+// Both cats use the same animation structure
+const PRABH_ANIMATIONS = ANIMATIONS
+const SEHAJ_ANIMATIONS = ANIMATIONS
 
 interface CatSpriteProps {
   cat: 'prabh' | 'sehaj'
