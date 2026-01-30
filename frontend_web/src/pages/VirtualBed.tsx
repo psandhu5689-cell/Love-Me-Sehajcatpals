@@ -1007,6 +1007,10 @@ export default function VirtualBed() {
   const [frameIndex, setFrameIndex] = useState(0)
   const FRAME_IMAGES = ['💕', '🐱🐱', '🌸', '✨', '🏠', '💝', '🌙', '☀️']
   
+  // NEW: Compact UI state
+  const [showSecondaryPanel, setShowSecondaryPanel] = useState(false)
+  const [targetMode, setTargetMode] = useState<'prabh' | 'sehaj' | 'both'>('both')
+  
   // Cat mood bubbles
   const [prabhMoodBubble, setPrabhMoodBubble] = useState<string | null>(null)
   const [sehajMoodBubble, setSehajMoodBubble] = useState<string | null>(null)
