@@ -62,10 +62,8 @@ const SECONDARY_ACTIONS: ActionButton[] = [
   { id: 'kick', icon: '💥', label: 'Kick' },
   { id: 'hogBlanket', icon: '🧣', label: 'Hog Blanket' },
   { id: 'cuddle', icon: '❤️', label: 'Cuddle' },
-  { id: 'drama', icon: '🎭', label: 'Drama' },
   { id: 'lightsOut', icon: '🌙', label: 'Lights Out' },
   { id: 'treatToss', icon: '🐟', label: 'Treat' },
-  { id: 'chaos', icon: '💀', label: 'fuck' },
 ]
 
 const MOOD_ICONS: Record<Mood, string> = {
