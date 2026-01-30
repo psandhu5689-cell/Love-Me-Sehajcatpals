@@ -3203,29 +3203,7 @@ export default function VirtualBed() {
           
           {/* Room level badges removed */}
 
-          {/* Special Button - Compact at bottom center */}
-          <motion.button
-            whileHover={{ scale: 1.02, boxShadow: `0 0 30px ${colors.primary}` }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleSpecialButton}
-            style={{
-              position: 'fixed',
-              bottom: 16,
-              right: 20,
-              padding: '12px 20px',
-              borderRadius: 20,
-              background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
-              border: 'none',
-              color: 'white',
-              fontSize: 14,
-              fontWeight: 700,
-              cursor: 'pointer',
-              boxShadow: `0 4px 20px ${colors.primaryGlow}`,
-              zIndex: 98,
-            }}
-          >
-            fuck 💕
-          </motion.button>
+          {/* Special button removed */}
 
           {/* Lights Out Overlay */}
           <AnimatePresence>
