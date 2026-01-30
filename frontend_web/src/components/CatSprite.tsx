@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import prabhSheet from '../assets/sprites/black_cat_sheet.png'
 import sehajSheet from '../assets/sprites/ginger_cat_labeled.png'
 
-// Core animation states (MINIMAL SCOPE)
+// Core animation states (EXPANDED FOR TOUCH INTERACTIONS)
 export type CatState = 
   | 'sitIdle'
   | 'layIdle'
@@ -21,6 +21,13 @@ export type CatState =
   | 'eat'
   | 'happy'
   | 'annoyed'
+  | 'sad'         // NEW: for drag-apart
+  | 'surprised'   // NEW: for nose tap
+  | 'purr'        // NEW: for body tap
+  | 'tailFlick'   // NEW: for tail tap
+  | 'bounce'      // NEW: for double tap
+  | 'pickUp'      // NEW: for long press
+  | 'chaos'       // NEW: for special button
 
 interface AnimationDef {
   start: number  // Frame index in sprite sheet
