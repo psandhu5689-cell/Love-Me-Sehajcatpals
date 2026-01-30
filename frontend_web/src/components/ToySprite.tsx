@@ -121,7 +121,7 @@ export function ToySprite({
   }
 
   const animStyle = getAnimationStyle(toy.state, isDragged)
-  const toySize = 60 // Base size in pixels
+  const toySize = 66 // Base size in pixels - 10% bigger (was 60)
 
   return (
     <motion.div
