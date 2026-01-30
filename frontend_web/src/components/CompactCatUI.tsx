@@ -90,14 +90,18 @@ export function CompactCatUI({ onAction, prabhState, sehajState, disabled }: Com
   }
 
   return (
-    <>
-      {/* Target Selector */}
+    <div style={{
+      width: '100%',
+      maxWidth: 800,
+      margin: '0 auto',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: 12,
+      paddingBottom: 20,
+    }}>
+      {/* Target Selector - Now relative positioning */}
       <div style={{
-        position: 'fixed',
-        bottom: 100,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 999,
         display: 'flex',
         gap: 4,
         background: 'rgba(26, 26, 36, 0.85)',
@@ -130,14 +134,9 @@ export function CompactCatUI({ onAction, prabhState, sehajState, disabled }: Com
         ))}
       </div>
 
-      {/* Bottom Action Bar */}
+      {/* Action Bar - Now relative positioning */}
       <motion.div
         style={{
-          position: 'fixed',
-          bottom: 20,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 1000,
           display: 'flex',
           gap: 12,
           background: 'rgba(26, 26, 36, 0.9)',
