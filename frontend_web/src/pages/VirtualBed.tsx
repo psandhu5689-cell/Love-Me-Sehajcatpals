@@ -2447,7 +2447,7 @@ export default function VirtualBed() {
               }}
               style={{
                 position: 'absolute',
-                zIndex: 3,
+                zIndex: 70,
                 opacity: 1,
                 visibility: 'visible',
                 display: 'block',
