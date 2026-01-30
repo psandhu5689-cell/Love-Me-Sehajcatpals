@@ -82,8 +82,14 @@ export function useCatMovement(catId: 'prabh' | 'sehaj') {
       return
     }
 
-    const target = FLOOR_SPOTS[position.targetSpot]
-    const speed = 0.5 // percent per frame
+    // Use custom target position if set, otherwise use FLOOR_SPOTS
+    const target = position.targetSpot >= FLOOR_SPOTS.length 
+      ? targetPositionRef.current 
+      : FLOOR_SPOTS[position.targetSpot]
+    
+    if (!target) return
+    
+    const speed = 0.8 // percent per frame - slightly faster
 
     const interval = setInterval(() => {
       setPosition(prev => {
@@ -92,7 +98,8 @@ export function useCatMovement(catId: 'prabh' | 'sehaj') {
         const dist = Math.sqrt(dx * dx + dy * dy)
 
         if (dist < 1) {
-          // Arrived! Return to idle
+          // Arrived! Return to idle and clear custom target
+          targetPositionRef.current = null
           return {
             ...prev,
             x: target.x,
@@ -112,7 +119,7 @@ export function useCatMovement(catId: 'prabh' | 'sehaj') {
           y: prev.y + moveY,
         }
       })
-    }, 1000 / 8) // 8 FPS movement update
+    }, 1000 / 12) // 12 FPS movement update - smoother
 
     return () => clearInterval(interval)
   }, [position.state, position.targetSpot])
