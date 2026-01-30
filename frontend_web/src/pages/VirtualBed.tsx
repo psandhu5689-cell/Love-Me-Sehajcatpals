@@ -355,6 +355,40 @@ const SPECIAL_MESSAGES = [
 
 const FOOD_ITEMS = ['🐟', '🦴', '🍖', '🍣', '🥛']
 
+// ============ QUICK BUTTON COMPONENT ============
+
+interface QuickButtonProps {
+  icon: string;
+  onClick: () => void;
+}
+
+function QuickButton({ icon, onClick }: QuickButtonProps) {
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      style={{
+        width: 32,
+        height: 32,
+        borderRadius: '50%',
+        background: 'rgba(255,255,255,0.2)',
+        backdropFilter: 'blur(10px)',
+        border: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 16,
+        cursor: 'pointer',
+        touchAction: 'manipulation',
+        WebkitTapHighlightColor: 'transparent',
+      }}
+    >
+      {icon}
+    </motion.button>
+  );
+}
+
 // ============ ACTION ICON COMPONENT (MOBILE OPTIMIZED) ============
 
 interface ActionIconProps {
