@@ -182,7 +182,6 @@ export default function VirtualBed() {
         sehajCat.triggerAction('wake')
         spawnEffect('exclaim', sehajCat.position.x, sehajCat.position.y)
       }
-      showFeedback(target === 'both' ? 'Both woke up!' : `${target} woke up!`)
     } else if (action === 'sleep') {
       if (target === 'prabh' || target === 'both') {
         prabhCat.triggerAction('sleep')
@@ -192,7 +191,6 @@ export default function VirtualBed() {
         sehajCat.triggerAction('sleep')
         spawnEffect('z', sehajCat.position.x, sehajCat.position.y)
       }
-      showFeedback('Sleeping...')
     } else if (action === 'feed') {
       if (target === 'prabh' || target === 'both') {
         prabhCat.triggerAction('eat')
@@ -202,12 +200,10 @@ export default function VirtualBed() {
         sehajCat.triggerAction('eat')
         spawnEffect('treat', sehajCat.position.x, sehajCat.position.y)
       }
-      showFeedback('Feeding!')
     } else if (action === 'cuddle') {
       prabhCat.triggerAction('happy')
       sehajCat.triggerAction('happy')
       spawnEffect('heart', 50, 50)
-      showFeedback('Cuddle time! 💕')
     } else if (action === 'gaming') {
       if (target === 'prabh' || target === 'both') {
         prabhCat.triggerAction('happy')
@@ -217,25 +213,21 @@ export default function VirtualBed() {
         sehajCat.triggerAction('happy')
         spawnEffect('sparkle', sehajCat.position.x, sehajCat.position.y)
       }
-      showFeedback('Gaming! 🎮')
     } else if (action === 'kick') {
       prabhCat.triggerAction('annoyed')
       sehajCat.triggerAction('annoyed')
       spawnEffect('angry', prabhCat.position.x, prabhCat.position.y)
       spawnEffect('angry', sehajCat.position.x, sehajCat.position.y)
-      showFeedback('Ow!')
     } else if (action === 'lightsOut') {
       setDimLights(true)
       prabhCat.triggerAction('surprised')
       sehajCat.triggerAction('surprised')
       setTimeout(() => setDimLights(false), 2500)
-      showFeedback('Lights out!')
     } else if (action === 'hogBlanket') {
       if (target === 'prabh') setBlanketShift(1)
       else if (target === 'sehaj') setBlanketShift(-1)
       else setBlanketShift(0)
       setTimeout(() => setBlanketShift(0), 3000)
-      showFeedback('Hogging blanket!')
     } else if (action === 'drama') {
       prabhCat.triggerAction('annoyed')
       sehajCat.triggerAction('annoyed')
@@ -244,7 +236,6 @@ export default function VirtualBed() {
       spawnEffect('angry', prabhCat.position.x, prabhCat.position.y)
       spawnEffect('angry', sehajCat.position.x, sehajCat.position.y)
       setTimeout(() => { setPrabhBubble(''); setSehajBubble('') }, 2500)
-      showFeedback('Drama!')
     } else if (action === 'chaos') {
       const chaosLines = [
         "OH MY GOD WHAT'S HAPPENING",
@@ -257,10 +248,8 @@ export default function VirtualBed() {
       prabhCat.triggerAction('chaos')
       sehajCat.triggerAction('chaos')
       setTimeout(() => { setShowChaos(false); setChaosText('') }, 2500)
-      showFeedback('CHAOS!')
     } else if (action === 'treatToss') {
       spawnEffect('treat', 50, 60)
-      showFeedback('Treat tossed!')
     }
 
     const state = stateMap[action] || 'sitIdle'
