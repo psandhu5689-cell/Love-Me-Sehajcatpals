@@ -40,7 +40,6 @@ export default function VirtualBed() {
   
   const [blanketShift, setBlanketShift] = useState(0)
   const [effects, setEffects] = useState<Effect[]>([])
-  const [buttonFeedback, setButtonFeedback] = useState<string>('')
   
   const prabhRef = useRef<HTMLDivElement>(null)
   const sehajRef = useRef<HTMLDivElement>(null)
