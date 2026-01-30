@@ -2080,7 +2080,7 @@ export default function VirtualBed() {
               background: 'linear-gradient(135deg, #E8A5C0 0%, #D88BA5 100%)',
               borderRadius: 8,
               border: '3px solid #B86080',
-              zIndex: 2,
+              zIndex: 60,
               boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
             }}>
               {/* Toy sticking out */}
