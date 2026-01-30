@@ -46,6 +46,42 @@ export default function VirtualBed() {
   
   const prabhRef = useRef<HTMLDivElement>(null)
   const sehajRef = useRef<HTMLDivElement>(null)
+  const floorRef = useRef<HTMLDivElement>(null)
+
+  // Handle cat reactions from toys
+  const handleToyReaction = useCallback((reaction: CatReaction) => {
+    haptics.light()
+    if (reaction.type === 'angry') {
+      if (reaction.cat === 'prabh') {
+        prabhCat.triggerAction('annoyed')
+        setPrabhBubble('😡')
+        spawnEffect('angry', prabhCat.position.x, prabhCat.position.y)
+        setTimeout(() => setPrabhBubble(''), 1200)
+      } else {
+        sehajCat.triggerAction('annoyed')
+        setSehajBubble('😡')
+        spawnEffect('angry', sehajCat.position.x, sehajCat.position.y)
+        setTimeout(() => setSehajBubble(''), 1200)
+      }
+    } else if (reaction.type === 'happy') {
+      if (reaction.cat === 'prabh') {
+        prabhCat.triggerAction('happy')
+        setPrabhBubble('💕')
+        spawnEffect('heart', prabhCat.position.x, prabhCat.position.y)
+        setTimeout(() => setPrabhBubble(''), 1200)
+      } else {
+        sehajCat.triggerAction('happy')
+        setSehajBubble('💕')
+        spawnEffect('heart', sehajCat.position.x, sehajCat.position.y)
+        setTimeout(() => setSehajBubble(''), 1200)
+      }
+    }
+  }, [prabhCat, sehajCat])
+
+  // Toy system with cat reactions
+  const toySystem = useToys({
+    onCatReaction: handleToyReaction
+  })
 
   // Clean up old effects
   useEffect(() => {
