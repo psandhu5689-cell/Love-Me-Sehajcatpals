@@ -493,15 +493,18 @@ export default function VirtualBed() {
         </div>
 
         {/* FLOOR CONTAINER - STARTS EXACTLY AT WALL BOTTOM */}
-        <div style={{
-          position: 'relative',
-          width: '100%',
-          height: 400,
-          margin: 0,
-          padding: 0,
-          overflow: 'hidden',
-          zIndex: 50,
-        }}>
+        <div 
+          ref={floorRef}
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: 400,
+            margin: 0,
+            padding: 0,
+            overflow: 'hidden',
+            zIndex: 50,
+          }}
+        >
           <img
             src="/floor.jpg"
             alt="floor"
@@ -515,41 +518,48 @@ export default function VirtualBed() {
             }}
           />
 
-          {/* BLANKET (Z80) */}
+          {/* TOYS LAYER (Z60) - 8 draggable toys */}
+          {toySystem.toys.map(toy => (
+            <ToySprite
+              key={toy.id}
+              toy={toy}
+              isDragged={toySystem.draggedToyId === toy.id}
+              containerRef={floorRef}
+              onDragStart={toySystem.startDrag}
+              onDragMove={toySystem.moveDrag}
+              onDragEnd={toySystem.endDrag}
+              onTap={toySystem.tapToy}
+            />
+          ))}
+
+          {/* BLANKET (Z80) - New pixel art blanket image */}
           <motion.div
-            animate={{ x: blanketShift * 60 }}
-            transition={{ duration: 0.5 }}
+            animate={{ x: blanketShift * 80 }}
+            transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
             style={{
               position: 'absolute',
-              bottom: '25%',
+              bottom: '15%',
               left: '50%',
               transform: 'translateX(-50%)',
-              width: 200,
-              height: 120,
-              background: 'linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFB6C1 100%)',
-              borderRadius: 16,
-              border: '3px solid #FF69B4',
+              width: 220,
+              height: 130,
               zIndex: 80,
-              opacity: 0.7,
-              boxShadow: '0 4px 12px rgba(255,105,180,0.4)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <div style={{
-              position: 'absolute',
-              inset: 8,
-              border: '2px dashed rgba(255,255,255,0.4)',
-              borderRadius: 12,
-            }} />
-            <div style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              fontSize: 40,
-              opacity: 0.6,
-            }}>
-              🧣
-            </div>
+            <img
+              src="/blanket.png"
+              alt="blanket"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                imageRendering: 'pixelated',
+                filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))',
+              }}
+            />
           </motion.div>
 
           {/* CATS (Z70) - FLOOR ONLY */}
