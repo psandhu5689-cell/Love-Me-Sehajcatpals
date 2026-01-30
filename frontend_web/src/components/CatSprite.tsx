@@ -1,12 +1,14 @@
 /**
- * GAME-GRADE CAT SPRITE ANIMATOR - FIXED RENDERING
+ * GAME-GRADE CAT SPRITE ANIMATOR - FIXED VITE PATHS
  * NO SLIDING - Movement only occurs during walk animations
  * Frame-based position updates
  */
 
 import React, { useState, useEffect, useRef } from 'react'
-import prabhSheet from '../assets/sprites/black_cat_sheet.png'
-import sehajSheet from '../assets/sprites/ginger_cat_labeled.png'
+
+// Use public folder paths for Vite
+const prabhSheet = '/black_cat_sheet.png'
+const sehajSheet = '/ginger_cat_labeled.png'
 
 // Core animation states
 export type CatState = 
