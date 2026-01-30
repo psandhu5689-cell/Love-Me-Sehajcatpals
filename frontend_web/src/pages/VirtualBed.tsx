@@ -390,33 +390,6 @@ export default function VirtualBed() {
         Mr & Mrs 🐱💕🐱
       </h1>
 
-      {/* Button Feedback */}
-      <AnimatePresence>
-        {buttonFeedback && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            style={{
-              position: 'fixed',
-              bottom: 180,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              background: 'rgba(255, 255, 255, 0.95)',
-              color: '#333',
-              padding: '8px 16px',
-              borderRadius: 12,
-              fontSize: 14,
-              fontWeight: 600,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-              zIndex: 500,
-            }}
-          >
-            {buttonFeedback}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* ROOM_VIEW - FIXED SEAM */}
       <motion.div
         id="room-view"
