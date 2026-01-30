@@ -1750,7 +1750,10 @@ export default function VirtualBed() {
               zIndex: 110,
               pointerEvents: 'none',
             }} />
-
+            {/* ============================================ */}
+            {/* Z-PLANE 100: WALL DECOR (Window, String Lights, Frames) */}
+            {/* ============================================ */}
+            
             {/* Rainy Window on Wall - LARGER with WHITE OUTLINE - STAYS BRIGHT */}
             <div style={{
               position: 'absolute',
