@@ -3199,7 +3199,7 @@ export default function VirtualBed() {
           
           {/* ============ ALL BUTTONS REMOVED ============ */}
           
-          {/* Living space only - no UI controls */}
+          {/* Pure living space - no controls, no UI */}
           
           {/* Room level badges removed */}
 
