@@ -300,7 +300,7 @@ export default function VirtualBed() {
       padding: 24,
       position: 'relative',
       overflow: 'auto',
-      paddingBottom: 160,
+      paddingBottom: 40,
     }}>
       <AnimatePresence>
         {showChaos && (
