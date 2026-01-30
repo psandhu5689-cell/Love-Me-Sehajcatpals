@@ -665,7 +665,7 @@ export default function VirtualBed() {
               state={prabhCat.position.state}
               onAnimationComplete={prabhCat.onAnimationComplete}
               flip={prabhCat.position.state === 'walkLeft'}
-              scale={3.1}
+              scale={3.9}
             />
             {prabhBubble && (
               <motion.div
@@ -711,7 +711,7 @@ export default function VirtualBed() {
               state={sehajCat.position.state}
               onAnimationComplete={sehajCat.onAnimationComplete}
               flip={sehajCat.position.state === 'walkLeft'}
-              scale={3.1}
+              scale={3.9}
             />
             {sehajBubble && (
               <motion.div
