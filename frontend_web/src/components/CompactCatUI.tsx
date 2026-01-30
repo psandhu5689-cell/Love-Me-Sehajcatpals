@@ -2,6 +2,8 @@
  * COMPACT GAME-STYLE CAT UI
  * Bottom action bar + secondary drawer
  * Icon-first, minimal, playful
+ * 
+ * NEW: Freakiness bar, Mood bar, Sleep status, Room level
  */
 
 import React, { useState } from 'react'
@@ -17,19 +19,25 @@ type ActionType =
   | 'kick'
   | 'hogBlanket'
   | 'cuddle'
-  | 'drama'        // NEW
-  | 'lightsOut'    // NEW
+  | 'drama'
+  | 'lightsOut'
   | 'treatToss'
   | 'laser'
-  | 'chaos'        // NEW: special "fuck" button
-  | 'water'        // NEW: water button
+  | 'chaos'
+  | 'water'
 
 type Target = 'prabh' | 'sehaj' | 'both'
+type Mood = 'cozy' | 'happy' | 'annoyed' | 'sleepy' | 'sad'
 
 interface CompactCatUIProps {
   onAction: (action: ActionType, target: Target) => void
   prabhState?: string
   sehajState?: string
+  prabhMood?: Mood
+  sehajMood?: Mood
+  prabhFreakiness?: number
+  sehajFreakiness?: number
+  roomLevel?: number
   disabled?: boolean
 }
 
@@ -57,10 +65,35 @@ const SECONDARY_ACTIONS: ActionButton[] = [
   { id: 'drama', icon: '🎭', label: 'Drama' },
   { id: 'lightsOut', icon: '🌙', label: 'Lights Out' },
   { id: 'treatToss', icon: '🐟', label: 'Treat' },
-  { id: 'chaos', icon: '💀', label: 'fuck' },  // Special chaos button
+  { id: 'chaos', icon: '💀', label: 'fuck' },
 ]
 
-export function CompactCatUI({ onAction, prabhState, sehajState, disabled }: CompactCatUIProps) {
+const MOOD_ICONS: Record<Mood, string> = {
+  cozy: '😊',
+  happy: '😸',
+  annoyed: '😾',
+  sleepy: '😴',
+  sad: '😿',
+}
+
+const GLASSY_STYLE = {
+  background: 'rgba(255, 255, 255, 0.08)',
+  backdropFilter: 'blur(16px)',
+  WebkitBackdropFilter: 'blur(16px)',
+  border: '1px solid rgba(255, 255, 255, 0.15)',
+}
+
+export function CompactCatUI({ 
+  onAction, 
+  prabhState, 
+  sehajState, 
+  prabhMood = 'happy',
+  sehajMood = 'happy',
+  prabhFreakiness = 42,
+  sehajFreakiness = 38,
+  roomLevel = 1,
+  disabled 
+}: CompactCatUIProps) {
   const [target, setTarget] = useState<Target>('both')
   const [showDrawer, setShowDrawer] = useState(false)
 
