@@ -32,6 +32,7 @@ export function useCatMovement(catId: 'prabh' | 'sehaj') {
   })
 
   const roamTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const targetPositionRef = useRef<{ x: number; y: number } | null>(null)
 
   // Auto-roam logic
   useEffect(() => {
