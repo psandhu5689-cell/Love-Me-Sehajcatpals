@@ -3000,7 +3000,7 @@ export default function VirtualBed() {
               fontWeight: 700,
               cursor: 'pointer',
               boxShadow: `0 4px 20px ${colors.primaryGlow}`,
-              zIndex: 100,
+              zIndex: 98,
             }}
           >
             fuck 💕
