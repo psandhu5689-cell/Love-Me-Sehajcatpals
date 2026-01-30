@@ -2364,15 +2364,22 @@ export default function VirtualBed() {
             {/* Sehaj Cat (Left - Ginger) - ROAMING with smooth transitions - TOUCH ZONES */}
             <motion.div
               animate={{
-                left: cuddleMode ? '42%' : `${sehajRoam.xPercent}%`,
-                bottom: cuddleMode ? '30%' : `${100 - sehajRoam.yPercent}%`,
+                left: `${sehajAnim.state.x}%`,
+                bottom: `${100 - sehajAnim.state.y}%`,
                 y: sehaj.action === 'nudge' || sehaj.action === 'kick' ? [0, -5, 0] : 0,
               }}
               transition={{ 
-                left: { duration: 2.5, ease: 'easeInOut' },
-                bottom: { duration: 2.5, ease: 'easeInOut' },
+                left: { duration: 0.5, ease: 'linear' },
+                bottom: { duration: 0.5, ease: 'linear' },
                 y: { duration: 0.3, ease: 'easeOut' }
               }}
+              onMouseDown={(e) => handleDragStart('sehaj', e)}
+              onMouseMove={handleDragMove}
+              onMouseUp={handleDragEnd}
+              onMouseLeave={handleDragEnd}
+              onTouchStart={(e) => handleDragStart('sehaj', e)}
+              onTouchMove={handleDragMove}
+              onTouchEnd={handleDragEnd}
               style={{
                 position: 'absolute',
                 zIndex: 3,
@@ -2382,7 +2389,7 @@ export default function VirtualBed() {
                 minWidth: 80,
                 minHeight: 80,
                 transform: 'translateX(-50%)',
-                cursor: 'pointer',
+                cursor: dragState.cat === 'sehaj' ? 'grabbing' : 'grab',
               }}
             >
               {/* Touch Zones - Invisible clickable areas */}
