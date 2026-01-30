@@ -1601,29 +1601,90 @@ export default function VirtualBed() {
     if (!dragState.cat) return
     
     const animController = dragState.cat === 'prabh' ? prabhAnim : sehajAnim
+    const catPos = animController.state;
     
-    // Walk to nearest spot
-    animController.setState(prev => ({ ...prev, animation: 'sitIdle', isMoving: false }))
+    // Check if dropped on sofa
+    const inSofaZone = 
+      catPos.x >= SOFA_DROP_ZONE.x &&
+      catPos.x <= SOFA_DROP_ZONE.x + SOFA_DROP_ZONE.width &&
+      catPos.y >= SOFA_DROP_ZONE.y &&
+      catPos.y <= SOFA_DROP_ZONE.y + SOFA_DROP_ZONE.height;
+    
+    if (inSofaZone) {
+      // Snap to nearest free seat
+      const leftOccupied = (dragState.cat === 'prabh' ? sehajSeated : prabhSeated) && 
+                          Math.abs(sehajAnim.state.x - SOFA_SEATS.left.x) < 5;
+      const rightOccupied = (dragState.cat === 'prabh' ? sehajSeated : prabhSeated) && 
+                           Math.abs(sehajAnim.state.x - SOFA_SEATS.right.x) < 5;
+      
+      let targetSeat = SOFA_SEATS.left;
+      if (leftOccupied && !rightOccupied) {
+        targetSeat = SOFA_SEATS.right;
+      } else if (!leftOccupied && rightOccupied) {
+        targetSeat = SOFA_SEATS.left;
+      } else if (!leftOccupied && !rightOccupied) {
+        // Pick closest
+        const distLeft = Math.abs(catPos.x - SOFA_SEATS.left.x);
+        const distRight = Math.abs(catPos.x - SOFA_SEATS.right.x);
+        targetSeat = distLeft < distRight ? SOFA_SEATS.left : SOFA_SEATS.right;
+      } else {
+        // Both occupied, return to roaming
+        animController.setState(prev => ({ ...prev, animation: 'sitIdle', isMoving: false }));
+        setTimeout(() => animController.startRoaming(), 1000);
+        setDragState({ isDragging: false, cat: null, startX: 0, startY: 0 });
+        return;
+      }
+      
+      // Snap to seat with bounce
+      animController.moveTo(targetSeat.x, targetSeat.y, () => {
+        if (dragState.cat === 'prabh') {
+          setPrabhSeated(true);
+          setPrabh(prev => ({ ...prev, mood: Math.min(100, prev.mood + 10) }));
+          setPrabhMoodBubble('😌 Comfy!');
+        } else {
+          setSehajSeated(true);
+          setSehaj(prev => ({ ...prev, mood: Math.min(100, prev.mood + 10) }));
+          setSehajMoodBubble('😌 Cozy!');
+        }
+        
+        setTimeout(() => {
+          setPrabhMoodBubble(null);
+          setSehajMoodBubble(null);
+        }, 2000);
+      }, 'sitIdle');
+      
+      haptics.medium();
+    } else {
+      // Not on sofa - return to normal roaming
+      animController.setState(prev => ({ ...prev, animation: 'sitIdle', isMoving: false }));
+      
+      // If cat was seated, unseat them
+      if (dragState.cat === 'prabh' && prabhSeated) {
+        setPrabhSeated(false);
+      } else if (dragState.cat === 'sehaj' && sehajSeated) {
+        setSehajSeated(false);
+      }
+      
+      // Resume roaming after 2 seconds
+      setTimeout(() => {
+        animController.startRoaming();
+      }, 2000);
+    }
     
     // Clear mood bubbles after delay
     setTimeout(() => {
-      setPrabhMoodBubble(null)
-      setSehajMoodBubble(null)
-    }, 2000)
-    
-    // Resume roaming after 3 seconds
-    setTimeout(() => {
-      animController.startRoaming()
-    }, 3000)
+      setPrabhMoodBubble(null);
+      setSehajMoodBubble(null);
+    }, 2000);
     
     setDragState({
       isDragging: false,
       cat: null,
       startX: 0,
       startY: 0,
-    })
+    });
     
-    haptics.light()
+    haptics.light();
   }
   
   // Enhanced special button with personality
