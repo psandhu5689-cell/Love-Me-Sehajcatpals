@@ -63,7 +63,7 @@ export function CatSprite({ cat, state, onAnimationComplete, flip = false, scale
   const lastTimeRef = useRef(0)
   const completedRef = useRef(false)
 
-  const spriteSheet = cat === 'prabh' ? '/black_cat_sprite.png' : '/ginger_cat_sprite.png'
+  const spriteSheet = cat === 'prabh' ? prabhSheet : sehajSheet
   const animations = cat === 'prabh' ? PRABH_ANIMATIONS : SEHAJ_ANIMATIONS
   const anim = animations[state] || animations.sitIdle
 
