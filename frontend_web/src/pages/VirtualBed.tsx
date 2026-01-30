@@ -82,11 +82,6 @@ export default function VirtualBed() {
     setEffects(prev => [...prev, { id: Math.random().toString(), type, x, y, timestamp: Date.now() }])
   }
 
-  const showFeedback = (text: string) => {
-    setButtonFeedback(text)
-    setTimeout(() => setButtonFeedback(''), 1500)
-  }
-
   const prabhTouch = useCatTouch({
     catId: 'prabh',
     onInteraction: (interaction) => {
