@@ -124,6 +124,22 @@ export function useCatMovement(catId: 'prabh' | 'sehaj') {
     }))
   }
 
+  // Move cat to specific coordinates
+  const moveTo = (targetX: number, targetY: number) => {
+    // Find closest floor spot or create a temporary one
+    const tempSpotIdx = FLOOR_SPOTS.length // Use index beyond array as temp
+    const walkState = calculateWalkDirection(position.x, position.y, targetX, targetY)
+    
+    // Store target position temporarily
+    targetPositionRef.current = { x: targetX, y: targetY }
+    
+    setPosition(prev => ({
+      ...prev,
+      state: walkState,
+      targetSpot: tempSpotIdx, // Signal we're using custom target
+    }))
+  }
+
   const onAnimationComplete = () => {
     if (!position.state.startsWith('walk')) {
       setPosition(prev => ({ ...prev, state: 'sitIdle' }))
@@ -133,6 +149,7 @@ export function useCatMovement(catId: 'prabh' | 'sehaj') {
   return {
     position,
     triggerAction,
+    moveTo,
     onAnimationComplete,
   }
 }
