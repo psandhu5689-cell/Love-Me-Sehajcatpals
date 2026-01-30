@@ -1,5 +1,5 @@
 /**
- * GAME-GRADE CAT SPRITE ANIMATOR
+ * GAME-GRADE CAT SPRITE ANIMATOR - FIXED RENDERING
  * NO SLIDING - Movement only occurs during walk animations
  * Frame-based position updates
  */
@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import prabhSheet from '../assets/sprites/black_cat_sheet.png'
 import sehajSheet from '../assets/sprites/ginger_cat_labeled.png'
 
-// Core animation states (EXPANDED FOR TOUCH INTERACTIONS)
+// Core animation states
 export type CatState = 
   | 'sitIdle'
   | 'layIdle'
@@ -21,22 +21,22 @@ export type CatState =
   | 'eat'
   | 'happy'
   | 'annoyed'
-  | 'sad'         // NEW: for drag-apart
-  | 'surprised'   // NEW: for nose tap
-  | 'purr'        // NEW: for body tap
-  | 'tailFlick'   // NEW: for tail tap
-  | 'bounce'      // NEW: for double tap
-  | 'pickUp'      // NEW: for long press
-  | 'chaos'       // NEW: for special button
+  | 'sad'
+  | 'surprised'
+  | 'purr'
+  | 'tailFlick'
+  | 'bounce'
+  | 'pickUp'
+  | 'chaos'
 
 interface AnimationDef {
-  start: number  // Frame index in sprite sheet
+  start: number
   end: number
   fps: number
   loop: boolean
 }
 
-// BLACK CAT (Prabh) - Using actual sprite sheet data
+// BLACK CAT (Prabh)
 const PRABH_ANIMATIONS: Record<CatState, AnimationDef> = {
   sitIdle: { start: 144, end: 144, fps: 1, loop: true },
   layIdle: { start: 145, end: 145, fps: 1, loop: true },
@@ -49,18 +49,18 @@ const PRABH_ANIMATIONS: Record<CatState, AnimationDef> = {
   eat: { start: 864, end: 873, fps: 10, loop: false },
   happy: { start: 504, end: 514, fps: 12, loop: false },
   annoyed: { start: 936, end: 945, fps: 10, loop: false },
-  sad: { start: 936, end: 938, fps: 6, loop: true },        // Use first few annoyed frames looped
-  surprised: { start: 144, end: 145, fps: 12, loop: false }, // Quick blink
-  purr: { start: 504, end: 506, fps: 8, loop: true },       // Subtle happy loop
-  tailFlick: { start: 936, end: 940, fps: 10, loop: false }, // Quick annoyed flick
-  bounce: { start: 504, end: 510, fps: 12, loop: false },   // Happy bounce
-  pickUp: { start: 144, end: 146, fps: 6, loop: true },     // Slight wiggle
-  chaos: { start: 936, end: 945, fps: 14, loop: false },    // Full annoyed/fight
+  sad: { start: 936, end: 938, fps: 6, loop: true },
+  surprised: { start: 144, end: 145, fps: 12, loop: false },
+  purr: { start: 504, end: 506, fps: 8, loop: true },
+  tailFlick: { start: 936, end: 940, fps: 10, loop: false },
+  bounce: { start: 504, end: 510, fps: 12, loop: false },
+  pickUp: { start: 144, end: 146, fps: 6, loop: true },
+  chaos: { start: 936, end: 945, fps: 14, loop: false },
 }
 
 // GINGER CAT (Sehaj) - Same structure
 const SEHAJ_ANIMATIONS: Record<CatState, AnimationDef> = {
-  ...PRABH_ANIMATIONS // For now, same frames (both sheets have same layout)
+  ...PRABH_ANIMATIONS
 }
 
 interface CatSpriteProps {
@@ -103,17 +103,15 @@ export function CatSprite({ cat, state, onAnimationComplete, flip = false, scale
         setCurrentFrame(prev => {
           const next = prev + 1
 
-          // If we've passed the end frame
           if (next > anim.end) {
             if (anim.loop) {
-              return anim.start // Loop back
+              return anim.start
             } else {
-              // Animation complete
               if (!completedRef.current) {
                 completedRef.current = true
                 setTimeout(() => onAnimationComplete?.(), 50)
               }
-              return anim.end // Stay on last frame
+              return anim.end
             }
           }
 
@@ -147,14 +145,23 @@ export function CatSprite({ cat, state, onAnimationComplete, flip = false, scale
       style={{
         width: displaySize,
         height: displaySize,
-        overflow: 'hidden',
+        position: 'relative',
         transform: flip ? 'scaleX(-1)' : 'none',
-        imageRendering: 'pixelated',
-        backgroundImage: `url(${spriteSheet})`,
-        backgroundSize: `${FRAME_SIZE * COLS * scale}px auto`,
-        backgroundPosition: `-${col * FRAME_SIZE * scale}px -${row * FRAME_SIZE * scale}px`,
-        backgroundRepeat: 'no-repeat',
       }}
-    />
+    >
+      <img
+        src={spriteSheet}
+        alt="cat"
+        style={{
+          position: 'absolute',
+          top: -row * FRAME_SIZE * scale,
+          left: -col * FRAME_SIZE * scale,
+          width: FRAME_SIZE * COLS * scale,
+          height: 'auto',
+          imageRendering: 'pixelated',
+          pointerEvents: 'none',
+        }}
+      />
+    </div>
   )
 }

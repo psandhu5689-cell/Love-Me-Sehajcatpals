@@ -1,7 +1,6 @@
 /**
- * MR & MRS - Clean Room Remake
- * ONLY: Wall + Floor + Cats + Blanket + Compact UI
- * NO: Window, rain, furniture, decorations
+ * MR & MRS - Complete Interactive Room
+ * FIXED: Wall/Floor seam, Cat sprites render, All buttons interactive
  */
 
 import React, { useState, useEffect, useRef } from 'react'
@@ -11,38 +10,51 @@ import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import haptics from '../utils/haptics'
 
-// NEW: Complete animation system
 import { CatSprite, CatState } from '../components/CatSprite'
 import { CompactCatUI } from '../components/CompactCatUI'
 import { useCatMovement } from '../hooks/useCatMovement'
 import { useCatTouch, detectDragApartSadness } from '../hooks/useCatTouch'
 
+type Effect = {
+  id: string
+  type: 'heart' | 'angry' | 'sparkle' | 'z' | 'exclaim' | 'treat' | 'yarn' | 'confetti'
+  x: number
+  y: number
+  timestamp: number
+}
+
 export default function VirtualBed() {
   const navigate = useNavigate()
   const { colors } = useTheme()
   
-  // Audio
   const [audioEnabled, setAudioEnabled] = useState(true)
   
-  // NEW: Cat movement with NO SLIDING
   const prabhCat = useCatMovement('prabh')
   const sehajCat = useCatMovement('sehaj')
   
-  // UI states
   const [prabhBubble, setPrabhBubble] = useState<string>('')
   const [sehajBubble, setSehajBubble] = useState<string>('')
   const [dimLights, setDimLights] = useState(false)
   const [chaosText, setChaosText] = useState<string>('')
   const [showChaos, setShowChaos] = useState(false)
   
-  // Blanket state for Hog Blanket mechanic
-  const [blanketShift, setBlanketShift] = useState(0) // -1 = left, 0 = center, 1 = right
+  const [blanketShift, setBlanketShift] = useState(0)
+  const [effects, setEffects] = useState<Effect[]>([])
+  const [buttonFeedback, setButtonFeedback] = useState<string>('')
   
-  // Refs for touch
   const prabhRef = useRef<HTMLDivElement>(null)
   const sehajRef = useRef<HTMLDivElement>(null)
 
-  // Drag-apart sadness detection
+  // Clean up old effects
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = Date.now()
+      setEffects(prev => prev.filter(e => now - e.timestamp < 3000))
+    }, 500)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Drag-apart sadness
   useEffect(() => {
     const interval = setInterval(() => {
       const status = detectDragApartSadness(
@@ -55,28 +67,27 @@ export default function VirtualBed() {
         sehajCat.triggerAction('sad')
         setPrabhBubble('🥺')
         setSehajBubble('😿')
-        setTimeout(() => {
-          setPrabhBubble('')
-          setSehajBubble('')
-        }, 8000)
-      } else if (status === 'reunited') {
-        if (prabhCat.position.state === 'sad') {
-          prabhCat.triggerAction('happy')
-          sehajCat.triggerAction('happy')
-          setPrabhBubble('💕')
-          setSehajBubble('💕')
-          setTimeout(() => {
-            setPrabhBubble('')
-            setSehajBubble('')
-          }, 3000)
-        }
+        setTimeout(() => { setPrabhBubble(''); setSehajBubble('') }, 8000)
+      } else if (status === 'reunited' && prabhCat.position.state === 'sad') {
+        prabhCat.triggerAction('happy')
+        sehajCat.triggerAction('happy')
+        setPrabhBubble('💕')
+        setSehajBubble('💕')
+        setTimeout(() => { setPrabhBubble(''); setSehajBubble('') }, 3000)
       }
     }, 500)
-
     return () => clearInterval(interval)
   }, [prabhCat.position, sehajCat.position])
 
-  // Touch handlers for Prabh
+  const spawnEffect = (type: Effect['type'], x: number, y: number) => {
+    setEffects(prev => [...prev, { id: Math.random().toString(), type, x, y, timestamp: Date.now() }])
+  }
+
+  const showFeedback = (text: string) => {
+    setButtonFeedback(text)
+    setTimeout(() => setButtonFeedback(''), 1500)
+  }
+
   const prabhTouch = useCatTouch({
     catId: 'prabh',
     onInteraction: (interaction) => {
@@ -85,34 +96,34 @@ export default function VirtualBed() {
         if (interaction.zone === 'head') {
           prabhCat.triggerAction('happy')
           setPrabhBubble('💖')
+          spawnEffect('heart', prabhCat.position.x, prabhCat.position.y)
           setTimeout(() => setPrabhBubble(''), 2000)
         } else if (interaction.zone === 'nose') {
           prabhCat.triggerAction('surprised')
           setPrabhBubble('!')
+          spawnEffect('exclaim', prabhCat.position.x, prabhCat.position.y)
           setTimeout(() => setPrabhBubble(''), 1500)
         } else if (interaction.zone === 'body') {
           prabhCat.triggerAction('purr')
           setPrabhBubble('😊')
+          spawnEffect('sparkle', prabhCat.position.x, prabhCat.position.y)
           setTimeout(() => setPrabhBubble(''), 2000)
         } else if (interaction.zone === 'tail') {
           prabhCat.triggerAction('tailFlick')
           setPrabhBubble('💢')
+          spawnEffect('angry', prabhCat.position.x, prabhCat.position.y)
           setTimeout(() => setPrabhBubble(''), 1500)
         }
       } else if (interaction.type === 'doubleTap') {
         prabhCat.triggerAction('bounce')
         setPrabhBubble('🎵')
+        spawnEffect('confetti', prabhCat.position.x, prabhCat.position.y)
         setTimeout(() => setPrabhBubble(''), 2000)
-      } else if (interaction.type === 'longPress') {
-        prabhCat.triggerAction('pickUp')
-        setPrabhBubble('👆')
-        setTimeout(() => setPrabhBubble(''), 1500)
       }
     },
     bounds: prabhRef.current?.getBoundingClientRect() || null,
   })
 
-  // Touch handlers for Sehaj
   const sehajTouch = useCatTouch({
     catId: 'sehaj',
     onInteraction: (interaction) => {
@@ -121,34 +132,34 @@ export default function VirtualBed() {
         if (interaction.zone === 'head') {
           sehajCat.triggerAction('happy')
           setSehajBubble('💖')
+          spawnEffect('heart', sehajCat.position.x, sehajCat.position.y)
           setTimeout(() => setSehajBubble(''), 2000)
         } else if (interaction.zone === 'nose') {
           sehajCat.triggerAction('surprised')
           setSehajBubble('!')
+          spawnEffect('exclaim', sehajCat.position.x, sehajCat.position.y)
           setTimeout(() => setSehajBubble(''), 1500)
         } else if (interaction.zone === 'body') {
           sehajCat.triggerAction('purr')
           setSehajBubble('😊')
+          spawnEffect('sparkle', sehajCat.position.x, sehajCat.position.y)
           setTimeout(() => setSehajBubble(''), 2000)
         } else if (interaction.zone === 'tail') {
           sehajCat.triggerAction('tailFlick')
           setSehajBubble('💢')
+          spawnEffect('angry', sehajCat.position.x, sehajCat.position.y)
           setTimeout(() => setSehajBubble(''), 1500)
         }
       } else if (interaction.type === 'doubleTap') {
         sehajCat.triggerAction('bounce')
         setSehajBubble('🎵')
+        spawnEffect('confetti', sehajCat.position.x, sehajCat.position.y)
         setTimeout(() => setSehajBubble(''), 2000)
-      } else if (interaction.type === 'longPress') {
-        sehajCat.triggerAction('pickUp')
-        setSehajBubble('👆')
-        setTimeout(() => setSehajBubble(''), 1500)
       }
     },
     bounds: sehajRef.current?.getBoundingClientRect() || null,
   })
 
-  // Action handler for CompactCatUI
   const handleAction = (action: string, target: 'prabh' | 'sehaj' | 'both') => {
     haptics.light()
     
@@ -167,52 +178,135 @@ export default function VirtualBed() {
       treatToss: 'eat',
     }
 
-    // Special actions
-    if (action === 'lightsOut') {
-      setDimLights(true)
-      setTimeout(() => setDimLights(false), 2500)
-    } else if (action === 'hogBlanket') {
-      // Hog Blanket: shift blanket left or right based on which cat
-      if (target === 'prabh') {
-        setBlanketShift(1) // Shift right (Prabh side)
-      } else if (target === 'sehaj') {
-        setBlanketShift(-1) // Shift left (Sehaj side)
-      } else {
-        setBlanketShift(0) // Reset to center
+    // INTERACTIVE ACTIONS
+    if (action === 'wake') {
+      if (target === 'prabh' || target === 'both') {
+        prabhCat.triggerAction('wake')
+        spawnEffect('exclaim', prabhCat.position.x, prabhCat.position.y)
       }
-      setTimeout(() => setBlanketShift(0), 3000) // Reset after 3s
+      if (target === 'sehaj' || target === 'both') {
+        sehajCat.triggerAction('wake')
+        spawnEffect('exclaim', sehajCat.position.x, sehajCat.position.y)
+      }
+      showFeedback(target === 'both' ? 'Both woke up!' : `${target} woke up!`)
+    } else if (action === 'sleep') {
+      if (target === 'prabh' || target === 'both') {
+        prabhCat.triggerAction('sleep')
+        spawnEffect('z', prabhCat.position.x, prabhCat.position.y)
+      }
+      if (target === 'sehaj' || target === 'both') {
+        sehajCat.triggerAction('sleep')
+        spawnEffect('z', sehajCat.position.x, sehajCat.position.y)
+      }
+      showFeedback('Sleeping...')
+    } else if (action === 'feed') {
+      if (target === 'prabh' || target === 'both') {
+        prabhCat.triggerAction('eat')
+        spawnEffect('treat', prabhCat.position.x, prabhCat.position.y)
+      }
+      if (target === 'sehaj' || target === 'both') {
+        sehajCat.triggerAction('eat')
+        spawnEffect('treat', sehajCat.position.x, sehajCat.position.y)
+      }
+      showFeedback('Feeding!')
+    } else if (action === 'cuddle') {
+      prabhCat.triggerAction('happy')
+      sehajCat.triggerAction('happy')
+      spawnEffect('heart', 50, 50)
+      showFeedback('Cuddle time! 💕')
+    } else if (action === 'gaming') {
+      if (target === 'prabh' || target === 'both') {
+        prabhCat.triggerAction('happy')
+        spawnEffect('sparkle', prabhCat.position.x, prabhCat.position.y)
+      }
+      if (target === 'sehaj' || target === 'both') {
+        sehajCat.triggerAction('happy')
+        spawnEffect('sparkle', sehajCat.position.x, sehajCat.position.y)
+      }
+      showFeedback('Gaming! 🎮')
+    } else if (action === 'kick') {
+      prabhCat.triggerAction('annoyed')
+      sehajCat.triggerAction('annoyed')
+      spawnEffect('angry', prabhCat.position.x, prabhCat.position.y)
+      spawnEffect('angry', sehajCat.position.x, sehajCat.position.y)
+      showFeedback('Ow!')
+    } else if (action === 'lightsOut') {
+      setDimLights(true)
+      prabhCat.triggerAction('surprised')
+      sehajCat.triggerAction('surprised')
+      setTimeout(() => setDimLights(false), 2500)
+      showFeedback('Lights out!')
+    } else if (action === 'hogBlanket') {
+      if (target === 'prabh') setBlanketShift(1)
+      else if (target === 'sehaj') setBlanketShift(-1)
+      else setBlanketShift(0)
+      setTimeout(() => setBlanketShift(0), 3000)
+      showFeedback('Hogging blanket!')
     } else if (action === 'drama') {
+      prabhCat.triggerAction('annoyed')
+      sehajCat.triggerAction('annoyed')
       setPrabhBubble('😡')
       setSehajBubble('😡')
-      setTimeout(() => {
-        setPrabhBubble('')
-        setSehajBubble('')
-      }, 2500)
+      spawnEffect('angry', prabhCat.position.x, prabhCat.position.y)
+      spawnEffect('angry', sehajCat.position.x, sehajCat.position.y)
+      setTimeout(() => { setPrabhBubble(''); setSehajBubble('') }, 2500)
+      showFeedback('Drama!')
     } else if (action === 'chaos') {
       const chaosLines = [
         "OH MY GOD WHAT'S HAPPENING",
         "THEY'RE FIGHTING AGAIN",
         "SOMEONE STOP THEM",
-        "THIS IS PURE CHAOS",
-        "WHY ARE THEY LIKE THIS"
+        "THIS IS PURE CHAOS"
       ]
       setChaosText(chaosLines[Math.floor(Math.random() * chaosLines.length)])
       setShowChaos(true)
-      
-      setTimeout(() => {
-        setShowChaos(false)
-        setChaosText('')
-      }, 2500)
+      prabhCat.triggerAction('chaos')
+      sehajCat.triggerAction('chaos')
+      setTimeout(() => { setShowChaos(false); setChaosText('') }, 2500)
+      showFeedback('CHAOS!')
+    } else if (action === 'treatToss') {
+      spawnEffect('treat', 50, 60)
+      showFeedback('Treat tossed!')
     }
 
     const state = stateMap[action] || 'sitIdle'
+    if (!['wake', 'sleep', 'feed', 'cuddle', 'gaming', 'kick', 'lightsOut', 'hogBlanket', 'drama', 'chaos', 'treatToss'].includes(action)) {
+      if (target === 'prabh' || target === 'both') prabhCat.triggerAction(state)
+      if (target === 'sehaj' || target === 'both') sehajCat.triggerAction(state)
+    }
+  }
 
-    if (target === 'prabh' || target === 'both') {
-      prabhCat.triggerAction(state)
+  const renderEffect = (effect: Effect) => {
+    const icons: Record<Effect['type'], string> = {
+      heart: '💕',
+      angry: '💢',
+      sparkle: '✨',
+      z: '💤',
+      exclaim: '!',
+      treat: '🍖',
+      yarn: '🧶',
+      confetti: '🎊'
     }
-    if (target === 'sehaj' || target === 'both') {
-      sehajCat.triggerAction(state)
-    }
+
+    return (
+      <motion.div
+        key={effect.id}
+        initial={{ opacity: 0, scale: 0.5, y: 0 }}
+        animate={{ opacity: 1, scale: 1.2, y: -30 }}
+        exit={{ opacity: 0, y: -50 }}
+        transition={{ duration: 0.8 }}
+        style={{
+          position: 'absolute',
+          left: `${effect.x}%`,
+          top: `${effect.y}%`,
+          fontSize: 28,
+          pointerEvents: 'none',
+          zIndex: 150,
+        }}
+      >
+        {icons[effect.type]}
+      </motion.div>
+    )
   }
 
   return (
@@ -225,7 +319,6 @@ export default function VirtualBed() {
       overflow: 'auto',
       paddingBottom: 160,
     }}>
-      {/* Chaos Overlay */}
       <AnimatePresence>
         {showChaos && (
           <motion.div
@@ -261,7 +354,6 @@ export default function VirtualBed() {
         )}
       </AnimatePresence>
 
-      {/* Header Controls */}
       <div style={{
         position: 'fixed',
         top: 20,
@@ -273,10 +365,7 @@ export default function VirtualBed() {
         zIndex: 100,
       }}>
         <button
-          onClick={() => {
-            haptics.light()
-            navigate('/ideas')
-          }}
+          onClick={() => { haptics.light(); navigate('/ideas') }}
           style={{
             background: colors.glass,
             backdropFilter: 'blur(10px)',
@@ -293,10 +382,7 @@ export default function VirtualBed() {
         </button>
 
         <button
-          onClick={() => {
-            setAudioEnabled(!audioEnabled)
-            haptics.light()
-          }}
+          onClick={() => { setAudioEnabled(!audioEnabled); haptics.light() }}
           style={{
             background: colors.glass,
             backdropFilter: 'blur(10px)',
@@ -311,7 +397,6 @@ export default function VirtualBed() {
         </button>
       </div>
 
-      {/* Title */}
       <h1 style={{
         textAlign: 'center',
         color: colors.textPrimary,
@@ -322,9 +407,34 @@ export default function VirtualBed() {
         Mr & Mrs 🐱💕🐱
       </h1>
 
-      {/* ============================================ */}
-      {/* ROOM_VIEW: ONLY Wall + Floor + Cats + Blanket */}
-      {/* ============================================ */}
+      {/* Button Feedback */}
+      <AnimatePresence>
+        {buttonFeedback && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            style={{
+              position: 'fixed',
+              bottom: 180,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              background: 'rgba(255, 255, 255, 0.95)',
+              color: '#333',
+              padding: '8px 16px',
+              borderRadius: 12,
+              fontSize: 14,
+              fontWeight: 600,
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+              zIndex: 500,
+            }}
+          >
+            {buttonFeedback}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ROOM_VIEW - FIXED SEAM */}
       <motion.div
         id="room-view"
         style={{
@@ -339,63 +449,112 @@ export default function VirtualBed() {
           marginBottom: 20,
           maxWidth: 800,
           margin: '0 auto 20px',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
+        {/* Dim Lights Overlay */}
+        <AnimatePresence>
+          {dimLights && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              exit={{ opacity: 0 }}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'black',
+                zIndex: 200,
+                pointerEvents: 'none',
+              }}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* WALL CONTAINER - NO OVERLAP */}
         <div style={{
           position: 'relative',
           width: '100%',
-          height: 600,
-          overflow: 'hidden',
-          borderRadius: 24,
+          margin: 0,
+          padding: 0,
+          lineHeight: 0,
+          zIndex: 10,
         }}>
-          {/* Dim Lights Overlay - dims EVERYTHING */}
-          <AnimatePresence>
-            {dimLights && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.6 }}
-                exit={{ opacity: 0 }}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'black',
-                  zIndex: 200,
-                  pointerEvents: 'none',
-                }}
-              />
-            )}
-          </AnimatePresence>
+          <img
+            src="/wall.jpg"
+            alt="wall"
+            style={{
+              display: 'block',
+              width: '100%',
+              height: 'auto',
+              objectFit: 'contain',
+              margin: 0,
+              padding: 0,
+            }}
+          />
+        </div>
 
-          {/* Z-PLANE 10: WALL (Top half) */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '50%',
-            backgroundImage: 'url(/wall.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            zIndex: 10,
-          }} />
+        {/* FLOOR CONTAINER - STARTS EXACTLY AT WALL BOTTOM */}
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          height: 400,
+          margin: 0,
+          padding: 0,
+          overflow: 'hidden',
+          zIndex: 50,
+        }}>
+          <img
+            src="/floor.jpg"
+            alt="floor"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
 
-          {/* Z-PLANE 50: FLOOR (Bottom half) */}
-          <div style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            width: '100%',
-            height: '50%',
-            backgroundImage: 'url(/floor.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            zIndex: 50,
-          }} />
+          {/* BLANKET (Z80) */}
+          <motion.div
+            animate={{ x: blanketShift * 60 }}
+            transition={{ duration: 0.5 }}
+            style={{
+              position: 'absolute',
+              bottom: '25%',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 200,
+              height: 120,
+              background: 'linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFB6C1 100%)',
+              borderRadius: 16,
+              border: '3px solid #FF69B4',
+              zIndex: 80,
+              opacity: 0.7,
+              boxShadow: '0 4px 12px rgba(255,105,180,0.4)',
+            }}
+          >
+            <div style={{
+              position: 'absolute',
+              inset: 8,
+              border: '2px dashed rgba(255,255,255,0.4)',
+              borderRadius: 12,
+            }} />
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              fontSize: 40,
+              opacity: 0.6,
+            }}>
+              🧣
+            </div>
+          </motion.div>
 
-          {/* Z-PLANE 70: CATS (on floor only) */}
-          {/* Prabh (Black Cat) */}
+          {/* CATS (Z70) - FLOOR ONLY */}
           <div
             ref={prabhRef}
             onMouseDown={prabhTouch.handleTouchStart}
@@ -407,7 +566,7 @@ export default function VirtualBed() {
             style={{
               position: 'absolute',
               left: `${prabhCat.position.x}%`,
-              top: `${50 + (prabhCat.position.y / 2)}%`, // Floor starts at 50%, map 0-100 to 50-100
+              top: `${prabhCat.position.y}%`,
               transform: 'translate(-50%, -50%)',
               zIndex: 70,
               cursor: 'pointer',
@@ -442,7 +601,6 @@ export default function VirtualBed() {
             )}
           </div>
 
-          {/* Sehaj (Ginger Cat) */}
           <div
             ref={sehajRef}
             onMouseDown={sehajTouch.handleTouchStart}
@@ -454,7 +612,7 @@ export default function VirtualBed() {
             style={{
               position: 'absolute',
               left: `${sehajCat.position.x}%`,
-              top: `${50 + (sehajCat.position.y / 2)}%`, // Floor starts at 50%, map 0-100 to 50-100
+              top: `${sehajCat.position.y}%`,
               transform: 'translate(-50%, -50%)',
               zIndex: 70,
               cursor: 'pointer',
@@ -489,51 +647,13 @@ export default function VirtualBed() {
             )}
           </div>
 
-          {/* Z-PLANE 80: BLANKET OVERLAY (for Hog Blanket mechanic) */}
-          <motion.div
-            animate={{
-              x: blanketShift * 60, // Shift left/right by 60px
-            }}
-            transition={{ duration: 0.5 }}
-            style={{
-              position: 'absolute',
-              bottom: '20%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: 200,
-              height: 120,
-              background: 'linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFB6C1 100%)',
-              borderRadius: 16,
-              border: '3px solid #FF69B4',
-              zIndex: 80,
-              opacity: 0.7,
-              boxShadow: '0 4px 12px rgba(255,105,180,0.4)',
-            }}
-          >
-            {/* Blanket texture pattern */}
-            <div style={{
-              position: 'absolute',
-              inset: 8,
-              border: '2px dashed rgba(255,255,255,0.4)',
-              borderRadius: 12,
-            }} />
-            <div style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              fontSize: 40,
-              opacity: 0.6,
-            }}>
-              🧣
-            </div>
-          </motion.div>
+          {/* EFFECTS LAYER (Z150) */}
+          <AnimatePresence>
+            {effects.map(effect => renderEffect(effect))}
+          </AnimatePresence>
         </div>
       </motion.div>
 
-      {/* ============================================ */}
-      {/* CONTROL_PANEL: Compact UI */}
-      {/* ============================================ */}
       <CompactCatUI
         onAction={handleAction}
         prabhState={prabhCat.position.state}
