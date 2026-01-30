@@ -413,6 +413,23 @@ export function CompactCatUI({
           </>
         )}
       </AnimatePresence>
+
+      {/* 5) Room Level Bar - Bottom right */}
+      <div style={{
+        alignSelf: 'flex-end',
+        marginRight: 10,
+        ...GLASSY_STYLE,
+        borderRadius: 16,
+        padding: '6px 14px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+      }}>
+        <span style={{ fontSize: 12 }}>🏠</span>
+        <span style={{ color: 'white', fontSize: 11, fontWeight: 600 }}>
+          Room Lv. {roomLevel}
+        </span>
+      </div>
     </div>
   )
 }
