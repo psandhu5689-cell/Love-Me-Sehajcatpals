@@ -317,7 +317,7 @@ export default function VirtualBed() {
     }
 
     const state = stateMap[action] || 'sitIdle'
-    if (!['wake', 'sleep', 'feed', 'cuddle', 'gaming', 'kick', 'lightsOut', 'hogBlanket', 'drama', 'chaos', 'treatToss'].includes(action)) {
+    if (!['wake', 'sleep', 'feed', 'cuddle', 'gaming', 'kick', 'lightsOut', 'hogBlanket', 'drama', 'chaos', 'treatToss', 'water'].includes(action)) {
       if (target === 'prabh' || target === 'both') prabhCat.triggerAction(state)
       if (target === 'sehaj' || target === 'both') sehajCat.triggerAction(state)
     }
