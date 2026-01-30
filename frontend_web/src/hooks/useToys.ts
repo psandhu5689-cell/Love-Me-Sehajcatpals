@@ -32,17 +32,17 @@ export type CatReaction = {
 }
 
 // Toy definitions with initial scattered positions - MORE SPREAD OUT
+// Note: Chess knight (toy #2) removed as requested
 const INITIAL_TOYS: Toy[] = [
   // Left side (Prabh's toys) - spread across left half
   { id: 1, name: 'duck', image: '/toys/toy_01_duck.png', x: 8, y: 25, homeSide: 'left', state: 'idle', zIndex: 60 },
-  { id: 2, name: 'knight', image: '/toys/toy_02_knight.png', x: 22, y: 80, homeSide: 'left', state: 'idle', zIndex: 60 },
-  { id: 3, name: 'ball', image: '/toys/toy_03_ball.png', x: 38, y: 30, homeSide: 'left', state: 'idle', zIndex: 60 },
-  { id: 4, name: 'blocks', image: '/toys/toy_04_blocks.png', x: 12, y: 55, homeSide: 'left', state: 'idle', zIndex: 60 },
+  { id: 3, name: 'ball', image: '/toys/toy_03_ball.png', x: 35, y: 30, homeSide: 'left', state: 'idle', zIndex: 60 },
+  { id: 4, name: 'blocks', image: '/toys/toy_04_blocks.png', x: 15, y: 55, homeSide: 'left', state: 'idle', zIndex: 60 },
   // Right side (Sehaj's toys) - spread across right half
-  { id: 5, name: 'puzzle', image: '/toys/toy_05_puzzle.png', x: 62, y: 25, homeSide: 'right', state: 'idle', zIndex: 60 },
-  { id: 6, name: 'rings', image: '/toys/toy_06_rings.png', x: 78, y: 80, homeSide: 'right', state: 'idle', zIndex: 60 },
-  { id: 7, name: 'robot', image: '/toys/toy_07_robot.png', x: 92, y: 45, homeSide: 'right', state: 'idle', zIndex: 60 },
-  { id: 8, name: 'teddy', image: '/toys/toy_08_teddy.png', x: 88, y: 75, homeSide: 'right', state: 'idle', zIndex: 60 },
+  { id: 5, name: 'puzzle', image: '/toys/toy_05_puzzle.png', x: 65, y: 25, homeSide: 'right', state: 'idle', zIndex: 60 },
+  { id: 6, name: 'rings', image: '/toys/toy_06_rings.png', x: 78, y: 75, homeSide: 'right', state: 'idle', zIndex: 60 },
+  { id: 7, name: 'robot', image: '/toys/toy_07_robot.png', x: 92, y: 40, homeSide: 'right', state: 'idle', zIndex: 60 },
+  { id: 8, name: 'teddy', image: '/toys/toy_08_teddy.png', x: 85, y: 70, homeSide: 'right', state: 'idle', zIndex: 60 },
 ]
 
 // Floor bounds (percentage)
