@@ -518,7 +518,157 @@ export default function VirtualBed() {
             }}
           />
 
-          {/* TOYS LAYER (Z60) - 8 draggable toys */}
+          {/* === FLOOR DECORATIONS (Z55) - Behind toys but above floor === */}
+          
+          {/* RUG in center-back area */}
+          <img
+            src="/decor/rug.png"
+            alt="rug"
+            style={{
+              position: 'absolute',
+              top: '8%',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 280,
+              height: 100,
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              zIndex: 55,
+              opacity: 0.9,
+            }}
+          />
+
+          {/* Cat bed - left back corner */}
+          <img
+            src="/decor/cat_bed.png"
+            alt="cat bed"
+            style={{
+              position: 'absolute',
+              top: '5%',
+              left: '8%',
+              width: 90,
+              height: 55,
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              zIndex: 56,
+            }}
+          />
+
+          {/* Cat bed - right back corner */}
+          <img
+            src="/decor/cat_bed.png"
+            alt="cat bed"
+            style={{
+              position: 'absolute',
+              top: '5%',
+              right: '8%',
+              width: 90,
+              height: 55,
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              zIndex: 56,
+              transform: 'scaleX(-1)', // Flip for variety
+            }}
+          />
+
+          {/* Cat tree - left side */}
+          <img
+            src="/decor/cat_tree.png"
+            alt="cat tree"
+            style={{
+              position: 'absolute',
+              top: '2%',
+              left: '25%',
+              width: 70,
+              height: 110,
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              zIndex: 57,
+            }}
+          />
+
+          {/* Food bowl station - back center-left */}
+          <div style={{
+            position: 'absolute',
+            top: '12%',
+            left: '38%',
+            display: 'flex',
+            gap: 8,
+            zIndex: 56,
+          }}>
+            <img
+              src="/decor/food_bowl.png"
+              alt="food bowl"
+              style={{
+                width: 45,
+                height: 32,
+                objectFit: 'contain',
+                imageRendering: 'pixelated',
+              }}
+            />
+            <img
+              src="/decor/water_bowl.png"
+              alt="water bowl"
+              style={{
+                width: 45,
+                height: 32,
+                objectFit: 'contain',
+                imageRendering: 'pixelated',
+              }}
+            />
+          </div>
+
+          {/* Extra toys in back - yarn ball */}
+          <img
+            src="/decor/yarn_ball.png"
+            alt="yarn ball"
+            style={{
+              position: 'absolute',
+              top: '18%',
+              right: '30%',
+              width: 35,
+              height: 35,
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              zIndex: 56,
+            }}
+          />
+
+          {/* Mouse toy - back right */}
+          <img
+            src="/decor/mouse_toy.png"
+            alt="mouse toy"
+            style={{
+              position: 'absolute',
+              top: '15%',
+              right: '18%',
+              width: 40,
+              height: 22,
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              zIndex: 56,
+            }}
+          />
+
+          {/* Feather toy - left side */}
+          <img
+            src="/decor/feather_toy.png"
+            alt="feather toy"
+            style={{
+              position: 'absolute',
+              top: '20%',
+              left: '12%',
+              width: 28,
+              height: 55,
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              zIndex: 56,
+            }}
+          />
+
+          {/* === END DECORATIONS === */}
+
+          {/* TOYS LAYER (Z60) - 7 draggable toys (chess knight removed) */}
           {toySystem.toys.map(toy => (
             <ToySprite
               key={toy.id}
