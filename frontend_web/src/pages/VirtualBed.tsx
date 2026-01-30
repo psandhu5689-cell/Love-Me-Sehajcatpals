@@ -2044,7 +2044,6 @@ export default function VirtualBed() {
               zIndex: 60,
             }} />
 
-            {/* LAYER 4: Furniture Props */}
             {/* Small couch/bean bag - left side */}
             <div style={{
               position: 'absolute',
@@ -2055,7 +2054,7 @@ export default function VirtualBed() {
               background: 'linear-gradient(135deg, #8B7355 0%, #6B5644 100%)',
               borderRadius: '45% 45% 20% 20%',
               border: '3px solid #5D4037',
-              zIndex: 2,
+              zIndex: 60,
               boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
             }}>
               {/* Couch cushion detail */}
