@@ -782,7 +782,7 @@ export default function VirtualBed() {
               state={sehajCat.position.state}
               onAnimationComplete={sehajCat.onAnimationComplete}
               flip={sehajCat.position.state === 'walkLeft'}
-              scale={2.5}
+              scale={3.1}
             />
             {sehajBubble && (
               <motion.div
