@@ -2201,20 +2201,21 @@ export default function VirtualBed() {
               zIndex: 1,
             }} />
 
-            {/* LAYER 3: Rug (centered, below characters) */}
+            {/* LAYER 3: Enlarged Rug (60-70% of floor, centered, below characters) */}
             <div style={{
               position: 'absolute',
-              bottom: 40,
+              bottom: 30,
               left: '50%',
               transform: 'translateX(-50%)',
-              width: '70%',
-              maxWidth: 350,
-              height: 140,
+              width: '75%',
+              maxWidth: 450,
+              height: 180,
               backgroundImage: 'url(/rug.png)',
               backgroundSize: 'contain',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               zIndex: 2,
+              filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.15))',
             }} />
 
             {/* LAYER 4: Furniture Props */}
