@@ -399,11 +399,11 @@ export default function TouchDemo() {
         marginTop: 30,
         lineHeight: 1.6,
       }}>
-        <div>✅ Tap zones (head/nose/body/tail)</div>
-        <div>✅ Double tap for bounce</div>
-        <div>✅ Hold for pick up</div>
-        <div>✅ Drag apart = sadness (>200px)</div>
-        <div>✅ Drama, Lights Out, & "fuck" buttons in drawer</div>
+        <div>Tap zones (head/nose/body/tail)</div>
+        <div>Double tap for bounce</div>
+        <div>Hold for pick up</div>
+        <div>Drag apart = sadness (greater than 200px)</div>
+        <div>Drama, Lights Out, and special button in drawer</div>
       </div>
     </div>
   )
