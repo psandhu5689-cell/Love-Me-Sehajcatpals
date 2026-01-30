@@ -186,7 +186,7 @@ export function CompactCatUI({ onAction, prabhState, sehajState, disabled }: Com
               }}
             />
             
-            {/* Drawer */}
+            {/* Drawer - Glassy look */}
             <motion.div
               initial={{ y: '100%' }}
               animate={{ y: 0 }}
@@ -198,14 +198,15 @@ export function CompactCatUI({ onAction, prabhState, sehajState, disabled }: Com
                 left: 0,
                 right: 0,
                 maxHeight: '45vh',
-                background: 'rgba(26, 26, 36, 0.95)',
-                backdropFilter: 'blur(20px)',
+                background: 'rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
                 borderTopLeftRadius: 24,
                 borderTopRightRadius: 24,
                 padding: '24px 20px 40px',
                 zIndex: 999,
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                boxShadow: '0 -4px 32px rgba(0, 0, 0, 0.3)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                boxShadow: '0 -4px 32px rgba(0, 0, 0, 0.2)',
               }}
             >
               {/* Drag Handle */}
