@@ -398,7 +398,7 @@ export function CompactCatUI({
             transition: 'all 0.2s ease',
           }}
         >
-          <span style={{ fontSize: 18 }}>💀</span>
+          <span style={{ fontSize: 18 }}>😈</span>
           <span style={{ 
             color: '#fecaca', 
             fontSize: 13, 
