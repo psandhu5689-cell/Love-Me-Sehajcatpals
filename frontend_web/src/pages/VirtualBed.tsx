@@ -1111,6 +1111,19 @@ export default function VirtualBed() {
   const [showSecondaryPanel, setShowSecondaryPanel] = useState(false)
   const [targetMode, setTargetMode] = useState<'prabh' | 'sehaj' | 'both'>('both')
   
+  // NEW: Room decor interactions
+  const [floorLampOn, setFloorLampOn] = useState(true)
+  const [stringLightsMode, setStringLightsMode] = useState<'off' | 'warm' | 'pink' | 'purple'>('warm')
+  const [prabhSeated, setPrabhSeated] = useState(false)
+  const [sehajSeated, setSehajSeated] = useState(false)
+  
+  // Sofa drop zone and seat anchors
+  const SOFA_DROP_ZONE = { x: 60, y: 60, width: 20, height: 15 }
+  const SOFA_SEATS = {
+    left: { x: 62, y: 65 },
+    right: { x: 72, y: 65 },
+  }
+  
   // Cat mood bubbles
   const [prabhMoodBubble, setPrabhMoodBubble] = useState<string | null>(null)
   const [sehajMoodBubble, setSehajMoodBubble] = useState<string | null>(null)
