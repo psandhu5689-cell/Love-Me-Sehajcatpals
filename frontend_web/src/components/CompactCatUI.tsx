@@ -164,7 +164,7 @@ export function CompactCatUI({ onAction, prabhState, sehajState, disabled }: Com
         />
       </motion.div>
 
-      {/* Secondary Action Drawer */}
+      {/* Secondary Action Drawer - This stays fixed as a modal */}
       <AnimatePresence>
         {showDrawer && (
           <>
@@ -198,7 +198,7 @@ export function CompactCatUI({ onAction, prabhState, sehajState, disabled }: Com
                 backdropFilter: 'blur(20px)',
                 borderTopLeftRadius: 24,
                 borderTopRightRadius: 24,
-                padding: '24px 20px 100px',
+                padding: '24px 20px 40px',
                 zIndex: 999,
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 boxShadow: '0 -4px 32px rgba(0, 0, 0, 0.3)',
@@ -234,7 +234,7 @@ export function CompactCatUI({ onAction, prabhState, sehajState, disabled }: Com
           </>
         )}
       </AnimatePresence>
-    </>
+    </div>
   )
 }
 
