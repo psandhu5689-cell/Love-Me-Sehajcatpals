@@ -22,6 +22,7 @@ type ActionType =
   | 'treatToss'
   | 'laser'
   | 'chaos'        // NEW: special "fuck" button
+  | 'water'        // NEW: water button
 
 type Target = 'prabh' | 'sehaj' | 'both'
 
@@ -43,6 +44,7 @@ const PRIMARY_ACTIONS: ActionButton[] = [
   { id: 'wake', icon: '👁️', label: 'Wake', primary: true },
   { id: 'sleep', icon: '😴', label: 'Sleep', primary: true },
   { id: 'feed', icon: '🍖', label: 'Feed', primary: true },
+  { id: 'water', icon: '💧', label: 'Water', primary: true },
 ]
 
 const SECONDARY_ACTIONS: ActionButton[] = [
