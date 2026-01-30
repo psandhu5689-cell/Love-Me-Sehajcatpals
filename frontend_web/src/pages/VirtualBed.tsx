@@ -558,22 +558,6 @@ export default function VirtualBed() {
           />
 
           {/* === FLOOR DECORATIONS (Z55) - Behind toys but above floor === */}
-          
-          {/* Cat tree - LEFT CORNER, overlapping into wall */}
-          <img
-            src="/decor/cat_tree.png"
-            alt="cat tree"
-            style={{
-              position: 'absolute',
-              top: '-25%',
-              left: '5%',
-              width: 95,
-              height: 149,
-              objectFit: 'contain',
-              imageRendering: 'pixelated',
-              zIndex: 57,
-            }}
-          />
 
           {/* Water bowls - center back area */}
           <div 
