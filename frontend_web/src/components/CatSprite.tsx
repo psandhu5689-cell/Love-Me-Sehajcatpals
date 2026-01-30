@@ -91,7 +91,7 @@ export function CatSprite({ cat, state, onAnimationComplete, flip = false, scale
   const anim = animations[state] || animations.sitIdle
 
   const FRAME_SIZE = 64
-  const COLS = 18
+  const COLS = 14  // Clean sprite sheets have 14 columns (896px / 64px = 14)
 
   // Reset frame when state changes
   useEffect(() => {
