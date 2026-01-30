@@ -5,6 +5,8 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react'
+import prabhSheet from '../assets/sprites/black_cat_sheet.png'
+import sehajSheet from '../assets/sprites/ginger_cat_labeled.png'
 
 // Core animation states (MINIMAL SCOPE)
 export type CatState = 
