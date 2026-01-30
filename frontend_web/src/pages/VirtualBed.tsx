@@ -292,6 +292,28 @@ export default function VirtualBed() {
       setTimeout(() => { setShowChaos(false); setChaosText('') }, 2500)
     } else if (action === 'treatToss') {
       spawnEffect('treat', 50, 60)
+    } else if (action === 'water') {
+      // Both cats walk to the water bowls (center back of room)
+      // Water bowls are at 50% x, 15% y (near wall)
+      prabhCat.moveTo(42, 20) // Left bowl
+      sehajCat.moveTo(58, 20) // Right bowl
+      
+      // Show water emoji above both cats after they arrive
+      setTimeout(() => {
+        spawnEffect('water', 42, 20)
+        spawnEffect('water', 58, 20)
+        setPrabhBubble('💧')
+        setSehajBubble('💧')
+      }, 1200)
+      
+      // Clear bubbles after drinking
+      setTimeout(() => {
+        setPrabhBubble('')
+        setSehajBubble('')
+        // Spawn happy effect after drinking
+        spawnEffect('heart', 42, 20)
+        spawnEffect('heart', 58, 20)
+      }, 2500)
     }
 
     const state = stateMap[action] || 'sitIdle'
