@@ -342,6 +342,77 @@ export function CompactCatUI({
         />
       </motion.div>
 
+      {/* Premium Special Buttons - Drama & Chaos */}
+      <div style={{
+        display: 'flex',
+        gap: 12,
+        marginTop: 4,
+      }}>
+        {/* Drama Button - Premium */}
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => handleAction('drama')}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '10px 20px',
+            borderRadius: 16,
+            border: '1px solid rgba(168, 85, 247, 0.4)',
+            background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(139, 92, 246, 0.1))',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            boxShadow: '0 0 20px rgba(168, 85, 247, 0.2), inset 0 1px 0 rgba(255,255,255,0.1)',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+          }}
+        >
+          <span style={{ fontSize: 18 }}>🎭</span>
+          <span style={{ 
+            color: '#e9d5ff', 
+            fontSize: 13, 
+            fontWeight: 600,
+            letterSpacing: '0.5px',
+            textShadow: '0 0 10px rgba(168, 85, 247, 0.5)',
+          }}>
+            Drama
+          </span>
+        </motion.button>
+
+        {/* Chaos/Fuck Button - Premium */}
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => handleAction('chaos')}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '10px 20px',
+            borderRadius: 16,
+            border: '1px solid rgba(239, 68, 68, 0.4)',
+            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1))',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            boxShadow: '0 0 20px rgba(239, 68, 68, 0.2), inset 0 1px 0 rgba(255,255,255,0.1)',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+          }}
+        >
+          <span style={{ fontSize: 18 }}>💀</span>
+          <span style={{ 
+            color: '#fecaca', 
+            fontSize: 13, 
+            fontWeight: 600,
+            letterSpacing: '0.5px',
+            textShadow: '0 0 10px rgba(239, 68, 68, 0.5)',
+          }}>
+            fuck
+          </span>
+        </motion.button>
+      </div>
+
       {/* Secondary Action Drawer - This stays fixed as a modal */}
       <AnimatePresence>
         {showDrawer && (
