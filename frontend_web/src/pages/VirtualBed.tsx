@@ -532,17 +532,17 @@ export default function VirtualBed() {
             />
           ))}
 
-          {/* BLANKET (Z80) - New pixel art blanket image */}
+          {/* BLANKET (Z80) - New pixel art blanket image - 40% BIGGER */}
           <motion.div
-            animate={{ x: blanketShift * 80 }}
+            animate={{ x: blanketShift * 100 }}
             transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
             style={{
               position: 'absolute',
-              bottom: '15%',
+              bottom: '10%',
               left: '50%',
               transform: 'translateX(-50%)',
-              width: 220,
-              height: 130,
+              width: 308,  // 220 * 1.4 = 308
+              height: 182, // 130 * 1.4 = 182
               zIndex: 80,
               display: 'flex',
               alignItems: 'center',
