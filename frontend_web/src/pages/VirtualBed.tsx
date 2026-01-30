@@ -549,8 +549,8 @@ export default function VirtualBed() {
             alt="cat tree"
             style={{
               position: 'absolute',
-              top: '-35%',
-              left: '3%',
+              top: '-25%',
+              left: '5%',
               width: 95,
               height: 149,
               objectFit: 'contain',
