@@ -520,13 +520,13 @@ export default function VirtualBed() {
 
           {/* === FLOOR DECORATIONS (Z55) - Behind toys but above floor === */}
           
-          {/* RUG in center-back area */}
+          {/* RUG in center-back area - MOVED FURTHER BACK */}
           <img
             src="/decor/rug.png"
             alt="rug"
             style={{
               position: 'absolute',
-              top: '8%',
+              top: '2%',
               left: '50%',
               transform: 'translateX(-50%)',
               width: 280,
@@ -538,13 +538,13 @@ export default function VirtualBed() {
             }}
           />
 
-          {/* Cat bed - left back corner */}
+          {/* Cat bed - left back corner - MOVED FURTHER BACK */}
           <img
             src="/decor/cat_bed.png"
             alt="cat bed"
             style={{
               position: 'absolute',
-              top: '5%',
+              top: '0%',
               left: '8%',
               width: 90,
               height: 55,
@@ -554,13 +554,13 @@ export default function VirtualBed() {
             }}
           />
 
-          {/* Cat bed - right back corner */}
+          {/* Cat bed - right back corner - MOVED FURTHER BACK */}
           <img
             src="/decor/cat_bed.png"
             alt="cat bed"
             style={{
               position: 'absolute',
-              top: '5%',
+              top: '0%',
               right: '8%',
               width: 90,
               height: 55,
@@ -571,61 +571,62 @@ export default function VirtualBed() {
             }}
           />
 
-          {/* Cat tree - left side */}
+          {/* Cat tree - left side - 35% BIGGER (70x110 -> 95x149) & MOVED BACK */}
           <img
             src="/decor/cat_tree.png"
             alt="cat tree"
             style={{
               position: 'absolute',
-              top: '2%',
-              left: '25%',
-              width: 70,
-              height: 110,
+              top: '-5%',
+              left: '22%',
+              width: 95,
+              height: 149,
               objectFit: 'contain',
               imageRendering: 'pixelated',
               zIndex: 57,
             }}
           />
 
-          {/* Food bowl station - back center-left */}
-          <div style={{
-            position: 'absolute',
-            top: '12%',
-            left: '38%',
-            display: 'flex',
-            gap: 8,
-            zIndex: 56,
-          }}>
-            <img
-              src="/decor/food_bowl.png"
-              alt="food bowl"
-              style={{
-                width: 45,
-                height: 32,
-                objectFit: 'contain',
-                imageRendering: 'pixelated',
-              }}
-            />
-            <img
-              src="/decor/water_bowl.png"
-              alt="water bowl"
-              style={{
-                width: 45,
-                height: 32,
-                objectFit: 'contain',
-                imageRendering: 'pixelated',
-              }}
-            />
-          </div>
+          {/* Food bowl - back center-left - MOVED FURTHER BACK */}
+          <img
+            src="/decor/food_bowl.png"
+            alt="food bowl"
+            style={{
+              position: 'absolute',
+              top: '5%',
+              left: '38%',
+              width: 45,
+              height: 32,
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              zIndex: 56,
+            }}
+          />
 
-          {/* Extra toys in back - yarn ball */}
+          {/* Water bowl - MOVED TO RIGHT SIDE */}
+          <img
+            src="/decor/water_bowl.png"
+            alt="water bowl"
+            style={{
+              position: 'absolute',
+              top: '5%',
+              right: '38%',
+              width: 45,
+              height: 32,
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              zIndex: 56,
+            }}
+          />
+
+          {/* Extra toys in back - yarn ball - MOVED FURTHER BACK */}
           <img
             src="/decor/yarn_ball.png"
             alt="yarn ball"
             style={{
               position: 'absolute',
-              top: '18%',
-              right: '30%',
+              top: '8%',
+              right: '28%',
               width: 35,
               height: 35,
               objectFit: 'contain',
@@ -634,14 +635,14 @@ export default function VirtualBed() {
             }}
           />
 
-          {/* Mouse toy - back right */}
+          {/* Mouse toy - back right - MOVED FURTHER BACK */}
           <img
             src="/decor/mouse_toy.png"
             alt="mouse toy"
             style={{
               position: 'absolute',
-              top: '15%',
-              right: '18%',
+              top: '6%',
+              right: '16%',
               width: 40,
               height: 22,
               objectFit: 'contain',
@@ -650,13 +651,13 @@ export default function VirtualBed() {
             }}
           />
 
-          {/* Feather toy - left side */}
+          {/* Feather toy - left side - MOVED FURTHER BACK */}
           <img
             src="/decor/feather_toy.png"
             alt="feather toy"
             style={{
               position: 'absolute',
-              top: '20%',
+              top: '10%',
               left: '12%',
               width: 28,
               height: 55,
