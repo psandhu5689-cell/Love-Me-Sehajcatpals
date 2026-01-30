@@ -736,7 +736,7 @@ export default function VirtualBed() {
               state={prabhCat.position.state}
               onAnimationComplete={prabhCat.onAnimationComplete}
               flip={prabhCat.position.state === 'walkLeft'}
-              scale={2.5}
+              scale={3.1}
             />
             {prabhBubble && (
               <motion.div
