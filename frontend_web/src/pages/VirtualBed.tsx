@@ -224,8 +224,11 @@ export default function VirtualBed() {
       sehajCat.triggerAction('surprised')
       setTimeout(() => setDimLights(false), 2500)
     } else if (action === 'hogBlanket') {
-      if (target === 'prabh') setBlanketShift(1)
-      else if (target === 'sehaj') setBlanketShift(-1)
+      // Prabh is on the left, Sehaj is on the right
+      // Negative shift = move left towards Prabh
+      // Positive shift = move right towards Sehaj
+      if (target === 'prabh') setBlanketShift(-1)
+      else if (target === 'sehaj') setBlanketShift(1)
       else setBlanketShift(0)
       setTimeout(() => setBlanketShift(0), 3000)
     } else if (action === 'drama') {
