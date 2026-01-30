@@ -1,9 +1,10 @@
 /**
  * MR & MRS - Complete Interactive Room
  * FIXED: Wall/Floor seam, Cat sprites render, All buttons interactive
+ * NEW: Pixel blanket image, 8 draggable toys with cat reactions
  */
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { IoChevronBackOutline, IoVolumeHigh, IoVolumeMute } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
@@ -12,8 +13,10 @@ import haptics from '../utils/haptics'
 
 import { CatSprite, CatState } from '../components/CatSprite'
 import { CompactCatUI } from '../components/CompactCatUI'
+import { ToySprite } from '../components/ToySprite'
 import { useCatMovement } from '../hooks/useCatMovement'
 import { useCatTouch, detectDragApartSadness } from '../hooks/useCatTouch'
+import { useToys, CatReaction } from '../hooks/useToys'
 
 type Effect = {
   id: string
