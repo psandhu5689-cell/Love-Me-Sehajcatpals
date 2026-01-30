@@ -136,20 +136,11 @@ export function CatSprite({ cat, state, onAnimationComplete, flip = false, scale
         overflow: 'hidden',
         transform: flip ? 'scaleX(-1)' : 'none',
         imageRendering: 'pixelated',
+        backgroundImage: `url(${spriteSheet})`,
+        backgroundSize: `${FRAME_SIZE * COLS * scale}px auto`,
+        backgroundPosition: `-${col * FRAME_SIZE * scale}px -${row * FRAME_SIZE * scale}px`,
+        backgroundRepeat: 'no-repeat',
       }}
-    >
-      <div
-        style={{
-          width: FRAME_SIZE * COLS * scale,
-          height: 'auto',
-          backgroundImage: `url(${spriteSheet})`,
-          backgroundSize: `${FRAME_SIZE * COLS * scale}px auto`,
-          backgroundPosition: `-${col * FRAME_SIZE * scale}px -${row * FRAME_SIZE * scale}px`,
-          backgroundRepeat: 'no-repeat',
-          width: displaySize,
-          height: displaySize,
-        }}
-      />
-    </div>
+    />
   )
 }
