@@ -310,7 +310,8 @@ export default function VirtualBed() {
       exclaim: '!',
       treat: '🍖',
       yarn: '🧶',
-      confetti: '🎊'
+      confetti: '🎊',
+      water: '💧'
     }
 
     return (
