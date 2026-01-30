@@ -2594,6 +2594,23 @@ export default function VirtualBed() {
                 flip={sehajRoam.xPercent > 40}
               />
               
+              {/* PERMANENT BOW ACCESSORY for Sehaj */}
+              <div style={{
+                position: 'absolute',
+                top: 8,
+                right: sehajRoam.xPercent > 40 ? 20 : 12,
+                width: 16,
+                height: 16,
+                zIndex: 30,
+              }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.2))' }}>
+                  <path d="M12 18l-6-3v-3l6-3 6 3v3z" fill="#FF69B4" />
+                  <ellipse cx="7" cy="12" rx="5" ry="3" fill="#FFB6D9" />
+                  <ellipse cx="17" cy="12" rx="5" ry="3" fill="#FFB6D9" />
+                  <circle cx="12" cy="12" r="2" fill="#FF1493" />
+                </svg>
+              </div>
+              
               {sehaj.action === 'gaming' && (
                 <motion.div
                   animate={{ y: [0, -3, 0] }}
